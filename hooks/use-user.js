@@ -64,7 +64,7 @@ export function useFetchUser({ required } = {}) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [loading, required, user]);
 
   return { user, loading };
 }
