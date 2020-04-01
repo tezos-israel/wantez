@@ -16,7 +16,5 @@
     }
   ],
   "env": { "browser": true, "node": true, "shared-node-browser": true },
-  "rules": {
-    "react/prop-types": "warn"
-  }
+  "rules": {}
 }

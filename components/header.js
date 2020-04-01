@@ -1,6 +1,13 @@
 import React from "react";
 import Link from "next/link";
 
+import PropTypes from "prop-types";
+
+Header.propTypes = {
+  user: PropTypes.object,
+  loading: PropTypes.bool,
+};
+
 function Header({ user, loading }) {
   return (
     <header>

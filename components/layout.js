@@ -1,6 +1,13 @@
 import React from "react";
 import Head from "next/head";
 import Header from "./header";
+import PropTypes from "prop-types";
+
+Layout.propTypes = {
+  user: PropTypes.object,
+  loading: PropTypes.bool,
+  children: PropTypes.elementType
+};
 
 function Layout({ user, loading = false, children }) {
   return (
