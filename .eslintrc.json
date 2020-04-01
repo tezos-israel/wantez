@@ -1,0 +1,11 @@
+{
+	"extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+	"plugins": ["react"],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 11,
+		"sourceType": "module"
+	}
+}
