@@ -64,7 +64,8 @@ export function useFetchUser({ required } = {}) {
     return () => {
       isMounted = false;
     };
-  }, [loading, required, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { user, loading };
 }
