@@ -1,4 +1,5 @@
-import Link from 'next/link'
+import React from "react";
+import Link from "next/link";
 
 function Header({ user, loading }) {
   return (
@@ -75,7 +76,7 @@ function Header({ user, loading }) {
         }
       `}</style>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

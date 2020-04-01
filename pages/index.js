@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
-import Layout from '../components/layout'
-import { useFetchUser } from '../utils/use-user';
+import Layout from "../components/layout";
+import { useFetchUser } from "../hooks/use-user";
 
 const Home = () => {
   const { user, loading } = useFetchUser();
@@ -16,7 +16,8 @@ const Home = () => {
             To test the login click in <i>Login</i>
           </p>
           <p>
-            Once you have logged in you should be able to click in <i>Profile</i> and <i>Logout</i>
+            Once you have logged in you should be able to click in{" "}
+            <i>Profile</i> and <i>Logout</i>
           </p>
         </>
       )}

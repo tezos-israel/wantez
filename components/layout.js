@@ -1,5 +1,6 @@
-import Head from 'next/head'
-import Header from './header'
+import React from "react";
+import Head from "next/head";
+import Header from "./header";
 
 function Layout({ user, loading = false, children }) {
   return (
@@ -24,12 +25,12 @@ function Layout({ user, loading = false, children }) {
         body {
           margin: 0;
           color: #333;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-            Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         }
       `}</style>
     </>
-  )
+  );
 }
 
-export default Layout
+export default Layout;
