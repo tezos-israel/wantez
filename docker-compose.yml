@@ -1,0 +1,23 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./prisma/schema.sql:/schema.sql
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: gitez
+
+  adminer:
+    image: adminer
+    ports:
+      - 5433:8080
+
+volumes:
+  db_data:

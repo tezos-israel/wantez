@@ -1,0 +1,5 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: ALTER TABLE "public"."profile" ALTER COLUMN "username" TYPE varchar;
+  type: run_sql
