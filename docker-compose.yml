@@ -1,23 +1,27 @@
-# Use postgres/example user/password credentials
-version: '3.1'
-
+version: "3.6"
 services:
-
   db:
-    image: postgres
-    ports:
-      - 5432:5432
+    image: postgres:12
+    # restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./prisma/schema.sql:/schema.sql
+    restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: gitez
-
-  adminer:
-    image: adminer
+      POSTGRES_PASSWORD: postgrespassword
+  graphql-engine:
+    image: hasura/graphql-engine:v1.1.1
     ports:
-      - 5433:8080
-
+      - "8080:8080"
+    depends_on:
+      - "db"
+    restart: unless-stopped
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@db:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to set an admin secret
+      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+    volumes:
+      - ./hasura/migrations:/hasura-migrations
 volumes:
   db_data:
