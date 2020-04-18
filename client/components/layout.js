@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 Layout.propTypes = {
   user: PropTypes.object,
   loading: PropTypes.bool,
-  children: PropTypes.elementType
+  children: PropTypes.element,
 };
 
 function Layout({ user, loading = false, children }) {
