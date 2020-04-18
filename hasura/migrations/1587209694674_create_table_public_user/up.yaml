@@ -1,0 +1,18 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: CREATE EXTENSION IF NOT EXISTS pgcrypto;
+  type: run_sql
+- args:
+    cascade: false
+    read_only: false
+    sql: CREATE TABLE "public"."user"("username" varchar NOT NULL, "email" varchar
+      NOT NULL, "gitlab_username" varchar NOT NULL, "github_username" varchar NOT
+      NULL, "id" uuid NOT NULL DEFAULT gen_random_uuid(), PRIMARY KEY ("id") , UNIQUE
+      ("username"), UNIQUE ("email"), UNIQUE ("gitlab_username"), UNIQUE ("github_username"),
+      UNIQUE ("id"));
+  type: run_sql
+- args:
+    name: user
+    schema: public
+  type: add_existing_table_or_view

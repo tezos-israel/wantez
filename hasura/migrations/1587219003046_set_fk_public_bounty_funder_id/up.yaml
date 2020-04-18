@@ -1,0 +1,10 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: |-
+      alter table "public"."bounty"
+                 add constraint "bounty_funder_id_fkey"
+                 foreign key ("funder_id")
+                 references "public"."user"
+                 ("id") on update restrict on delete set null;
+  type: run_sql
