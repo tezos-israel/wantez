@@ -1,6 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/client";
 
 import { client } from "../utils/graphql";
 

@@ -1,6 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import { useQuery, gql } from "@apollo/client";
 
 import Layout from "../components/layout";
 import { useFetchUser } from "../hooks/use-user";
