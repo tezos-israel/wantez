@@ -1,18 +1,18 @@
 import React from "react";
-import propTypes from "prop-types";
-import { ApolloProvider } from "@apollo/client";
+import { AuthProvider } from "react-use-auth";
+import { useRouter } from "next/router";
 
-import { client } from "../utils/graphql";
-
+// eslint-disable-next-line react/prop-types
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+
   return (
-    <ApolloProvider client={client}>
+    <AuthProvider
+      navigate={router.push}
+      auth0_domain="dev-f1oauz37.eu.auth0.com"
+      auth0_client_id="l8Y9T9AGl31xhc311XswLoaZeQaHW5cA"
+    >
       <Component {...pageProps} />
-    </ApolloProvider>
+    </AuthProvider>
   );
 }
-
-App.propTypes = {
-  Component: propTypes.element.isRequired,
-  pageProps: propTypes.object,
-};

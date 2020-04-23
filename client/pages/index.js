@@ -1,59 +1,73 @@
 import React from "react";
-import { useQuery, gql } from "@apollo/client";
+import Head from "next/head";
+import Nav from "../components/nav";
+import { Button } from "semantic-ui-react";
+import { useAuth } from "react-use-auth";
 
-import Layout from "../components/layout";
-import { useFetchUser } from "../hooks/use-user";
+const Login = () => {
+  const { isAuthenticated, isAuthenticating, login, logout } = useAuth();
 
-const QUERY = gql`
-  {
-    bounty(limit: 10) {
-      fee
-      title
-      funder {
-        email
-      }
-    }
+  if (isAuthenticated()) {
+    return (
+      <>
+        <Button onClick={logout} style={{ backgroundColor: "#067df7" }}>
+          Logout
+        </Button>
+        <small>{isAuthenticating ? "Authenticating ..." : null}</small>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Button onClick={login} style={{ backgroundColor: "#067df7" }}>
+          Login
+        </Button>
+        <small>{isAuthenticating ? "Authenticating ..." : null}</small>
+      </>
+    );
   }
-`;
+};
 
 const Home = () => {
-  const { user, loading } = useFetchUser();
-  const { loading: loadingBounties, error, data } = useQuery(QUERY);
+  const { isAuthenticated, user } = useAuth();
+
   return (
-    <Layout user={user} loading={loading}>
-      <>
-        {loading && <p>Loading login info...</p>}
+    <div>
+      <Head>
+        <title>Home</title>
+        <link rel="icon" href="/static/favicon.ico" />
+      </Head>
 
-        {!loading && !user && (
-          <>
-            <p>
-              To test the login click in <i>Login</i>
-            </p>
-            <p>
-              Once you have logged in you should be able to click in{" "}
-              <i>Profile</i> and <i>Logout</i>
-            </p>
-          </>
-        )}
+      <Nav />
 
-        {user && (
-          <>
-            <h4>Rendered user info on the client</h4>
-            <img src={user.picture} alt="user picture" />
-            <p>nickname: {user.nickname}</p>
-            <p>name: {user.name}</p>
-          </>
-        )}
+      <div className="hero">
+        <h1 className="title">Welcome to useAuth Next.js example!</h1>
+        <p className="description">To get started, click that button 👇👇👇</p>
+        <p className="description">
+          <Login />
+        </p>
 
-        {loadingBounties ? (
-          <div>Loading bounties</div>
-        ) : error ? (
-          <div>Failed loading bounties</div>
-        ) : (
-          <div>{data.bounty[0].fee}</div>
-        )}
-      </>
-    </Layout>
+        <h1 className="title">Hi {isAuthenticated() ? user.name : "people"}</h1>
+      </div>
+
+      <style jsx>{`
+        .hero {
+          width: 100%;
+          color: #333;
+        }
+        .title {
+          margin: 0;
+          width: 100%;
+          padding-top: 80px;
+          line-height: 1.15;
+          font-size: 48px;
+        }
+        .title,
+        .description {
+          text-align: center;
+        }
+      `}</style>
+    </div>
   );
 };
 
