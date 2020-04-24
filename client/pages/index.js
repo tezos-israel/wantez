@@ -1,36 +1,20 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import Nav from "../components/nav";
-import { Button } from "semantic-ui-react";
-import { useAuth } from "react-use-auth";
-
-const Login = () => {
-  const { isAuthenticated, isAuthenticating, login, logout } = useAuth();
-
-  if (isAuthenticated()) {
-    return (
-      <>
-        <Button onClick={logout} style={{ backgroundColor: "#067df7" }}>
-          Logout
-        </Button>
-        <small>{isAuthenticating ? "Authenticating ..." : null}</small>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Button onClick={login} style={{ backgroundColor: "#067df7" }}>
-          Login
-        </Button>
-        <small>{isAuthenticating ? "Authenticating ..." : null}</small>
-      </>
-    );
-  }
-};
+import { useUser } from "utils/user";
+// import { useQuery, gql } from "@apollo/client";
 
 const Home = () => {
-  const { isAuthenticated, user } = useAuth();
-
+  const { user, loading: loadingUser } = useUser();
+  // const { loading, data, error } = useQuery(gql`
+  //   {
+  //     bounty {
+  //       id
+  //       fee
+  //     }
+  //   }
+  // `);
   return (
     <div>
       <Head>
@@ -44,10 +28,19 @@ const Home = () => {
         <h1 className="title">Welcome to useAuth Next.js example!</h1>
         <p className="description">To get started, click that button 👇👇👇</p>
         <p className="description">
-          <Login />
+          {!loadingUser &&
+            (user ? (
+              <Link href="/api/logout">
+                <a>Logout</a>
+              </Link>
+            ) : (
+              <Link href="/api/login">
+                <a>Login</a>
+              </Link>
+            ))}
         </p>
 
-        <h1 className="title">Hi {isAuthenticated() ? user.name : "people"}</h1>
+        <h1 className="title">Hi {user ? user.name : "people"}</h1>
       </div>
 
       <style jsx>{`
