@@ -21,5 +21,6 @@
     }
   ],
   "env": { "browser": true, "node": true, "shared-node-browser": true },
-  "rules": {}
+  "rules": {},
+  "root": true
 }
