@@ -4,6 +4,8 @@ import { ApolloProvider } from "@apollo/client";
 import { createApolloClient } from "../utils/graphql";
 import { UserProvider, useFetchUser } from "utils/user";
 
+import "semantic-ui-css/semantic.min.css";
+
 // eslint-disable-next-line react/prop-types
 export default function App({ Component, pageProps }) {
   const { user, loading, accessToken } = useFetchUser();
