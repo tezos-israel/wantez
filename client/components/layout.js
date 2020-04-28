@@ -1,19 +1,21 @@
 import React from "react";
 import Head from "next/head";
-import Header from "./header";
 import PropTypes from "prop-types";
 
+import { useUser } from "utils/user";
+import Header from "./header";
+
 Layout.propTypes = {
-  user: PropTypes.object,
-  loading: PropTypes.bool,
   children: PropTypes.any,
+  title: PropTypes.string,
 };
 
-function Layout({ user, loading = false, children }) {
+function Layout({ children, title }) {
+  const { user, loading } = useUser();
   return (
     <>
       <Head>
-        <title>TzGit</title>
+        <title>{title ? `${title} - ` : ""}TzGit</title>
       </Head>
 
       <Header user={user} loading={loading} />

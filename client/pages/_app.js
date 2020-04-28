@@ -3,6 +3,7 @@ import { ApolloProvider } from "@apollo/client";
 
 import { createApolloClient } from "../utils/graphql";
 import { UserProvider, useFetchUser } from "utils/user";
+import Layout from "components/layout";
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }) {
   return (
     <UserProvider user={user} loading={loading}>
       <ApolloProvider client={client}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ApolloProvider>
     </UserProvider>
   );

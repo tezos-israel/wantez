@@ -22,17 +22,14 @@ function Header({ user, loading }) {
             (user ? (
               <>
                 <li>
-                  <Link href="/profile">
-                    <a>Client-rendered profile</a>
+                  <Link href="/bounty/create">
+                    <a>Create Bounty</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/ssr-profile">
-                    <a>Server rendered profile (advanced)</a>
+                  <Link href="/api/logout">
+                    <a>Logout</a>
                   </Link>
-                </li>
-                <li>
-                  <a href="/api/logout">Logout</a>
                 </li>
               </>
             ) : (

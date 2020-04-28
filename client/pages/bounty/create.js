@@ -4,8 +4,7 @@ import { useMutation, gql } from "@apollo/client";
 import { Form, Button, Message } from "semantic-ui-react";
 import { useForm } from "react-hook-form";
 
-import Layout from "components/layout";
-import { useFetchUser } from "utils/user";
+import { useUser } from "utils/user";
 
 const SAVE_BOUNTY = gql`
   mutation(
@@ -28,14 +27,14 @@ const SAVE_BOUNTY = gql`
 `;
 
 const CreateBountyPage = () => {
-  const { user, loading } = useFetchUser({ required: true });
+  const { user, loading } = useUser();
   const [createBounty] = useMutation(SAVE_BOUNTY);
   const { handleSubmit, register, errors } = useForm();
   const [globalError, setGlobalError] = React.useState(null);
   const router = useRouter();
 
   if (loading) {
-    return <Layout>Loading...</Layout>;
+    return <div>Loading...</div>;
   }
 
   if (!loading && !user) {
@@ -53,7 +52,7 @@ const CreateBountyPage = () => {
   }
 
   return (
-    <Layout>
+    <div>
       {/* Header */}
 
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +89,7 @@ const CreateBountyPage = () => {
           Submit
         </Button>
       </Form>
-    </Layout>
+    </div>
   );
 };
 
