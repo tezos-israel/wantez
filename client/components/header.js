@@ -1,9 +1,30 @@
 import React from "react";
 import Link from "next/link";
-
+import { Menu } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-Header.propTypes = {
+function UserMenu({ user, loading }) {
+  if (loading) {
+    return null;
+  }
+  return (
+    <Menu.Menu position="right">
+      {user ? (
+        <Menu.Item>
+          <Link href="/api/logout">
+            <a>Logout</a>
+          </Link>
+        </Menu.Item>
+      ) : (
+        <Menu.Item>
+          <a href="/api/login">Login</a>
+        </Menu.Item>
+      )}
+    </Menu.Menu>
+  );
+}
+
+UserMenu.propTypes = {
   user: PropTypes.object,
   loading: PropTypes.bool,
 };
@@ -11,71 +32,30 @@ Header.propTypes = {
 function Header({ user, loading }) {
   return (
     <header>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">
-              <a>Home</a>
-            </Link>
-          </li>
-          {!loading &&
-            (user ? (
-              <>
-                <li>
-                  <Link href="/bounty/create">
-                    <a>Create Bounty</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/api/logout">
-                    <a>Logout</a>
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <li>
-                <a href="/api/login">Login</a>
-              </li>
-            ))}
-        </ul>
-      </nav>
-
-      <style jsx>{`
-        header {
-          padding: 0.2rem;
-          color: #fff;
-          background-color: #333;
-        }
-        nav {
-          max-width: 42rem;
-          margin: 1.5rem auto;
-        }
-        ul {
-          display: flex;
-          list-style: none;
-          margin-left: 0;
-          padding-left: 0;
-        }
-        li {
-          margin-right: 1rem;
-        }
-        li:nth-child(2) {
-          margin-right: auto;
-        }
-        a {
-          color: #fff;
-          text-decoration: none;
-        }
-        button {
-          font-size: 1rem;
-          color: #fff;
-          cursor: pointer;
-          border: none;
-          background: none;
-        }
-      `}</style>
+      <Menu secondary>
+        <Menu.Item>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+        </Menu.Item>
+        {!loading && user && (
+          <>
+            <Menu.Item>
+              <Link href="/bounty/create">
+                <a>Create Bounty</a>
+              </Link>
+            </Menu.Item>
+          </>
+        )}
+        <UserMenu user={user} loading={loading} />
+      </Menu>
     </header>
   );
 }
+
+Header.propTypes = {
+  user: PropTypes.object,
+  loading: PropTypes.bool,
+};
 
 export default Header;
