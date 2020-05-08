@@ -3,7 +3,7 @@ import { ApolloProvider } from "@apollo/client";
 
 import { createApolloClient } from "../utils/graphql";
 import { UserProvider, useFetchUser } from "utils/user";
-import Layout from "components/layout";
+import Layout from "components/Layout";
 
 import "semantic-ui-css/semantic.min.css";
 

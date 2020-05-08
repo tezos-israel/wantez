@@ -1,10 +1,9 @@
 import React from "react";
 import Head from "next/head";
 import PropTypes from "prop-types";
-import { Container } from "semantic-ui-react";
 
 import { useUser } from "utils/user";
-import Header from "./header";
+import Container from "./ResponsiveContainer";
 
 Layout.propTypes = {
   children: PropTypes.any,
@@ -14,12 +13,10 @@ Layout.propTypes = {
 function Layout({ children, title }) {
   const { user, loading } = useUser();
   return (
-    <Container>
+    <Container user={user} loading={loading}>
       <Head>
         <title>{title ? `${title} - ` : ""}TzGit</title>
       </Head>
-
-      <Header user={user} loading={loading} />
 
       <main>{children}</main>
     </Container>
