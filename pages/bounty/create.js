@@ -1,7 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useMutation, gql } from "@apollo/client";
-import { Form, Button, Message } from "semantic-ui-react";
+import { Button, FormControl } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
 import { useForm } from "react-hook-form";
 
 import { useUser } from "utils/user";
@@ -55,22 +56,22 @@ const CreateBountyPage = () => {
     <div>
       {/* Header */}
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {globalError && (
-          <Message negative>
-            <Message.Header>Failed submittion</Message.Header>
+          <Alert>
+            <AlertTitle>Failed submittion</AlertTitle>
             {globalError}
-          </Message>
+          </Alert>
         )}
-        <Form.Field error={!!errors.title} id="title-input">
+        <FormControl error={!!errors.title} id="title-input">
           <label>Title</label>
           <input ref={register} name="title" />
-        </Form.Field>
-        <Form.Field error={!!errors.issueUrl} id="issue-url-input">
+        </FormControl>
+        <FormControl error={!!errors.issueUrl} id="issue-url-input">
           <label>Issue URL</label>
           <input ref={register} name="issueUrl" />
-        </Form.Field>
-        <Form.Field error={!!errors.fee} id="fee-input">
+        </FormControl>
+        <FormControl error={!!errors.fee} id="fee-input">
           <label>Fee</label>
           <input
             ref={register}
@@ -79,16 +80,16 @@ const CreateBountyPage = () => {
             name="fee"
             defaultValue={0}
           />
-        </Form.Field>
-        <Form.Field error={!!errors.description} id="decsription-input">
+        </FormControl>
+        <FormControl error={!!errors.description} id="decsription-input">
           <label>Description</label>
           <textarea ref={register} name="description" />
-        </Form.Field>
+        </FormControl>
 
         <Button primary type="submit">
           Submit
         </Button>
-      </Form>
+      </form>
     </div>
   );
 };

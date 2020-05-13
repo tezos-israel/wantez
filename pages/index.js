@@ -1,7 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { useQuery, gql } from "@apollo/client";
-import { Message, Table } from "semantic-ui-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableContainer,
+} from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const FETCH_BOUNTIES = gql`
   {
@@ -22,33 +30,38 @@ const Home = () => {
 
   if (error) {
     return (
-      <Message error header="Failed loading bounties" content={error.message} />
+      <Alert severity="error">
+        <AlertTitle>Failed loading bounties</AlertTitle>
+        {error.message}
+      </Alert>
     );
   }
   return (
-    <Table>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Title</Table.HeaderCell>
-          <Table.HeaderCell>Fee</Table.HeaderCell>
-          <Table.HeaderCell>Status</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Title</TableCell>
+            <TableCell>Fee</TableCell>
+            <TableCell>Status</TableCell>
+          </TableRow>
+        </TableHead>
 
-      <Table.Body>
-        {data.bounty.map((bounty) => (
-          <Table.Row key={bounty.id}>
-            <Table.Cell selectable>
-              <Link href={`/bounty/${bounty.id}`}>
-                <a>{bounty.title}</a>
-              </Link>
-            </Table.Cell>
-            <Table.Cell>{bounty.fee}</Table.Cell>
-            <Table.Cell>{bounty.status}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table>
+        <TableBody>
+          {data.bounty.map((bounty) => (
+            <TableRow key={bounty.id}>
+              <TableCell>
+                <Link href={`/bounty/${bounty.id}`}>
+                  <a>{bounty.title}</a>
+                </Link>
+              </TableCell>
+              <TableCell>{bounty.fee}</TableCell>
+              <TableCell>{bounty.status}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

@@ -2,8 +2,11 @@ import React from "react";
 import Head from "next/head";
 import PropTypes from "prop-types";
 
+import { Container } from "@material-ui/core";
+
+import NavBar from "./Nav";
+
 import { useUser } from "utils/user";
-import Container from "./ResponsiveContainer";
 
 Layout.propTypes = {
   children: PropTypes.any,
@@ -13,10 +16,12 @@ Layout.propTypes = {
 function Layout({ children, title }) {
   const { user, loading } = useUser();
   return (
-    <Container user={user} loading={loading}>
+    <Container>
       <Head>
         <title>{title ? `${title} - ` : ""}TzGit</title>
       </Head>
+
+      <NavBar user={user} loading={loading} />
 
       <main>{children}</main>
     </Container>
