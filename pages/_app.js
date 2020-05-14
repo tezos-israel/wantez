@@ -6,6 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { createApolloClient } from "../utils/graphql";
 import { UserProvider, useFetchUser } from "utils/user";
 import Layout from "components/Layout";
+import "./_app.css";
 
 // eslint-disable-next-line react/prop-types
 export default function App({ Component, pageProps }) {

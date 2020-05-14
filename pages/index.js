@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
   TableContainer,
+  Paper,
 } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
@@ -37,31 +38,33 @@ const Home = () => {
     );
   }
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Fee</TableCell>
-            <TableCell>Status</TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {data.bounty.map((bounty) => (
-            <TableRow key={bounty.id}>
-              <TableCell>
-                <Link href={`/bounty/${bounty.id}`}>
-                  <a>{bounty.title}</a>
-                </Link>
-              </TableCell>
-              <TableCell>{bounty.fee}</TableCell>
-              <TableCell>{bounty.status}</TableCell>
+    <Paper>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Title</TableCell>
+              <TableCell>Fee</TableCell>
+              <TableCell>Status</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+
+          <TableBody>
+            {data.bounty.map((bounty) => (
+              <TableRow key={bounty.id}>
+                <TableCell>
+                  <Link href={`/bounty/${bounty.id}`}>
+                    <a>{bounty.title}</a>
+                  </Link>
+                </TableCell>
+                <TableCell>{bounty.fee}</TableCell>
+                <TableCell>{bounty.status}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 
