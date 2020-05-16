@@ -1,0 +1,24 @@
+{
+  "mnemonic": [
+    "demand",
+    "interest",
+    "kind",
+    "note",
+    "pear",
+    "olive",
+    "dragon",
+    "hedgehog",
+    "trick",
+    "book",
+    "gown",
+    "engine",
+    "pulp",
+    "print",
+    "route"
+  ],
+  "secret": "55f8df797ba1ac9e6ed8d631aee9bd37f9beed3d",
+  "amount": "1275495517",
+  "pkh": "tz1U1PsuK6zNaTB6YteGfVG5tCwNrM1zmeJK",
+  "password": "SEqdlz1jp8",
+  "email": "aydcarfj.bikdzuzv@tezos.example.org"
+}
