@@ -16,6 +16,8 @@
     "@auth0/nextjs-auth0": "^0.11.0",
     "@material-ui/core": "^4.9.14",
     "@material-ui/lab": "^4.0.0-alpha.53",
+    "@taquito/beacon-wallet": "^6.3.1-beta.0",
+    "@taquito/taquito": "^6.3.1-beta.0",
     "dotenv": "^8.2.0",
     "graphql": "^14.0.0",
     "isomorphic-unfetch": "^3.0.0",
