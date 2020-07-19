@@ -44,8 +44,8 @@ let issueBounty = (bountyId: bountyId, deadline: date, issuer: address, store: s
   }
 }
 
-let getBountyIssuer = (bounty: bounty) : contract(unit) => {
-  switch (Tezos.get_contract_opt (bounty.issuer) : option(contract(unit))) {
+let getContract = (ad: address) : contract(unit) => {
+  switch (Tezos.get_contract_opt (ad) : option(contract(unit))) {
     | Some (contract) => contract
     | None => (failwith ("Not a contract") : (contract(unit)))
   }
@@ -67,7 +67,7 @@ let getBounty = (bountyId: bountyId, owner: address, store: storage) : bounty =>
 let refundBounty = (bountyId: bountyId, store: storage) : returnType => {
   let bounty = getBounty(bountyId, Tezos.source, store);
   let store : storage = Map.update (bountyId, None : option(bounty), store);
-  let issuerContract = getBountyIssuer(bounty);
+  let issuerContract = getContract(bounty.issuer);
   let payment : operation = Tezos.transaction(unit, bounty.balance, issuerContract);
   ([payment] : list(operation), store)
 }
