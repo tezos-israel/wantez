@@ -46,7 +46,7 @@ contract('Bounties', (addresses) => {
     const issueBountyParameter = { bountyId: '3', deadline: timestamp };
     await bountiesInstance.issueBounty(issueBountyParameter.bountyId, issueBountyParameter.deadline, { amount });
     const op = await bountiesInstance.refundBounty(issueBountyParameter.bountyId);
-    console.log(op);
+    // todo check that there's a transaction to account[0]
     const storage = await bountiesInstance.storage();
     const bounty = storage.get(issueBountyParameter.bountyId);
     assert.equal(bounty, null, 'Bounty still exists');

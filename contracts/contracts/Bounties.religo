@@ -51,16 +51,25 @@ let getBountyIssuer = (bounty: bounty) : contract(unit) => {
   }
 }
 
-let refundBounty = (bountyId: bountyId, store: storage) : returnType => {
+let getBounty = (bountyId: bountyId, owner: address, store: storage) : bounty => {
   switch (Map.find_opt (bountyId, store)) {
     | Some(bounty) => {
-        let store : storage = Map.update (bountyId, None : option(bounty), store);
-        let issuerContract = getBountyIssuer(bounty);
-        let payment : operation = Tezos.transaction(unit, bounty.balance, issuerContract);
-        ([payment] : list(operation), store)
+        if (bounty.issuer != owner) {
+          failwith("Wrong issuer") : bounty
+        } else {
+          bounty
+        }
     }
-    | None => failwith ("Can't find bounty") : returnType
+    | None => failwith ("Can't find bounty") : bounty
   }
+}
+
+let refundBounty = (bountyId: bountyId, store: storage) : returnType => {
+  let bounty = getBounty(bountyId, Tezos.source, store);
+  let store : storage = Map.update (bountyId, None : option(bounty), store);
+  let issuerContract = getBountyIssuer(bounty);
+  let payment : operation = Tezos.transaction(unit, bounty.balance, issuerContract);
+  ([payment] : list(operation), store)
 }
 
 let acceptBounty = (bountyId: bountyId, approved: address, store: storage) : returnType =>
