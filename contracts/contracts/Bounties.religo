@@ -72,8 +72,13 @@ let refundBounty = (bountyId: bountyId, store: storage) : returnType => {
   ([payment] : list(operation), store)
 }
 
-let acceptBounty = (bountyId: bountyId, approved: address, store: storage) : returnType =>
-  ([] : list(operation), store)
+let acceptBounty = (bountyId: bountyId, approved: address, store: storage) : returnType =>{
+  let bounty = getBounty(bountyId, Tezos.source, store);
+  let store : storage = Map.update (bountyId, None : option(bounty), store);
+  let issuerContract = getContract(approved);
+  let payment : operation = Tezos.transaction(unit, bounty.balance, issuerContract);
+  ([payment] : list(operation), store)
+}
 
 let main = ((action, store) : (action, storage)) : returnType => 
   switch(action) {
