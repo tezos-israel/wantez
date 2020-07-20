@@ -1,4 +1,5 @@
 
+
 CREATE TABLE "public"."user"("id" uuid NOT NULL, "username" text NOT NULL, "email" text NOT NULL, "created_at" timestamptz NOT NULL, "last_seen_at" timestamptz NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("username"), UNIQUE ("email"));
 
 CREATE TABLE "public"."bountyStatusTypes"("value" text NOT NULL, "description" text NOT NULL, PRIMARY KEY ("value") );
@@ -40,3 +41,7 @@ CREATE TABLE "public"."site"("id" text NOT NULL, PRIMARY KEY ("id") );
 INSERT INTO "site" (id) VALUES ('gitlab'), ('github'), ('auth0');
 
 CREATE TABLE "public"."socialAccount"("site" text NOT NULL, "userId" uuid NOT NULL, "handle" text NOT NULL, PRIMARY KEY ("site","userId") , FOREIGN KEY ("site") REFERENCES "public"."site"("id") ON UPDATE restrict ON DELETE restrict);
+
+ALTER TABLE "public"."bounty" ADD COLUMN "title" text NOT NULL;
+
+ALTER TABLE "public"."bounty" ADD COLUMN "description" text NOT NULL;

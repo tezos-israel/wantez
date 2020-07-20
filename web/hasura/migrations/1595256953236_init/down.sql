@@ -1,4 +1,9 @@
 
+ALTER TABLE "public"."bounty" DROP COLUMN "description";
+
+ALTER TABLE "public"."bounty" DROP COLUMN "title";
+
+
 DROP TABLE "public"."socialAccount";
 
 DELETE from "site" WHERE id IN ('gitlab', 'github', 'auth0');
