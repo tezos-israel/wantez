@@ -1,0 +1,67 @@
+- table:
+    schema: public
+    name: application
+  object_relationships:
+  - name: applicant
+    using:
+      foreign_key_constraint_on: applicantId
+  - name: bounty
+    using:
+      foreign_key_constraint_on: bountyId
+- table:
+    schema: public
+    name: applicationStatusType
+  is_enum: true
+- table:
+    schema: public
+    name: bounty
+  object_relationships:
+  - name: funder
+    using:
+      foreign_key_constraint_on: funderId
+  array_relationships:
+  - name: applications
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: application
+        column_mapping:
+          id: bountyId
+- table:
+    schema: public
+    name: bountyStatusTypes
+  is_enum: true
+- table:
+    schema: public
+    name: site
+  is_enum: true
+- table:
+    schema: public
+    name: socialAccount
+- table:
+    schema: public
+    name: users
+  array_relationships:
+  - name: applications
+    using:
+      foreign_key_constraint_on:
+        column: applicantId
+        table:
+          schema: public
+          name: application
+  - name: bounties
+    using:
+      foreign_key_constraint_on:
+        column: funderId
+        table:
+          schema: public
+          name: bounty
+  - name: sites
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: socialAccount
+        column_mapping:
+          id: userId

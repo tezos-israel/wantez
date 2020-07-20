@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
-    image: hasura/graphql-engine:v1.2.0-beta.4
+    image: hasura/graphql-engine:v1.2.0
     ports:
       - "8080:8080"
     depends_on:
@@ -17,13 +17,14 @@ services:
     restart: unless-stopped
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@db:5432/postgres
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_JWT_SECRET: '{"type": "RS512", "key": "-----BEGIN CERTIFICATE-----\nMIIDDTCCAfWgAwIBAgIJOjTmo7I5mo9MMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\nBAMTGWRldi1mMW9hdXozNy5ldS5hdXRoMC5jb20wHhcNMjAwMzMxMTk0MDQzWhcN\nMzMxMjA4MTk0MDQzWjAkMSIwIAYDVQQDExlkZXYtZjFvYXV6MzcuZXUuYXV0aDAu\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzTvypbd7qxjkhcme\nCpB64eDUqO76cA3SuvSDpMDbCLUn6vAOLzgT0rHkKRbfKphP/uWuKfBSQEiBb578\nbCX3KGsUd6xeVnbRTBKVImbFN3iRn6kEacJm1lsddIop4TJsmApp97I5erf7P826\nQdNFVGrm0bJy2+9JNe7VCu735axe+5GzG9cRPgpKAPnYy26MbzuCEqCrQHNOCl5S\n/txNjdyI1kOe4zEQ+mq2nBtKa9SmakqSSZBsTjAaJPVD/ZbSCKhUYeofaIuM28R1\nOi1LbdPB6JvsJh2rtswMZZvuA4eB71P0jihFBxiw40l5YSRHqclRb7QHySEiTvN1\nggKJ1QIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRQnFll1duR\n5XKtQfIqfiKG1AlryzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\nAFwVXU210nHbrqhtKOFMepqEVBCH8t/TN6OFMIdKzcgAdJvv4E4P+VYUmXbCZGyo\nPkNoTmX/L1Hm1/8w12gEfpU0s6xonWOhOlSCIzY3nRCkE/6BuBXFreeWqb2IHMtC\ntsivD/tsyDvTacGpnguotaaP9im47FQIP/uSQhGL3Yv68SBGYcS3XPvyd1k6Gs2C\n6tZEzGRlzGfDvIyY0iH684Dk/ENsJRUCEe+u2DIH3pwYxxkyxgvHG8wI061azjIT\n6FuLYUNLBUMl4CbJoYn51p2JsvD8tVihzJyfYtOBFIsLAXzISWjHYSPtXkzDpzyF\nWRlalFfUM4cLj2wUuDlrqrE=\n-----END CERTIFICATE-----"}'
       HASURA_GRAPHQL_ADMIN_SECRET: password
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public
     volumes:
       - ./hasura/migrations:/hasura-migrations
+      - ./hasura/metadata:/hasura-metadata
   tunnel:
     image: wernight/ngrok
     network_mode: host
