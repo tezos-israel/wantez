@@ -1,5 +1,5 @@
 {
-  "name": "gitz-contracts",
+  "name": "contracts",
   "version": "1.0.0",
   "dependencies": {
     "@taquito/taquito": "^6.3.3-beta.0",
