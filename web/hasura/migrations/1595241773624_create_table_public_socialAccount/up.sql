@@ -1,1 +1,0 @@
-CREATE TABLE "public"."socialAccount"("site" text NOT NULL, "userId" uuid NOT NULL, "handle" text NOT NULL, PRIMARY KEY ("site","userId") , FOREIGN KEY ("site") REFERENCES "public"."site"("id") ON UPDATE restrict ON DELETE restrict);

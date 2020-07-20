@@ -2,25 +2,31 @@
     schema: public
     name: application
   object_relationships:
-  - name: applicant
+  - name: applicationStatusType
     using:
-      foreign_key_constraint_on: applicantId
+      foreign_key_constraint_on: status
   - name: bounty
     using:
       foreign_key_constraint_on: bountyId
+  - name: user
+    using:
+      foreign_key_constraint_on: applicantId
 - table:
     schema: public
     name: applicationStatusType
-  is_enum: true
+  array_relationships:
+  - name: applications
+    using:
+      foreign_key_constraint_on:
+        column: status
+        table:
+          schema: public
+          name: application
 - table:
     schema: public
     name: bounty
   object_relationships:
-  - name: funder
-    using:
-      foreign_key_constraint_on: funderId
-  array_relationships:
-  - name: applications
+  - name: application
     using:
       manual_configuration:
         remote_table:
@@ -28,20 +34,44 @@
           name: application
         column_mapping:
           id: bountyId
+  - name: bountyStatusType
+    using:
+      foreign_key_constraint_on: status
+  - name: user
+    using:
+      foreign_key_constraint_on: funderId
 - table:
     schema: public
     name: bountyStatusTypes
-  is_enum: true
+  array_relationships:
+  - name: bounties
+    using:
+      foreign_key_constraint_on:
+        column: status
+        table:
+          schema: public
+          name: bounty
 - table:
     schema: public
     name: site
-  is_enum: true
+  array_relationships:
+  - name: socialAccounts
+    using:
+      foreign_key_constraint_on:
+        column: site
+        table:
+          schema: public
+          name: socialAccount
 - table:
     schema: public
     name: socialAccount
+  object_relationships:
+  - name: siteBySite
+    using:
+      foreign_key_constraint_on: site
 - table:
     schema: public
-    name: users
+    name: user
   array_relationships:
   - name: applications
     using:
@@ -57,11 +87,3 @@
         table:
           schema: public
           name: bounty
-  - name: sites
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: socialAccount
-        column_mapping:
-          id: userId
