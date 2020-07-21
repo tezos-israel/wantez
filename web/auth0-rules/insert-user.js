@@ -1,3 +1,5 @@
+/* global auth0, Promise, request, configuration */
+// eslint-disable-next-line no-unused-vars
 function main(user, context, callback) {
   const { identities, email, nickname } = user;
 
@@ -25,13 +27,16 @@ function main(user, context, callback) {
 
   function graphqlRequest(query, variables = {}) {
     return new Promise((resolve, reject) => {
-      const admin_secret = "password";
-      const url = "http://gitez.ngrok.io/v1/graphql";
+      const adminSecret = context.clientMetadata.development
+        ? configuration.hasuraAdminSecretDev
+        : configuration.hasuraAdminSecret;
+
+      const url = context.clientMetadata.hasuraUrl;
       request.post(
         {
           headers: {
             "content-type": "application/json",
-            "x-hasura-admin-secret": admin_secret,
+            "x-hasura-admin-secret": adminSecret,
           },
           url: url,
           body: JSON.stringify({
