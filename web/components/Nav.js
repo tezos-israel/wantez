@@ -11,15 +11,26 @@ const useStyles = makeStyles((theme) => ({
   },
   userButtonsContainer: {
     marginLeft: "auto",
+    display: "flex",
+    alignItems: "center",
+    "& > * + *": {
+      marginLeft: theme.spacing(1),
+    },
   },
   root: {},
 }));
 
 import UserButtons from "./UserButtons";
 
-export default function Nav({ loading, user, className = "" }) {
+export default function Nav({
+  loading,
+  user,
+  className = "",
+  balance,
+  address,
+}) {
   const styles = useStyles();
-
+  const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
   return (
     <AppBar
       position="sticky"
@@ -42,6 +53,8 @@ export default function Nav({ loading, user, className = "" }) {
           </>
         )}
         <div className={styles.userButtonsContainer}>
+          <div>{!loading && shortAddress}</div>
+          <div>{!loading && balance}</div>
           <UserButtons user={user} loading={loading} />
         </div>
       </Toolbar>
@@ -53,4 +66,6 @@ Nav.propTypes = {
   loading: PropTypes.bool,
   user: PropTypes.any,
   className: PropTypes.string,
+  address: PropTypes.string,
+  balance: PropTypes.number,
 };

@@ -20,13 +20,7 @@ const FETCH_BOUNTIES = gql`
 
 const Home = () => {
   const { data, ...queryState } = useQuery(FETCH_BOUNTIES);
-  const {
-    address,
-    balance,
-    bounties,
-    connected,
-    ...tezosState
-  } = useTezosContext();
+  const { ...tezosState } = useTezosContext();
 
   const loading = tezosState.loading || queryState.loading;
   if (loading) {

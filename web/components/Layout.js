@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import NavBar from "./Nav";
 
+import { useTezosContext } from "hooks/TezosContext";
 import { useUser } from "utils/user";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
 
 function Layout({ children, title }) {
   const classes = useStyles();
-  const { user, loading } = useUser();
+  const { user, loading: userLoading } = useUser();
+  const { address, balance, ...tezosState } = useTezosContext();
+
+  const loading = userLoading || tezosState.loading;
 
   return (
     <Container className={classes.root}>
@@ -25,7 +29,13 @@ function Layout({ children, title }) {
         <title>{title ? `${title} - ` : ""}TzGit</title>
       </Head>
 
-      <NavBar user={user} loading={loading} className={classes.navBar} />
+      <NavBar
+        user={user}
+        address={address}
+        balance={balance}
+        loading={loading}
+        className={classes.navBar}
+      />
 
       <main>{children}</main>
     </Container>
