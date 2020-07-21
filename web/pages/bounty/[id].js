@@ -15,7 +15,7 @@ const BOUNTY_QUERY = gql`
       title
       fee
       funder {
-        name
+        username
       }
     }
   }

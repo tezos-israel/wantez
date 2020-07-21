@@ -23,7 +23,7 @@ const SAVE_BOUNTY = gql`
     insert_bounty_one(
       object: {
         title: $title
-        issue_url: $issueUrl
+        issueUrl: $issueUrl
         description: $description
         fee: $fee
       }
