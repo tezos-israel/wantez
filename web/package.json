@@ -13,25 +13,25 @@
   },
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.43",
-    "@auth0/nextjs-auth0": "^0.11.0",
+    "@auth0/nextjs-auth0": "^0.15.0",
     "@material-ui/core": "^4.9.14",
     "@material-ui/lab": "^4.0.0-alpha.53",
     "@taquito/beacon-wallet": "^6.3.1-beta.0",
     "@taquito/taquito": "^6.3.1-beta.0",
     "dotenv": "^8.2.0",
-    "graphql": "^14.0.0",
+    "graphql": "^15.3.0",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "9.3.3",
+    "next": "9.4.4",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-hook-form": "^5.5.3"
+    "react-hook-form": "^6.0.8"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "husky": ">=4",
     "lint-staged": ">=10",
     "prettier": "^2.0.2"
