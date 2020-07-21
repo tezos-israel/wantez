@@ -9,5 +9,19 @@
   "workspaces": [
     "web",
     "contracts"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^7.5.0",
+    "husky": ">=4",
+    "lint-staged": ">=10",
+    "prettier": "^2.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
 }
