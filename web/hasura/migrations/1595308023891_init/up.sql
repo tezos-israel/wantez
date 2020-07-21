@@ -1,5 +1,6 @@
 
 
+
 CREATE TABLE "public"."user"("id" uuid NOT NULL, "username" text NOT NULL, "email" text NOT NULL, "created_at" timestamptz NOT NULL, "last_seen_at" timestamptz NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("username"), UNIQUE ("email"));
 
 CREATE TABLE "public"."bountyStatusTypes"("value" text NOT NULL, "description" text NOT NULL, PRIMARY KEY ("value") );
@@ -45,3 +46,13 @@ CREATE TABLE "public"."socialAccount"("site" text NOT NULL, "userId" uuid NOT NU
 ALTER TABLE "public"."bounty" ADD COLUMN "title" text NOT NULL;
 
 ALTER TABLE "public"."bounty" ADD COLUMN "description" text NOT NULL;
+
+alter table "public"."user" rename column "created_at" to "createdAt";
+
+ALTER TABLE "public"."user" ALTER COLUMN "last_seen_at" TYPE timestamp with time zone;
+ALTER TABLE ONLY "public"."user" ALTER COLUMN "last_seen_at" SET DEFAULT now();
+alter table "public"."user" rename column "last_seen_at" to "lastSeenAt";
+
+ALTER TABLE ONLY "public"."user" ALTER COLUMN "createdAt" SET DEFAULT now();
+
+ALTER TABLE ONLY "public"."user" ALTER COLUMN "id" SET DEFAULT gen_random_uuid();

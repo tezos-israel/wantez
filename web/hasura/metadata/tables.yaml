@@ -102,3 +102,11 @@
         table:
           schema: public
           name: bounty
+  - name: socialAccounts
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: socialAccount
+        column_mapping:
+          id: userId

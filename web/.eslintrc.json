@@ -18,6 +18,17 @@
       "files": "pages/api",
       "extends": "eslint:recommended",
       "rules": { "no-console": "warn" }
+    },
+    {
+      "files": "auth0-rules",
+      "globals": {
+        "auth0": true,
+        "Promise": true,
+        "request": true
+      },
+      "rules": {
+        "no-unused-vars": "warn"
+      }
     }
   ],
   "env": { "browser": true, "node": true, "shared-node-browser": true },
