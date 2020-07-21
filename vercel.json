@@ -1,0 +1,15 @@
+{
+  "build": {
+    "env": {
+      "DOMAIN": "gitez.vercel.app",
+      "AUTH0_DOMAIN": "dev-f1oauz37.eu.auth0.com",
+      "AUTH0_AUDIENCE": "hasura",
+      "AUTH0_CLIENT_ID": "1xgDZ0r1LH4rGfVCLL8hYC2t8u9bsJS5",
+      "AUTH0_CLIENT_SECRET": "@auth0_client_secret",
+      "REDIRECT_URI": "https://gitez.vercel.app/api/callback",
+      "POST_LOGOUT_REDIRECT_URI": "https://gitez.vercel.app/",
+      "SESSION_COOKIE_SECRET": "@session_cookie_secret",
+      "GRAPHQL_ENDPOINT": "https://fun-joey-30.hasura.app/v1/graphql"
+    }
+  }
+}
