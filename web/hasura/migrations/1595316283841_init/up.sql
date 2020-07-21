@@ -1,6 +1,7 @@
 
 
 
+
 CREATE TABLE "public"."user"("id" uuid NOT NULL, "username" text NOT NULL, "email" text NOT NULL, "created_at" timestamptz NOT NULL, "last_seen_at" timestamptz NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("username"), UNIQUE ("email"));
 
 CREATE TABLE "public"."bountyStatusTypes"("value" text NOT NULL, "description" text NOT NULL, PRIMARY KEY ("value") );
@@ -56,3 +57,5 @@ alter table "public"."user" rename column "last_seen_at" to "lastSeenAt";
 ALTER TABLE ONLY "public"."user" ALTER COLUMN "createdAt" SET DEFAULT now();
 
 ALTER TABLE ONLY "public"."user" ALTER COLUMN "id" SET DEFAULT gen_random_uuid();
+
+ALTER TABLE ONLY "public"."bounty" ALTER COLUMN "status" SET DEFAULT 'pending';

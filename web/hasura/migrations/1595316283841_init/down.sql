@@ -1,4 +1,7 @@
 
+ALTER TABLE ONLY "public"."bounty" ALTER COLUMN "status" DROP DEFAULT;
+
+
 ALTER TABLE ONLY "public"."user" ALTER COLUMN "id" DROP DEFAULT;
 
 ALTER TABLE ONLY "public"."user" ALTER COLUMN "createdAt" DROP DEFAULT;

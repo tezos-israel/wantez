@@ -37,9 +37,24 @@
   - name: bountyStatusType
     using:
       foreign_key_constraint_on: status
-  - name: user
+  - name: funder
     using:
       foreign_key_constraint_on: funderId
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        funderId:
+          _eq: X-Hasura-User-Id
+      set:
+        funderId: x-hasura-User-Id
+      columns:
+      - description
+      - fee
+      - issueUrl
+      - status
+      - title
+      backend_only: false
   select_permissions:
   - role: public
     permission:
@@ -54,6 +69,20 @@
       - updatedAt
       - title
       - description
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - fee
+      - contractAddress
+      - description
+      - issueUrl
+      - status
+      - title
+      - createdAt
+      - updatedAt
+      - funderId
+      - id
       filter: {}
 - table:
     schema: public
@@ -110,3 +139,14 @@
           name: socialAccount
         column_mapping:
           id: userId
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - username
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - username
+      filter: {}
