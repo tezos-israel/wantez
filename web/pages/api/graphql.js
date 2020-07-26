@@ -18,6 +18,7 @@ export default async function callback(req, res) {
       headers,
       body: JSON.stringify(req.body),
     });
+    console.log('request succeed', gqlResponse.ok, gqlResponse.status)
     const data = await gqlResponse.text();
     res.status(gqlResponse.status).send(data);
   } catch (e) {
