@@ -48,8 +48,11 @@ function main(user, context, callback) {
           if (error) {
             return reject(error);
           }
-
-          body = JSON.parse(body);
+          try {
+            body = JSON.parse(body);
+          } catch (e) {
+            return reject(`body is not json ${body}`);
+          }
 
           if (body.errors) {
             return reject(body.errors[0]);
