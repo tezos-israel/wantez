@@ -38,6 +38,7 @@ const Home = () => {
   }
   return (
     <Paper>
+      <div>{process.env.DOMAIN}</div>
       <BountiesTable bounties={data.bounty} />
     </Paper>
   );
