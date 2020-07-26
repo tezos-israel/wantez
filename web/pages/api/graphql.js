@@ -12,7 +12,7 @@ export default async function callback(req, res) {
           authorization: accessToken && `Bearer ${accessToken}`,
         }
       : req.headers;
-
+    console.log({endpoint: process.env.GRAPHQL_ENDPOINT})
     const gqlResponse = await fetch(process.env.GRAPHQL_ENDPOINT, {
       method: "POST",
       headers,
