@@ -12,6 +12,9 @@ import {
 } from "@material-ui/core";
 
 export function BountiesTable({ bounties }) {
+  if (!bounties.length) {
+    return <div>No Bounties</div>;
+  }
   return (
     <TableContainer>
       <Table>
