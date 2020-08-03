@@ -2,6 +2,8 @@ import React from "react";
 import Head from "next/head";
 import PropTypes from "prop-types";
 
+import { useFetchUser } from "lib/user";
+
 import { Container } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,7 +11,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import NavBar from "./Nav";
 
 import { useTezosContext } from "hooks/TezosContext";
-import { useUser } from "utils/user";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Layout({ children, title }) {
   const classes = useStyles();
-  const { user, loading: userLoading } = useUser();
+  const { user, loading: userLoading } = useFetchUser();
   const { address, balance, ...tezosState } = useTezosContext();
 
   const loading = userLoading || tezosState.loading;
@@ -30,9 +31,9 @@ function Layout({ children, title }) {
       </Head>
 
       <NavBar
-        user={user}
         address={address}
         balance={balance}
+        user={user}
         loading={loading}
         className={classes.navBar}
       />

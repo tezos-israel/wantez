@@ -34,6 +34,5 @@
   "env": { "browser": true, "node": true, "shared-node-browser": true },
   "rules": {
     "react/prop-types": [2, { "ignore": ["children"] }]
-  },
-  "root": true
+  }
 }

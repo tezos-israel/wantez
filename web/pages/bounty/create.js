@@ -6,7 +6,6 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { useUser } from "utils/user";
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -34,21 +33,21 @@ const SAVE_BOUNTY = gql`
 `;
 
 const CreateBountyPage = () => {
-  const { user, loading } = useUser();
+  // const { user, loading } = useUser();
   const [createBounty] = useMutation(SAVE_BOUNTY);
   const { handleSubmit, errors, control } = useForm();
   const [globalError, setGlobalError] = React.useState(null);
   const router = useRouter();
   const classes = useStyles();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (!loading && !user) {
-    router.push("/");
-    return null;
-  }
+  // if (!loading && !user) {
+  //   router.push("/");
+  //   return null;
+  // }
 
   async function onSubmit(variables) {
     try {
@@ -64,7 +63,7 @@ const CreateBountyPage = () => {
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         {globalError && (
           <Alert>
-            <AlertTitle>Failed submittion</AlertTitle>
+            <AlertTitle>Failed submission</AlertTitle>
             {globalError}
           </Alert>
         )}

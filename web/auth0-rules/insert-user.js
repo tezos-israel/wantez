@@ -1,4 +1,4 @@
-/* global auth0, Promise, request, configuration */
+/* global auth0, request, configuration */
 // eslint-disable-next-line no-unused-vars
 function main(user, context, callback) {
   const { identities, email, nickname } = user;
