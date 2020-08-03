@@ -33,3 +33,11 @@ export const SAVE_BOUNTY = gql`
     }
   }
 `;
+
+export const DELETE_BOUNTY = gql`
+  mutation($id: uuid!) {
+    delete_bounty_by_pk(id: $id) {
+      id
+    }
+  }
+`;

@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useContext } from "react";
 import { useBountiesContract } from "./use-bounties-contract";
 import { useBalanceState } from "./use-balance-state";
 import { useWallet } from "./use-wallet";
+import { useOnRouteChange } from "./useOnRouteChange";
 
 export const TezosContext = createContext({
   address: "",
@@ -24,14 +25,26 @@ export function TezosProvider({ children }) {
     bounties,
     connect: connectToContract,
     issueBounty,
+    clearErrors: clearContractErrors,
   } = useBountiesContract();
   const {
     initialized: connected,
     address,
     connect: connectToWallet,
+    clearError: clearWalletError,
     ...walletState
   } = useWallet();
-  const { balance, ...balanceState } = useBalanceState(address);
+  const {
+    balance,
+    clearError: clearBalanceError,
+    ...balanceState
+  } = useBalanceState(address);
+
+  useOnRouteChange(() => {
+    clearContractErrors();
+    clearWalletError();
+    clearBalanceError();
+  });
 
   useEffect(() => {
     connect();

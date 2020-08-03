@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useFetchUser } from "lib/user";
 import { useTezosContext } from "hooks/TezosContext";
 
-import { SAVE_BOUNTY, GET_BOUNTIES } from "queries/bounties";
+import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from "queries/bounties";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,21 +23,12 @@ const useStyles = makeStyles((theme) => ({
 const CreateBountyPage = () => {
   const { user, ...userState } = useFetchUser();
   const { balance, issueBounty, ...tezosState } = useTezosContext();
+  const [deleteBounty] = useMutation(DELETE_BOUNTY, {
+    update: updateCacheAfterDelete,
+  });
   const [createBounty] = useMutation(SAVE_BOUNTY, {
     update: updateCache,
-    async onCompleted({ insert_bounty_one: bounty }) {
-      try {
-        await issueBounty({
-          id: bounty.id,
-          deadline: Date.now() + 24 * 60 * 60,
-          fee: bounty.fee,
-        });
-      } catch (error) {
-        // TODO delete bounty
-        console.error(error);
-      }
-      router.push("/");
-    },
+    onCompleted,
   });
   const { handleSubmit, errors, control } = useForm();
   const [globalError, setGlobalError] = React.useState(null);
@@ -53,18 +44,6 @@ const CreateBountyPage = () => {
   if (!loading && !user) {
     router.push("/");
     return null;
-  }
-
-  async function onSubmit(variables) {
-    if (balance < variables.fee) {
-      setGlobalError("Not enough funds");
-      return;
-    }
-    try {
-      await createBounty({ variables });
-    } catch (e) {
-      setGlobalError(e.message);
-    }
   }
 
   return (
@@ -144,11 +123,11 @@ const CreateBountyPage = () => {
   );
 
   function updateCache(cache, { data }) {
-    const existingBounties = cache.readQuery({
+    const existingBountiesQuery = cache.readQuery({
       query: GET_BOUNTIES,
     });
 
-    if (!existingBounties) {
+    if (!existingBountiesQuery) {
       return;
     }
 
@@ -156,8 +135,59 @@ const CreateBountyPage = () => {
 
     cache.writeQuery({
       query: GET_BOUNTIES,
-      data: { bounty: [newBounty, ...existingBounties.bounty] },
+      data: { bounty: [newBounty, ...existingBountiesQuery.bounty] },
     });
+  }
+
+  function updateCacheAfterDelete(cache, { data }) {
+    const existingBountiesQuery = cache.readQuery({
+      query: GET_BOUNTIES,
+    });
+
+    if (!existingBountiesQuery) {
+      return;
+    }
+
+    const bountyId = data.delete_bounty_by_pk.id;
+
+    cache.writeQuery({
+      query: GET_BOUNTIES,
+      data: {
+        bounty: existingBountiesQuery.bounty.filter((b) => b.id !== bountyId),
+      },
+    });
+  }
+
+  async function onSubmit(variables) {
+    if (balance < variables.fee) {
+      setGlobalError("Not enough funds");
+      return;
+    }
+    try {
+      await createBounty({ variables });
+    } catch (e) {
+      setGlobalError(e.message);
+    }
+  }
+
+  async function onCompleted({ insert_bounty_one: bounty }) {
+    console.log("completed");
+    try {
+      await issueBounty({
+        id: bounty.id,
+        deadline: Date.now() + 24 * 60 * 60,
+        fee: bounty.fee,
+      });
+      router.push("/");
+    } catch (error) {
+      setGlobalError(tezosState.error || "Failed saving bounty to blockchain");
+      console.error(error);
+      try {
+        await deleteBounty({ variables: { id: bounty.id } });
+      } catch (deleteError) {
+        setGlobalError(deleteError.message || "Failed deleting bounty");
+      }
+    }
   }
 };
 

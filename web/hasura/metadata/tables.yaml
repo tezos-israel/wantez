@@ -84,6 +84,12 @@
       - funderId
       - id
       filter: {}
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        funderId:
+          _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: bountyStatusTypes

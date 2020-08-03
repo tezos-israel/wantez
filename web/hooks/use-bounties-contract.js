@@ -6,6 +6,7 @@ const types = {
   OPERATION_STARTED: "OPERATION_STARTED",
   OPERATION_FINISHED: "OPERATION_FINISHED",
   OPERATION_FAILED: "OPERATION_FAILED",
+  CLEAR_ERROR: "CLEAR_ERROR",
 };
 
 export function useBountiesContract() {
@@ -16,6 +17,7 @@ export function useBountiesContract() {
     loading,
     connect,
     increaseOperationsCount,
+    clearError: clearContractError,
   } = useContract(CONTRACT_ADDRESS);
 
   const [operationState, dispatch] = useReducer(stateReducer, {
@@ -28,6 +30,7 @@ export function useBountiesContract() {
     contractState: { error, loading },
     bounties: storage,
     connect,
+    clearErrors,
     issueBounty,
   };
 
@@ -40,17 +43,27 @@ export function useBountiesContract() {
       const op = await cb(contract.methods);
       await op.confirmation();
       increaseOperationsCount();
+      dispatch({ type: types.OPERATION_FINISHED });
     } catch (error) {
-      dispatch({ type: types.OPERATION_FAILED, error: error.message });
+      dispatch({
+        type: types.OPERATION_FAILED,
+        error: error.message || "Failed",
+      });
+      throw error;
     }
-    dispatch({ type: types.OPERATION_FINISHED });
+  }
+
+  function clearErrors() {
+    dispatch({ type: types.CLEAR_ERROR });
+    clearContractError();
   }
 
   function issueBounty(bounty) {
-    return callMethod((methods) =>
-      methods
-        .issueBounty(bounty.id, bounty.deadline)
-        .send({ amount: bounty.fee })
+    return callMethod(
+      async (methods) =>
+        await methods
+          .issueBounty(bounty.id, bounty.deadline)
+          .send({ amount: bounty.fee })
     );
   }
 }
@@ -63,5 +76,7 @@ function stateReducer(state, action) {
       return { ...state, loading: false };
     case types.OPERATION_FAILED:
       return { ...state, loading: false, error: action.error };
+    case types.CLEAR_ERROR:
+      return { ...state, error: null };
   }
 }

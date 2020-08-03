@@ -20,7 +20,12 @@ export function useContract(contractAddress) {
     operationsCount,
     connect,
     increaseOperationsCount,
+    clearError,
   };
+
+  function clearError() {
+    setError("");
+  }
 
   function increaseOperationsCount() {
     setOperationsCounter(operationsCount + 1);
