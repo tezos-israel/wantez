@@ -35,6 +35,7 @@ export function TezosProvider({ children }) {
 
   useEffect(() => {
     connect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loading =
