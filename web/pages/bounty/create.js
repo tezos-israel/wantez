@@ -6,19 +6,36 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { useFetchUser } from "lib/user";
+import { useTezosContext } from "hooks/TezosContext";
+
 import { SAVE_BOUNTY, GET_BOUNTIES } from "queries/bounties";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
   },
+  error: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 const CreateBountyPage = () => {
-  // const { user, loading } = useUser();
+  const { user, ...userState } = useFetchUser();
+  const { balance, issueBounty, ...tezosState } = useTezosContext();
   const [createBounty] = useMutation(SAVE_BOUNTY, {
     update: updateCache,
-    onCompleted() {
+    async onCompleted({ insert_bounty_one: bounty }) {
+      try {
+        await issueBounty({
+          id: bounty.id,
+          deadline: Date.now() + 24 * 60 * 60,
+          fee: bounty.fee,
+        });
+      } catch (error) {
+        // TODO delete bounty
+        console.error(error);
+      }
       router.push("/");
     },
   });
@@ -27,16 +44,22 @@ const CreateBountyPage = () => {
   const router = useRouter();
   const classes = useStyles();
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
+  const loading = userState.loading || tezosState.loading;
 
-  // if (!loading && !user) {
-  //   router.push("/");
-  //   return null;
-  // }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!loading && !user) {
+    router.push("/");
+    return null;
+  }
 
   async function onSubmit(variables) {
+    if (balance < variables.fee) {
+      setGlobalError("Not enough funds");
+      return;
+    }
     try {
       await createBounty({ variables });
     } catch (e) {
@@ -48,7 +71,7 @@ const CreateBountyPage = () => {
     <Paper className={classes.root}>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         {globalError && (
-          <Alert>
+          <Alert severity="error" className={classes.error}>
             <AlertTitle>Failed submission</AlertTitle>
             {globalError}
           </Alert>

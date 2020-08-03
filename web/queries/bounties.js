@@ -27,6 +27,9 @@ export const SAVE_BOUNTY = gql`
       }
     ) {
       id
+      fee
+      title
+      status
     }
   }
 `;
