@@ -1,11 +1,12 @@
 import React from "react";
+import isAfter from "date-fns/isAfter";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import { Button, Paper, TextField, Grid } from "@material-ui/core";
+import { DateTimePicker } from "@material-ui/pickers";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
-
 import { useFetchUser } from "lib/user";
 import { useTezosContext } from "hooks/TezosContext";
 
@@ -64,8 +65,9 @@ const CreateBountyPage = () => {
               control={control}
               id="title-input"
               label="Title"
-              rules={{ required: true }}
+              rules={{ required: "Title is required" }}
               error={!!errors.title}
+              helperText={errors.title && errors.title.message}
             />
           </Grid>
           <Grid item xs={12}>
@@ -76,8 +78,9 @@ const CreateBountyPage = () => {
               control={control}
               id="issue-url-input"
               label="Issue URL"
-              rules={{ required: true }}
+              rules={{ required: "Issue URL is required" }}
               error={!!errors.issueUrl}
+              helperText={errors.issueUrl && errors.issueUrl.message}
             />
           </Grid>
           <Grid item xs={12}>
@@ -89,14 +92,17 @@ const CreateBountyPage = () => {
               id="fee-input"
               label="Fee"
               rules={{
-                required: true,
+                required: "Fee is required",
                 validate: {
-                  positiveNumber: (value) => parseFloat(value, 10) > 0,
+                  positiveNumber: (value) =>
+                    parseFloat(value, 10) > 0 ||
+                    "Fee should be a positive number",
                 },
               }}
               type="number"
               step="0.1"
               error={!!errors.fee}
+              helperText={errors.fee && errors.fee.message}
             />
           </Grid>
           <Grid item xs={12}>
@@ -106,10 +112,30 @@ const CreateBountyPage = () => {
               as={TextField}
               control={control}
               id="description-input"
-              label="description"
+              label="Description"
               rules={{ required: true }}
               multiline
               error={!!errors.description}
+              helperText={errors.description && "Description is required"}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name="deadline"
+              as={DateTimePicker}
+              control={control}
+              id="deadline-input"
+              label="Deadline"
+              rules={{
+                required: "Field is required",
+                validate: (value) =>
+                  isAfter(value, Date.now()) || "Should be after today",
+              }}
+              minDate={Date.now()}
+              minDateMessage="Date should be after today"
+              helperText={errors.deadline && errors.deadline.message}
+              error={!!errors.deadline}
+              variant="inline"
             />
           </Grid>
           <Grid item style={{ marginTop: 16 }}>
@@ -171,13 +197,8 @@ const CreateBountyPage = () => {
   }
 
   async function onCompleted({ insert_bounty_one: bounty }) {
-    console.log("completed");
     try {
-      await issueBounty({
-        id: bounty.id,
-        deadline: Date.now() + 24 * 60 * 60,
-        fee: bounty.fee,
-      });
+      await issueBounty(bounty);
       router.push("/");
     } catch (error) {
       setGlobalError(tezosState.error || "Failed saving bounty to blockchain");
