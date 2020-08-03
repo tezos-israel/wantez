@@ -1,10 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Button, Paper, TextField, Grid } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { SAVE_BOUNTY, GET_BOUNTIES } from "queries/bounties";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,29 +14,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SAVE_BOUNTY = gql`
-  mutation(
-    $title: String!
-    $issueUrl: String!
-    $description: String!
-    $fee: numeric
-  ) {
-    insert_bounty_one(
-      object: {
-        title: $title
-        issueUrl: $issueUrl
-        description: $description
-        fee: $fee
-      }
-    ) {
-      id
-    }
-  }
-`;
-
 const CreateBountyPage = () => {
   // const { user, loading } = useUser();
-  const [createBounty] = useMutation(SAVE_BOUNTY);
+  const [createBounty] = useMutation(SAVE_BOUNTY, {
+    update: updateCache,
+    onCompleted() {
+      router.push("/");
+    },
+  });
   const { handleSubmit, errors, control } = useForm();
   const [globalError, setGlobalError] = React.useState(null);
   const router = useRouter();
@@ -52,7 +39,6 @@ const CreateBountyPage = () => {
   async function onSubmit(variables) {
     try {
       await createBounty({ variables });
-      router.push("/");
     } catch (e) {
       setGlobalError(e.message);
     }
@@ -133,6 +119,23 @@ const CreateBountyPage = () => {
       </form>
     </Paper>
   );
+
+  function updateCache(cache, { data }) {
+    const existingBounties = cache.readQuery({
+      query: GET_BOUNTIES,
+    });
+
+    if (!existingBounties) {
+      return;
+    }
+
+    const newBounty = data.insert_bounty_one;
+
+    cache.writeQuery({
+      query: GET_BOUNTIES,
+      data: { bounty: [newBounty, ...existingBounties.bounty] },
+    });
+  }
 };
 
 export default CreateBountyPage;

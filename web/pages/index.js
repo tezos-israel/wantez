@@ -1,25 +1,16 @@
 import React from "react";
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Paper } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
 import { useTezosContext } from "hooks/TezosContext";
 import { BountiesTable } from "components/BountiesTable";
 
-const FETCH_BOUNTIES = gql`
-  {
-    bounty {
-      title
-      id
-      fee
-      status
-    }
-  }
-`;
+import { GET_BOUNTIES } from "queries/bounties";
 
 const Home = () => {
-  const { data, ...queryState } = useQuery(FETCH_BOUNTIES);
+  const { data, ...queryState } = useQuery(GET_BOUNTIES);
   const { ...tezosState } = useTezosContext();
 
   const loading = tezosState.loading || queryState.loading;
