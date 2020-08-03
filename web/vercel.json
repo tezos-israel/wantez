@@ -15,11 +15,14 @@
   "build": {
     "env": {
       "AUTH0_DOMAIN": "dev-f1oauz37.eu.auth0.com",
-      "AUTH0_CLIENT_ID": "1xgDZ0r1LH4rGfVCLL8hYC2t8u9bsJS5",
       "AUTH0_AUDIENCE": "https://gitez.com",
+      "AUTH0_CLIENT_ID": "1xgDZ0r1LH4rGfVCLL8hYC2t8u9bsJS5",
+      "AUTH0_CLIENT_SECRET": "@auth0_client_secret",
       "AUTH0_SCOPE": "profile openid",
       "REDIRECT_URI": "https://gitez.vercel.app/api/callback",
       "POST_LOGOUT_REDIRECT_URI": "https://gitez.vercel.app/",
+      "SESSION_COOKIE_SECRET": "@session_cookie_secret",
+      "SESSION_COOKIE_LIFETIME": "7200",
       "NEXT_PUBLIC_HASURA_DOMAIN": "https://fun-joey-30.hasura.app/v1/graphql",
       "NEXT_PUBLIC_DOMAIN": "https://gitez.vercel.app"
     }
