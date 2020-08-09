@@ -25,6 +25,7 @@ export function TezosProvider({ children }) {
     bounties,
     connect: connectToContract,
     issueBounty,
+    refundBounty,
     clearErrors: clearContractErrors,
   } = useBountiesContract();
   const {
@@ -72,6 +73,7 @@ export function TezosProvider({ children }) {
         loading,
         error,
         issueBounty,
+        refundBounty,
       }}
     >
       {children}

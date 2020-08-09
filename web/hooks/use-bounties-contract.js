@@ -32,6 +32,7 @@ export function useBountiesContract() {
     connect,
     clearErrors,
     issueBounty,
+    refundBounty,
   };
 
   async function callMethod(cb) {
@@ -64,6 +65,12 @@ export function useBountiesContract() {
         await methods
           .issueBounty(bounty.id, bounty.deadline)
           .send({ amount: bounty.fee })
+    );
+  }
+
+  function refundBounty(bounty) {
+    return callMethod(
+      async (methods) => await methods.refundBounty(bounty.id).send()
     );
   }
 }

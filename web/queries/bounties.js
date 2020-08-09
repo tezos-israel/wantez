@@ -44,3 +44,25 @@ export const DELETE_BOUNTY = gql`
     }
   }
 `;
+
+export const BOUNTY_QUERY = gql`
+  query($id: uuid!) {
+    bounty_by_pk(id: $id) {
+      id
+      title
+      fee
+      status
+      funder {
+        username
+      }
+    }
+  }
+`;
+
+export const REFUND_BOUNTY = gql`
+  mutation($id: uuid!) {
+    update_bounty_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
+      id
+    }
+  }
+`;

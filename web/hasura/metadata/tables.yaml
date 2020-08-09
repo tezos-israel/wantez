@@ -49,6 +49,7 @@
       set:
         funderId: x-hasura-User-Id
       columns:
+      - deadline
       - description
       - fee
       - issueUrl
@@ -84,6 +85,20 @@
       - funderId
       - id
       filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - description
+      - issueUrl
+      - status
+      - title
+      filter:
+        funderId:
+          _eq: X-Hasura-User-Id
+      check:
+        funderId:
+          _eq: X-Hasura-User-Id
   delete_permissions:
   - role: user
     permission:
