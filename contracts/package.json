@@ -2,7 +2,7 @@
   "name": "contracts",
   "version": "1.0.0",
   "dependencies": {
-    "@taquito/taquito": "^6.3.3-beta.0",
+    "@taquito/taquito": "^6.3.5-beta.0",
     "promise-retry": "^2.0.1"
   },
   "devDependencies": {
