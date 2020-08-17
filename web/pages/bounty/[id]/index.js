@@ -1,15 +1,19 @@
 import React from "react";
+
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { Paper, Typography, Button } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import { useQuery, useMutation } from "@apollo/client";
-import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { useQuery, useMutation } from "@apollo/client";
 
 import { useTezosContext } from "hooks/TezosContext";
 import { useFetchUser } from "lib/user";
 import { ConfirmDialog, useDialog } from "components/ConfirmDialog";
 import { BOUNTY_QUERY, REFUND_BOUNTY, GET_BOUNTIES } from "queries/bounties";
+import { ApplicationsTable } from "components/ApplicationsTable";
 
 const useStyles = makeStyles((theme) => ({
   root: { padding: theme.spacing(2) },
@@ -52,23 +56,27 @@ export default function BountyPage() {
   }
 
   const { bounty_by_pk: bounty } = data;
+  const userApplication =
+    user &&
+    bounty.applications.find((a) => a.applicant.username === user.nickname);
+  const userIsOwner = user && user.nickname === bounty.funder.username;
+  const buttons = renderButtons(
+    bountyId,
+    bounty.status !== "canceled",
+    userIsOwner,
+    userApplication,
+    toggleConfirmRefundDialog
+  );
 
   return (
     <Paper className={classes.root}>
       <div className={classes.header}>
         <Typography variant="h4">{bounty.title}</Typography>
-        <div className={classes.buttons}>
-          {bounty.status !== "canceled" &&
-            user &&
-            (user.nickname === bounty.funder.username ? (
-              <Button onClick={toggleConfirmRefundDialog}>Refund</Button>
-            ) : (
-              <Link href={`${bountyId}/application`}>Apply</Link>
-            ))}
-        </div>
+        <div className={classes.buttons}>{buttons}</div>
       </div>
       <Typography variant="body1">{bounty.fee}</Typography>
       <Typography variant="body1">{bounty.funder.name}</Typography>
+      <ApplicationsTable applications={bounty.applications} />
       <ConfirmDialog
         isOpen={isConfirmRefundDialogOpen}
         onOk={refundBounty}
@@ -115,4 +123,24 @@ export default function BountyPage() {
     }
     // refundBountyDB;
   }
+}
+
+function renderButtons(bountyId, isAlive, isOwner, application, onRefundClick) {
+  if (!isAlive) {
+    return null;
+  }
+
+  if (isOwner) {
+    return <Button onClick={onRefundClick}>Refund</Button>;
+  }
+
+  if (application) {
+    return null;
+  }
+
+  return (
+    <Link href={`${bountyId}/application`}>
+      <a>Apply</a>
+    </Link>
+  );
 }

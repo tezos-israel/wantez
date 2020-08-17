@@ -23,6 +23,7 @@ export function BountiesTable({ bounties }) {
             <TableCell>Title</TableCell>
             <TableCell>Fee</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>Applications</TableCell>
           </TableRow>
         </TableHead>
 
@@ -36,6 +37,9 @@ export function BountiesTable({ bounties }) {
               </TableCell>
               <TableCell>{bounty.fee}</TableCell>
               <TableCell>{bounty.status}</TableCell>
+              <TableCell>
+                {bounty.applications_aggregate.aggregate.count}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

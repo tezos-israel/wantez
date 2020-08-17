@@ -7,6 +7,11 @@ export const GET_BOUNTIES = gql`
       id
       fee
       status
+      applications_aggregate {
+        aggregate {
+          count
+        }
+      }
     }
   }
 `;
@@ -54,6 +59,14 @@ export const BOUNTY_QUERY = gql`
       status
       funder {
         username
+      }
+      applications {
+        id
+        createdAt
+        status
+        applicant {
+          username
+        }
       }
     }
   }
