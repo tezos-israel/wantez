@@ -11,6 +11,61 @@
   - name: user
     using:
       foreign_key_constraint_on: applicantId
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        applicantId:
+          _eq: X-Hasura-User-Id
+      set:
+        applicantId: x-hasura-User-Id
+      columns:
+      - bountyId
+      - details
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - applicantId
+      - bountyId
+      - createdAt
+      - details
+      - id
+      - status
+      - updatedAt
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - applicantId
+      - bountyId
+      - createdAt
+      - details
+      - id
+      - status
+      - updatedAt
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - bountyId
+      - details
+      filter:
+        applicantId:
+          _eq: X-Hasura-User-Id
+      check:
+        applicantId:
+          _eq: X-Hasura-User-Id
+      set:
+        applicantId: x-hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        applicantId:
+          _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: applicationStatusType
@@ -74,21 +129,23 @@
   - role: user
     permission:
       columns:
-      - fee
       - contractAddress
+      - createdAt
+      - deadline
       - description
+      - fee
+      - funderId
+      - id
       - issueUrl
       - status
       - title
-      - createdAt
       - updatedAt
-      - funderId
-      - id
       filter: {}
   update_permissions:
   - role: user
     permission:
       columns:
+      - deadline
       - description
       - issueUrl
       - status
