@@ -23,6 +23,7 @@
       columns:
       - bountyId
       - details
+      - paymentAddress
       backend_only: false
   select_permissions:
   - role: public
@@ -33,6 +34,7 @@
       - createdAt
       - details
       - id
+      - paymentAddress
       - status
       - updatedAt
       filter: {}
@@ -45,6 +47,7 @@
       - createdAt
       - details
       - id
+      - paymentAddress
       - status
       - updatedAt
       filter: {}
