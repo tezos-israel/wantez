@@ -6,4 +6,5 @@ module.exports = {
     GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
   },
   jsconfigPaths: true,
+  trailingSlash: true,
 };
