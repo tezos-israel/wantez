@@ -91,7 +91,7 @@ contract("Bounties", (addresses) => {
   it("should fail if trying to approve a non existent bounty", async () => {
     let failwith = "";
     try {
-      await bountiesInstance.approveApplication("dosnt exist");
+      await bountiesInstance.approveApplication(addresses[0], "dosnt exist");
     } catch (e) {
       failwith = e.message;
     }
