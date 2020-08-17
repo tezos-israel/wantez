@@ -2,15 +2,15 @@
     schema: public
     name: application
   object_relationships:
+  - name: applicant
+    using:
+      foreign_key_constraint_on: applicantId
   - name: applicationStatusType
     using:
       foreign_key_constraint_on: status
   - name: bounty
     using:
       foreign_key_constraint_on: bountyId
-  - name: user
-    using:
-      foreign_key_constraint_on: applicantId
   insert_permissions:
   - role: user
     permission:
@@ -18,6 +18,7 @@
         applicantId:
           _eq: X-Hasura-User-Id
       set:
+        status: pending
         applicantId: x-hasura-User-Id
       columns:
       - bountyId
@@ -35,6 +36,7 @@
       - status
       - updatedAt
       filter: {}
+      allow_aggregations: true
   - role: user
     permission:
       columns:
@@ -46,12 +48,14 @@
       - status
       - updatedAt
       filter: {}
+      allow_aggregations: true
   update_permissions:
   - role: user
     permission:
       columns:
       - bountyId
       - details
+      - status
       filter:
         applicantId:
           _eq: X-Hasura-User-Id
@@ -81,7 +85,14 @@
     schema: public
     name: bounty
   object_relationships:
-  - name: application
+  - name: bountyStatusType
+    using:
+      foreign_key_constraint_on: status
+  - name: funder
+    using:
+      foreign_key_constraint_on: funderId
+  array_relationships:
+  - name: applications
     using:
       manual_configuration:
         remote_table:
@@ -89,12 +100,6 @@
           name: application
         column_mapping:
           id: bountyId
-  - name: bountyStatusType
-    using:
-      foreign_key_constraint_on: status
-  - name: funder
-    using:
-      foreign_key_constraint_on: funderId
   insert_permissions:
   - role: user
     permission:
@@ -115,17 +120,19 @@
   - role: public
     permission:
       columns:
-      - id
       - contractAddress
-      - status
-      - issueUrl
+      - createdAt
+      - deadline
+      - description
       - fee
       - funderId
-      - createdAt
-      - updatedAt
+      - id
+      - issueUrl
+      - status
       - title
-      - description
+      - updatedAt
       filter: {}
+      allow_aggregations: true
   - role: user
     permission:
       columns:
@@ -141,6 +148,7 @@
       - title
       - updatedAt
       filter: {}
+      allow_aggregations: true
   update_permissions:
   - role: user
     permission:
