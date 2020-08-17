@@ -198,10 +198,17 @@ const CreateBountyPage = () => {
 
   async function onCompleted({ insert_bounty_one: bounty }) {
     try {
-      await issueBounty(bounty);
+      await issueBounty({
+        ...bounty,
+        deadline: Number(new Date(bounty.deadline)),
+      });
       router.push("/");
     } catch (error) {
-      setGlobalError(tezosState.error || "Failed saving bounty to blockchain");
+      setGlobalError(
+        tezosState.error ||
+          error.message ||
+          "Failed saving bounty to blockchain"
+      );
       console.error(error);
       try {
         await deleteBounty({ variables: { id: bounty.id } });

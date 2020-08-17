@@ -17,7 +17,7 @@ export const SAVE_BOUNTY = gql`
     $issueUrl: String!
     $description: String!
     $fee: numeric
-    $deadline: String!
+    $deadline: timestamptz!
   ) {
     insert_bounty_one(
       object: {
