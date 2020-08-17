@@ -1,6 +1,8 @@
 {
   "env": {
-    "node": true
+    "node": true,
+    "mocha": true,
+    "truffle/globals": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
@@ -10,5 +12,5 @@
   // "rules": {
   //   "func-style": ["warn", "declaration"]
   // },
-  "root": true
+  "plugins": ["truffle"]
 }

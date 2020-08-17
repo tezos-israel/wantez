@@ -12,15 +12,15 @@ type issueBountyParameter = {
   deadline: date,
 };
 
-type accpetBountyParameter = {
+type approveApplicationParameter = {
   bountyId: bountyId,
-  approved: address
+  applicant: address
 };
 
 type action = 
   | IssueBounty(issueBountyParameter)
   | RefundBounty(bountyId)
-  | AcceptBounty(accpetBountyParameter);
+  | ApproveApplication(approveApplicationParameter);
 
 type storage = map (bountyId, bounty);
 type returnType = (list (operation), storage);
@@ -72,11 +72,11 @@ let refundBounty = (bountyId: bountyId, store: storage) : returnType => {
   ([payment] : list(operation), store)
 }
 
-let acceptBounty = (bountyId: bountyId, approved: address, store: storage) : returnType =>{
+let approveApplication = (bountyId: bountyId, applicant: address, store: storage) : returnType =>{
   let bounty = getBounty(bountyId, Tezos.source, store);
   let store : storage = Map.update (bountyId, None : option(bounty), store);
-  let issuerContract = getContract(approved);
-  let payment : operation = Tezos.transaction(unit, bounty.balance, issuerContract);
+  let applicantContract = getContract(applicant);
+  let payment : operation = Tezos.transaction(unit, bounty.balance, applicantContract);
   ([payment] : list(operation), store)
 }
 
@@ -84,5 +84,5 @@ let main = ((action, store) : (action, storage)) : returnType =>
   switch(action) {
     | IssueBounty(parameter) => issueBounty(parameter.bountyId, parameter.deadline, Tezos.source, store)
     | RefundBounty(bountyId) => refundBounty(bountyId, store)
-    | AcceptBounty(parameter) => acceptBounty(parameter.bountyId, parameter.approved, store)
+    | ApproveApplication(parameter) => approveApplication(parameter.bountyId, parameter.applicant, store)
   }
