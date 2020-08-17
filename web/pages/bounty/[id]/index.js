@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Paper, Typography, Button } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { useQuery, useMutation } from "@apollo/client";
@@ -20,8 +21,9 @@ export default function BountyPage() {
   const { user, ...userState } = useFetchUser();
   const classes = useStyles();
   const router = useRouter();
+  const bountyId = router.query.id;
   const { data, loading, error } = useQuery(BOUNTY_QUERY, {
-    variables: { id: router.query.id },
+    variables: { id: bountyId },
   });
 
   const [refundBountyDB] = useMutation(REFUND_BOUNTY, {
@@ -61,7 +63,7 @@ export default function BountyPage() {
             (user.nickname === bounty.funder.username ? (
               <Button onClick={toggleConfirmRefundDialog}>Refund</Button>
             ) : (
-              <Button disabled>Apply</Button>
+              <Link href={`${bountyId}/application`}>Apply</Link>
             ))}
         </div>
       </div>
