@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,7 +12,12 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useTezosContext } from "hooks/TezosContext";
 import { useFetchUser } from "lib/user";
 import { ConfirmDialog, useDialog } from "components/ConfirmDialog";
-import { BOUNTY_QUERY, REFUND_BOUNTY, GET_BOUNTIES } from "queries/bounties";
+import {
+  BOUNTY_QUERY,
+  GET_BOUNTIES,
+  REFUND_BOUNTY,
+  APPROVE_APPLICATION,
+} from "queries/bounties";
 import { ApplicationsTable } from "components/ApplicationsTable";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,40 +34,53 @@ export default function BountyPage() {
   const { data, loading, error } = useQuery(BOUNTY_QUERY, {
     variables: { id: bountyId },
   });
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
   const [refundBountyDB] = useMutation(REFUND_BOUNTY, {
-    onCompleted,
-    update: updateCache,
+    update: updateCacheAfterRefund,
   });
 
-  const { refundBounty: refundBountyTezos } = useTezosContext();
+  const [approveApplicationDB] = useMutation(APPROVE_APPLICATION, {
+    update: updateCacheAfterApproval,
+  });
+
+  const {
+    refundBounty: refundBountyTezos,
+    approveApplication: approveApplicationTezos,
+  } = useTezosContext();
 
   const {
     isOpen: isConfirmRefundDialogOpen,
     toggle: toggleConfirmRefundDialog,
   } = useDialog();
 
+  const {
+    isOpen: isConfirmApproveDialogOpen,
+    toggle: toggleConfirmApproveDialog,
+  } = useDialog();
+
   if (loading || userState.loading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  const { bounty_by_pk: bounty } = data;
+
+  if (error || !bounty) {
     return (
       <Alert severity="error">
-        <AlertTitle>Failed loading bounties</AlertTitle>
-        {error.message}
+        <AlertTitle>Failed loading bounty</AlertTitle>
+        {error && error.message}
       </Alert>
     );
   }
 
-  const { bounty_by_pk: bounty } = data;
   const userApplication =
     user &&
     bounty.applications.find((a) => a.applicant.username === user.nickname);
   const userIsOwner = user && user.nickname === bounty.funder.username;
   const buttons = renderButtons(
     bountyId,
-    bounty.status !== "canceled",
+    !["canceled", "finished"].includes(bounty.status),
     userIsOwner,
     userApplication,
     toggleConfirmRefundDialog
@@ -76,23 +94,38 @@ export default function BountyPage() {
       </div>
       <Typography variant="body1">{bounty.fee}</Typography>
       <Typography variant="body1">{bounty.funder.name}</Typography>
-      <ApplicationsTable applications={bounty.applications} />
+      <ApplicationsTable
+        applications={bounty.applications}
+        isOwner={userIsOwner}
+        onApproveClick={openConfirmApplicationDialog}
+      />
       <ConfirmDialog
         isOpen={isConfirmRefundDialogOpen}
         onOk={refundBounty}
         onCancel={toggleConfirmRefundDialog}
       />
+      <ConfirmDialog
+        isOpen={isConfirmApproveDialogOpen}
+        onOk={() => approveApplication(selectedApplication)}
+        onCancel={toggleConfirmApproveDialog}
+      />
     </Paper>
   );
 
-  function onCompleted() {
-    toggleConfirmRefundDialog();
+  function openConfirmApplicationDialog(application) {
+    setSelectedApplication(application);
+    toggleConfirmApproveDialog();
   }
 
-  function updateCache(cache, { data }) {
-    const existingBountiesQuery = cache.readQuery({
-      query: GET_BOUNTIES,
-    });
+  function updateCacheAfterRefund(cache, { data }) {
+    let existingBountiesQuery;
+    try {
+      existingBountiesQuery = cache.readQuery({
+        query: GET_BOUNTIES,
+      });
+    } catch (e) {
+      //
+    }
     const bountyId = data.update_bounty_by_pk.id;
     if (existingBountiesQuery) {
       const newBounties = existingBountiesQuery.bounty.map((bounty) => {
@@ -114,14 +147,63 @@ export default function BountyPage() {
     });
   }
 
+  function updateCacheAfterApproval(cache, { data }) {
+    let existingBountiesQuery;
+    try {
+      existingBountiesQuery = cache.readQuery({
+        query: GET_BOUNTIES,
+      });
+    } catch (e) {
+      //
+    }
+    const applicationId = data.update_application_by_pk.id;
+    if (existingBountiesQuery) {
+      const newBounties = existingBountiesQuery.bounty.map((bounty) => {
+        if (bounty.id !== bountyId) {
+          return bounty;
+        }
+        return transformBounty(bounty);
+      });
+
+      cache.writeQuery({ query: GET_BOUNTIES, data: { bounty: newBounties } });
+    }
+
+    cache.writeQuery({
+      query: BOUNTY_QUERY,
+      data: { bounty_by_pk: transformBounty(bounty) },
+    });
+
+    function transformBounty(bounty) {
+      const applications = bounty.applications.map((application) => {
+        if (application.id !== applicationId) {
+          return { ...application, status: "dismissed" };
+        }
+        return { ...application, status: "approved" };
+      });
+      return { ...bounty, status: "finished", applications };
+    }
+  }
+
   async function refundBounty() {
     try {
       await refundBountyTezos(bounty);
       await refundBountyDB({ variables: { id: bounty.id } });
     } catch (err) {
       console.error(err);
+      toggleConfirmRefundDialog();
     }
-    // refundBountyDB;
+  }
+
+  async function approveApplication(application) {
+    try {
+      await approveApplicationTezos(bountyId, application.paymentAddress);
+      await approveApplicationDB({
+        variables: { bountyId, applicationId: application.id },
+      });
+      toggleConfirmApproveDialog();
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 

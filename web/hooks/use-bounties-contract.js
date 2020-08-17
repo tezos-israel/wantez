@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { useContract } from "./use-contract";
 
-const CONTRACT_ADDRESS = "KT19Z8rpDE1PZpArJWuHyvRCFeYssLGzMNQ2";
+const CONTRACT_ADDRESS = "KT1PkEPjZZ7enjoeePcnFhR83AwX2UFjkETL";
 const types = {
   OPERATION_STARTED: "OPERATION_STARTED",
   OPERATION_FINISHED: "OPERATION_FINISHED",
@@ -33,6 +33,7 @@ export function useBountiesContract() {
     clearErrors,
     issueBounty,
     refundBounty,
+    approveApplication,
   };
 
   async function callMethod(cb) {
@@ -71,6 +72,13 @@ export function useBountiesContract() {
   function refundBounty(bounty) {
     return callMethod(
       async (methods) => await methods.refundBounty(bounty.id).send()
+    );
+  }
+
+  function approveApplication(bountyId, paymentAddress) {
+    return callMethod(
+      async (methods) =>
+        await methods.approveApplication(paymentAddress, bountyId).send()
     );
   }
 }

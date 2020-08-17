@@ -13,7 +13,7 @@ export const TezosContext = createContext({
   error: null,
   issueBounty() {},
   refundBounty() {},
-  approveBounty() {},
+  approveApplication() {},
 });
 
 export const useTezosContext = () => useContext(TezosContext);
@@ -26,6 +26,7 @@ export function TezosProvider({ children }) {
     connect: connectToContract,
     issueBounty,
     refundBounty,
+    approveApplication,
     clearErrors: clearContractErrors,
   } = useBountiesContract();
   const {
@@ -74,6 +75,7 @@ export function TezosProvider({ children }) {
         error,
         issueBounty,
         refundBounty,
+        approveApplication,
       }}
     >
       {children}

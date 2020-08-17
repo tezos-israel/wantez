@@ -149,9 +149,14 @@ const CreateBountyPage = () => {
   );
 
   function updateCache(cache, { data }) {
-    const existingBountiesQuery = cache.readQuery({
-      query: GET_BOUNTIES,
-    });
+    let existingBountiesQuery = null;
+    try {
+      existingBountiesQuery = cache.readQuery({
+        query: GET_BOUNTIES,
+      });
+    } catch (e) {
+      return;
+    }
 
     if (!existingBountiesQuery) {
       return;
@@ -173,7 +178,7 @@ const CreateBountyPage = () => {
     if (!existingBountiesQuery) {
       return;
     }
-
+    console.log({ existingBountiesQuery });
     const bountyId = data.delete_bounty_by_pk.id;
 
     cache.writeQuery({
@@ -192,6 +197,7 @@ const CreateBountyPage = () => {
     try {
       await createBounty({ variables });
     } catch (e) {
+      console.error(e);
       setGlobalError(e.message);
     }
   }
@@ -213,6 +219,7 @@ const CreateBountyPage = () => {
       try {
         await deleteBounty({ variables: { id: bounty.id } });
       } catch (deleteError) {
+        console.error(deleteError);
         setGlobalError(deleteError.message || "Failed deleting bounty");
       }
     }

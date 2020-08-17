@@ -8,9 +8,10 @@ import {
   TableHead,
   TableRow,
   TableContainer,
+  Button,
 } from "@material-ui/core";
 
-export function ApplicationsTable({ applications }) {
+export function ApplicationsTable({ applications, isOwner, onApproveClick }) {
   if (!applications.length) {
     return <div>No Applications</div>;
   }
@@ -22,6 +23,7 @@ export function ApplicationsTable({ applications }) {
             <TableCell>Created By</TableCell>
             <TableCell>Created At</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
 
@@ -31,6 +33,13 @@ export function ApplicationsTable({ applications }) {
               <TableCell>{application.applicant.username}</TableCell>
               <TableCell>{application.createdAt}</TableCell>
               <TableCell>{application.status}</TableCell>
+              <TableCell>
+                {isOwner && application.status === "pending" && (
+                  <Button onClick={() => onApproveClick(application)}>
+                    Approve
+                  </Button>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -41,4 +50,6 @@ export function ApplicationsTable({ applications }) {
 
 ApplicationsTable.propTypes = {
   applications: propTypes.array.isRequired,
+  isOwner: propTypes.bool.isRequired,
+  onApproveClick: propTypes.func.isRequired,
 };

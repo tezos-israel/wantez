@@ -11,6 +11,7 @@ import { useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
 
 import { CREATE_APPLICATION } from "queries/applications";
+import { useTezosContext } from "hooks/TezosContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,7 @@ export default function CreateApplication() {
   });
   const [error, setError] = useState("");
   const router = useRouter();
-
+  const { address } = useTezosContext();
   return (
     <Paper className={classes.root}>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -68,7 +69,11 @@ export default function CreateApplication() {
   async function onSubmit({ details }) {
     try {
       await createApplication({
-        variables: { details, bountyId: router.query.id },
+        variables: {
+          details,
+          bountyId: router.query.id,
+          paymentAddress: address,
+        },
       });
     } catch (e) {
       setError(e.message);
