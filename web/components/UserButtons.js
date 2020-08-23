@@ -4,26 +4,22 @@ import { Button } from "@material-ui/core";
 
 import Link from "components/Link";
 
-export default function UserMenu({ user, loading, inverted }) {
+export default function UserMenu({ user, loading, inverted, onLogout }) {
   if (loading) {
     return null;
   }
   return (
     <>
       {user ? (
-        <Link href="/api/logout">
+        <Button color="primary" inverted={inverted} onClick={onLogout}>
+          Log out
+        </Button>
+      ) : (
+        <Link href="/login">
           <Button color="primary" inverted={inverted}>
-            Log out
+            Log in / Sign up
           </Button>
         </Link>
-      ) : (
-        <>
-          <Link href="/api/login">
-            <Button color="primary" inverted={inverted}>
-              Log in / Sign up
-            </Button>
-          </Link>
-        </>
       )}
     </>
   );
@@ -33,4 +29,5 @@ UserMenu.propTypes = {
   user: PropTypes.object,
   loading: PropTypes.bool,
   inverted: PropTypes.bool,
+  onLogout: PropTypes.func.isRequired,
 };

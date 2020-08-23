@@ -1,10 +1,20 @@
-import auth0 from "lib/auth0";
+import { decryptCookie } from "lib/cookie";
 
-export default async function me(req, res) {
-  try {
-    await auth0.handleProfile(req, res);
-  } catch (error) {
-    console.error(error);
-    res.status(error.status || 500).end(error.message);
+export default async (req, res) => {
+  const { method } = req;
+
+  if (method !== "GET") {
+    return res
+      .status(400)
+      .json({ message: "This route only accepts GET requests" });
   }
-}
+
+  try {
+    const userFromCookie = await decryptCookie(req.cookies.auth);
+    /* send back response with user obj */
+    return res.json({ authorized: true, user: userFromCookie });
+  } catch (error) {
+    /* if there's no valid auth cookie, user is not logged in */
+    return res.json({ authorized: false, error });
+  }
+};

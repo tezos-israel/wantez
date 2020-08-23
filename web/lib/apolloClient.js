@@ -11,13 +11,13 @@ const HASURA_DOMAIN = process.env.NEXT_PUBLIC_HASURA_DOMAIN;
 const requestAccessToken = async () => {
   if (accessToken) return;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/session`);
-  if (res.ok) {
-    const json = await res.json();
-    accessToken = json.accessToken;
-  } else {
-    accessToken = null;
-  }
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/session`);
+  // if (res.ok) {
+  //   const json = await res.json();
+  //   accessToken = json.accessToken;
+  // } else {
+  //   accessToken = null;
+  // }
 };
 
 // // remove cached token on 401 from the server

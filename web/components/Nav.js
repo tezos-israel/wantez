@@ -28,6 +28,7 @@ export default function Nav({
   className = "",
   balance,
   address,
+  onLogout,
 }) {
   const styles = useStyles();
   const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
@@ -55,7 +56,7 @@ export default function Nav({
         <div className={styles.userButtonsContainer}>
           <div>{!loading && shortAddress}</div>
           <div>{!loading && balance}</div>
-          <UserButtons user={user} loading={loading} />
+          <UserButtons user={user} loading={loading} onLogout={onLogout} />
         </div>
       </Toolbar>
     </AppBar>
@@ -68,4 +69,5 @@ Nav.propTypes = {
   className: PropTypes.string,
   address: PropTypes.string,
   balance: PropTypes.number,
+  onLogout: PropTypes.func.isRequired,
 };

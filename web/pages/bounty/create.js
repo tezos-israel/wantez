@@ -7,8 +7,8 @@ import { DateTimePicker } from "@material-ui/pickers";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
-import { useFetchUser } from "lib/user";
 import { useTezosContext } from "hooks/TezosContext";
+import { useAuthContext } from "hooks/AuthContext";
 
 import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from "queries/bounties";
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateBountyPage = () => {
-  const { user, ...userState } = useFetchUser();
+  const { user, ...userState } = useAuthContext();
   const { balance, issueBounty, ...tezosState } = useTezosContext();
   const [deleteBounty] = useMutation(DELETE_BOUNTY, {
     update: updateCacheAfterDelete,

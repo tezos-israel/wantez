@@ -3,7 +3,6 @@ import Head from "next/head";
 import { ApolloProvider } from "@apollo/client";
 import propTypes from "prop-types";
 import createApolloClient from "./apolloClient";
-import auth0 from "./auth0";
 
 // On the client, we store the Apollo Client in the following variable.
 // This prevents the client from reinitializing between page transitions.
@@ -54,13 +53,13 @@ export const initOnContext = (ctx) => {
 async function getHeaders(ctx) {
   if (typeof window !== "undefined") return null;
   if (typeof ctx.req === "undefined") return null;
+  return null;
+  // const s = await auth0.getSession(ctx.req);
+  // if (s && s.accessToken == null) return null;
 
-  const s = await auth0.getSession(ctx.req);
-  if (s && s.accessToken == null) return null;
-
-  return {
-    authorization: `Bearer ${s ? s.accessToken : ""}`,
-  };
+  // return {
+  //   authorization: `Bearer ${s ? s.accessToken : ""}`,
+  // };
 }
 
 /**

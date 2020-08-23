@@ -8,6 +8,7 @@ import { useTezosContext } from "hooks/TezosContext";
 import { BountiesTable } from "components/BountiesTable";
 
 import { GET_BOUNTIES } from "queries/bounties";
+import Layout from "components/Layout";
 
 const Home = () => {
   const { data, ...queryState } = useQuery(GET_BOUNTIES);
@@ -21,17 +22,21 @@ const Home = () => {
   const error = tezosState.error || queryState.error;
   if (error) {
     return (
-      <Alert severity="error">
-        <AlertTitle>Failed loading bounties</AlertTitle>
-        {error.message}
-      </Alert>
+      <Layout>
+        <Alert severity="error">
+          <AlertTitle>Failed loading bounties</AlertTitle>
+          {error.message}
+        </Alert>
+      </Layout>
     );
   }
   return (
-    <Paper>
-      <div>{process.env.DOMAIN}</div>
-      <BountiesTable bounties={data.bounty} />
-    </Paper>
+    <Layout>
+      <Paper>
+        <div>{process.env.DOMAIN}</div>
+        <BountiesTable bounties={data.bounty} />
+      </Paper>
+    </Layout>
   );
 };
 
