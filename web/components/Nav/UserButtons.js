@@ -1,28 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Link from 'next/link';
 
-export default function UserMenu({ user, loading, inverted, onLogout }) {
+import { Button } from 'components/shared/Button';
+
+export default function UserMenu({ user, loading, onLogout }) {
   if (loading) {
     return null;
   }
   return (
     <>
       {user ? (
-        <button
-          type="button"
-          color="primary"
-          inverted={inverted}
-          onClick={onLogout}
-        >
+        <Button type="button" color="primary" onClick={onLogout}>
           Log out
-        </button>
+        </Button>
       ) : (
-        <Link href="/login">
-          <button type="button" color="primary" inverted={inverted}>
-            Log in / Sign up
-          </button>
+        <Link href="/login" passHref>
+          <a>
+            <Button color="primary">Log in / Sign up</Button>
+          </a>
         </Link>
       )}
     </>

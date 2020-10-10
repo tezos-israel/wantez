@@ -9,14 +9,11 @@ import UserButtons from './UserButtons';
 export default function Nav({ loading, user, balance, address, onLogout }) {
   const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
   return (
-    <div className="h-20 bg-gradient-to-l from-green-900 to-black flex items-center px-6 justify-between">
-      <div className="mb-1">
-        <img src={logo} alt="logo" />
-      </div>
+    <div className="h-20 bg-gradient-to-l from-green-900 to-black flex items-center px-6 justify-end">
+      <Link href="/">
+        <img src={logo} alt="logo" className="mb-1 mr-auto" />
+      </Link>
 
-      <button type="submit" color="primary">
-        <Link href="/">Bounties</Link>
-      </button>
       {!loading && user && (
         <>
           <button type="submit">
@@ -24,7 +21,7 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
           </button>
         </>
       )}
-      <div>
+      <div className="flex space-x-4 items-center">
         <div>{!loading && shortAddress}</div>
         <div>{!loading && balance}</div>
         <UserButtons user={user} loading={loading} onLogout={onLogout} />
