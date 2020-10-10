@@ -28,7 +28,9 @@ function Layout({ children, title }) {
         onLogout={handleLogout}
       />
 
-      <main className="flex-auto">{children}</main>
+      <main className="flex-auto flex items-center justify-center">
+        {children}
+      </main>
     </div>
   );
 

@@ -13,27 +13,23 @@ const Home = () => {
   const { ...tezosState } = useTezosContext();
 
   const loading = tezosState.loading || queryState.loading;
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   const error = tezosState.error || queryState.error;
-  if (error) {
-    return (
-      <Layout>
+
+  return (
+    <Layout>
+      {loading ? (
+        'Loading...'
+      ) : error ? (
         <div className="alert" severity="error">
           <div className="alert-title">Failed loading bounties</div>
           {error.message}
         </div>
-      </Layout>
-    );
-  }
-  return (
-    <Layout>
-      <div>
-        <div>{process.env.DOMAIN}</div>
-        <BountiesTable bounties={data.bounty} />
-      </div>
+      ) : (
+        <div>
+          <div>{process.env.DOMAIN}</div>
+          <BountiesTable bounties={data.bounty} />
+        </div>
+      )}
     </Layout>
   );
 };
