@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import { useAuthContext } from "hooks/AuthContext";
 
-
 import NavBar from "./Nav";
 
 import { useTezosContext } from "hooks/TezosContext";
@@ -16,7 +15,7 @@ function Layout({ children, title }) {
   const loading = userLoading || tezosState.loading;
 
   return (
-    <div className="container">
+    <div className="flex flex-col h-screen">
       <Head>
         <title>{title ? `${title} - ` : ""}Wantez</title>
       </Head>
@@ -27,10 +26,9 @@ function Layout({ children, title }) {
         user={user}
         loading={loading}
         onLogout={handleLogout}
-        className="nav-bar"
       />
 
-      <main>{children}</main>
+      <main className="flex-auto">{children}</main>
     </div>
   );
 
