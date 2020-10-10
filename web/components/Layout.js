@@ -27,7 +27,7 @@ function Layout({ children, title }) {
   return (
     <Container className={classes.root}>
       <Head>
-        <title>{title ? `${title} - ` : ""}TzGit</title>
+        <title>{title ? `${title} - ` : ""}Wantez</title>
       </Head>
 
       <NavBar

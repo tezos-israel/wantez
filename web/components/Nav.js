@@ -40,7 +40,7 @@ export default function Nav({
     >
       <Toolbar>
         <Typography variant="h6" className={styles.title}>
-          TzGit
+          Wantez
         </Typography>
 
         <Button color="primary">
