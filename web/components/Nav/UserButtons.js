@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "@material-ui/core";
 
-import Link from "components/Link";
+import Link from "next/link";
 
 export default function UserMenu({ user, loading, inverted, onLogout }) {
   if (loading) {
@@ -11,14 +10,14 @@ export default function UserMenu({ user, loading, inverted, onLogout }) {
   return (
     <>
       {user ? (
-        <Button color="primary" inverted={inverted} onClick={onLogout}>
+        <button type="button" color="primary" inverted={inverted} onClick={onLogout}>
           Log out
-        </Button>
+        </button>
       ) : (
         <Link href="/login">
-          <Button color="primary" inverted={inverted}>
+          <button type="button" color="primary" inverted={inverted}>
             Log in / Sign up
-          </Button>
+          </button>
         </Link>
       )}
     </>

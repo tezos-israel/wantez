@@ -4,28 +4,19 @@ import PropTypes from "prop-types";
 
 import { useAuthContext } from "hooks/AuthContext";
 
-import { Container } from "@material-ui/core";
-
-import { makeStyles } from "@material-ui/core/styles";
 
 import NavBar from "./Nav";
 
 import { useTezosContext } from "hooks/TezosContext";
 
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  navBar: { marginBottom: theme.spacing(2) },
-}));
-
 function Layout({ children, title }) {
-  const classes = useStyles();
   const { user, loading: userLoading, setUser, magic } = useAuthContext();
   const { address, balance, ...tezosState } = useTezosContext();
 
   const loading = userLoading || tezosState.loading;
 
   return (
-    <Container className={classes.root}>
+    <div className="container">
       <Head>
         <title>{title ? `${title} - ` : ""}Wantez</title>
       </Head>
@@ -36,11 +27,11 @@ function Layout({ children, title }) {
         user={user}
         loading={loading}
         onLogout={handleLogout}
-        className={classes.navBar}
+        className="nav-bar"
       />
 
       <main>{children}</main>
-    </Container>
+    </div>
   );
 
   /**

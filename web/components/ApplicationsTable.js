@@ -1,50 +1,39 @@
 import React from "react";
 import propTypes from "prop-types";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableContainer,
-  Button,
-} from "@material-ui/core";
 
 export function ApplicationsTable({ applications, isOwner, onApproveClick }) {
   if (!applications.length) {
     return <div>No Applications</div>;
   }
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Created By</TableCell>
-            <TableCell>Created At</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell />
-          </TableRow>
-        </TableHead>
+      <table>
+        <thead>
+          <tr>
+            <td>Created By</td>
+            <td>Created At</td>
+            <td>Status</td>
+            <td />
+          </tr>
+        </thead>
 
-        <TableBody>
+        <tbody>
           {applications.map((application) => (
-            <TableRow key={application.id}>
-              <TableCell>{application.applicant.username}</TableCell>
-              <TableCell>{application.createdAt}</TableCell>
-              <TableCell>{application.status}</TableCell>
-              <TableCell>
+            <tr key={application.id}>
+              <td>{application.applicant.username}</td>
+              <td>{application.createdAt}</td>
+              <td>{application.status}</td>
+              <td>
                 {isOwner && application.status === "pending" && (
-                  <Button onClick={() => onApproveClick(application)}>
+                  <button type="button" onClick={() => onApproveClick(application)}>
                     Approve
-                  </Button>
+                  </button>
                 )}
-              </TableCell>
-            </TableRow>
+              </td>
+            </tr>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
   );
 }
 

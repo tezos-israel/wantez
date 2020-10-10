@@ -2,49 +2,38 @@ import React from "react";
 import propTypes from "prop-types";
 import Link from "next/link";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableContainer,
-} from "@material-ui/core";
-
 export function BountiesTable({ bounties }) {
   if (!bounties.length) {
     return <div>No Bounties</div>;
   }
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Fee</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Applications</TableCell>
-          </TableRow>
-        </TableHead>
+      <table>
+        <thead>
+          <tr>
+            <td>Title</td>
+            <td>Fee</td>
+            <td>Status</td>
+            <td>Applications</td>
+          </tr>
+        </thead>
 
-        <TableBody>
+        <tbody>
           {bounties.map((bounty) => (
-            <TableRow key={bounty.id}>
-              <TableCell>
+            <tr key={bounty.id}>
+              <td>
                 <Link href={`/bounty/${bounty.id}`}>
                   <a>{bounty.title}</a>
                 </Link>
-              </TableCell>
-              <TableCell>{bounty.fee}</TableCell>
-              <TableCell>{bounty.status}</TableCell>
-              <TableCell>
+              </td>
+              <td>{bounty.fee}</td>
+              <td>{bounty.status}</td>
+              <td>
                 {bounty.applications_aggregate.aggregate.count}
-              </TableCell>
-            </TableRow>
+              </td>
+            </tr>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
   );
 }
 

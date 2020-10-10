@@ -1,8 +1,6 @@
 import React from "react";
 
 import { useQuery } from "@apollo/client";
-import { Paper } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
 
 import { useTezosContext } from "hooks/TezosContext";
 import { BountiesTable } from "components/BountiesTable";
@@ -23,19 +21,19 @@ const Home = () => {
   if (error) {
     return (
       <Layout>
-        <Alert severity="error">
-          <AlertTitle>Failed loading bounties</AlertTitle>
+        <div className="alert" severity="error">
+          <div className="alert-title">Failed loading bounties</div>
           {error.message}
-        </Alert>
+        </div>
       </Layout>
     );
   }
   return (
     <Layout>
-      <Paper>
+      <div>
         <div>{process.env.DOMAIN}</div>
         <BountiesTable bounties={data.bounty} />
-      </Paper>
+      </div>
     </Layout>
   );
 };

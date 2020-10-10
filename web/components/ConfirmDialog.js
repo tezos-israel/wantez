@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Dialog, Button, DialogTitle, DialogActions } from "@material-ui/core";
 
 export function ConfirmDialog({ isOpen, onOk, onCancel }) {
   return (
-    <Dialog open={isOpen}>
-      <DialogTitle>Are you sure?</DialogTitle>
-      <DialogActions>
-        <Button autoFocus onClick={onCancel} color="primary">
+    <div open={isOpen}>
+      <div>Are you sure?</div>
+      <div>
+        <button type="button" autoFocus onClick={onCancel} color="primary">
           Cancel
-        </Button>
-        <Button onClick={onOk} color="primary">
+        </button>
+        <button type="button" onClick={onOk} color="primary">
           Ok
-        </Button>
-      </DialogActions>
-    </Dialog>
+        </button>
+      </div>
+    </div>
   );
 }
 
