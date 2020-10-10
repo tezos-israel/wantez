@@ -25,9 +25,14 @@ const Home = () => {
           {error.message}
         </div>
       ) : (
-        <div>
-          <div>{process.env.DOMAIN}</div>
-          <BountiesTable bounties={data.bounty} />
+        <div className="grid grid-cols-6 flex-1 w-full">
+          <div className="">filter</div>
+          <div className="col-span-5 flex flex-col">
+            <div className="tag-list h-16">tags</div>
+            <div className="flex-auto">
+              <BountiesTable bounties={data.bounty} />
+            </div>
+          </div>
         </div>
       )}
     </Layout>
