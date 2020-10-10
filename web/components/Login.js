@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { useAuthContext } from "hooks/AuthContext";
-import Router from "next/router";
-import Link from "next/link";
+import React, { useState } from 'react';
+import { useAuthContext } from 'hooks/AuthContext';
+import Router from 'next/router';
+import Link from 'next/link';
 
 export function Login() {
   const { user, setUser, magic, isLoading } = useAuthContext();
 
-  const [email, setEmail] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [disableLogin, setDisableLogin] = useState(false);
 
   const authenticateWithDb = async (DIDT) => {
     /* Pass the Decentralized ID token in the Authorization header to the database */
     let res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`, {
-      method: "POST",
+      method: 'POST',
       headers: new Headers({
-        Authorization: "Bearer " + DIDT,
+        Authorization: 'Bearer ' + DIDT,
       }),
     });
 
@@ -33,13 +33,13 @@ export function Login() {
 
       /* Get DID Token returned from when the email link is clicked */
       const DIDT = await magic.auth.loginWithMagicLink({ email });
-      
+
       /* `user` will be the user object returned from the db, or `false` if the login failed */
       let user = await authenticateWithDb(DIDT);
 
       if (user) {
         setUser(user);
-        Router.push("/");
+        Router.push('/');
       }
     } catch (err) {
       /* If the user clicked "cancel", allow them to click the login again */
@@ -61,7 +61,8 @@ export function Login() {
         />
       ) : user ? ( // If the user is logged in, show a link to the home page
         <>
-          You're already logged in! Click <Link href="/">here</Link> to go home
+          You&apos;re already logged in! Click <Link href="/">here</Link> to go
+          home
         </>
       ) : (
         <div className="login-form">
@@ -72,7 +73,7 @@ export function Login() {
               type="email"
               value={email}
               onChange={(e) => {
-                setErrorMsg(""); // remove error msg
+                setErrorMsg(''); // remove error msg
                 setEmail(e.target.value);
               }}
             />
@@ -84,7 +85,7 @@ export function Login() {
               disabled={disableLogin}
               onClick={(e) => {
                 e.preventDefault();
-                if (!email) return setErrorMsg("Email cannot be empty.");
+                if (!email) return setErrorMsg('Email cannot be empty.');
                 handleLogin();
               }}
             />

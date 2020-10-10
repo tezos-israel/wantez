@@ -1,14 +1,14 @@
-const fetch = require("isomorphic-unfetch");
+const fetch = require('isomorphic-unfetch');
 
-import { magic } from "lib/magic";
-import { encryptCookie, cookie } from "lib/cookie";
-import { serialize } from "cookie";
+import { magic } from 'lib/magic';
+import { encryptCookie, cookie } from 'lib/cookie';
+import { serialize } from 'cookie';
 
 export default async (req, res) => {
   const { method } = req;
 
-  if (method !== "POST") {
-    return res.status(400).json({ message: "Only POST requests are accepted" });
+  if (method !== 'POST') {
+    return res.status(400).json({ message: 'Only POST requests are accepted' });
   }
 
   /* strip token from Authorization header */
@@ -18,7 +18,7 @@ export default async (req, res) => {
     /* validate token to ensure request came from the issuer */
     await magic.token.validate(DIDT);
   } catch (e) {
-    console.error("failed validation", e);
+    console.error('failed validation', e);
     return res.status(e.status || 500).send({ error: e.message });
   }
 
@@ -33,15 +33,15 @@ export default async (req, res) => {
     const { id } = await createUserIfNeeded(userMetadata);
     userMetadata.id = id;
   } catch (e) {
-    console.error("failed creating user object", e);
+    console.error('failed creating user object', e);
     return res.status(e.status || 500).send({ error: e.message });
   }
 
   try {
     const token = await encryptCookie(userMetadata);
-    await res.setHeader("Set-Cookie", serialize("auth", token, cookie));
+    await res.setHeader('Set-Cookie', serialize('auth', token, cookie));
   } catch (e) {
-    console.error("failed creating cookie", e);
+    console.error('failed creating cookie', e);
     return res.status(e.status || 500).send({ error: e.message });
   }
 
@@ -49,7 +49,7 @@ export default async (req, res) => {
   return res.json({ authorized: true, user: userMetadata });
 };
 
-async function createUserIfNeeded({ email, issuer }) {
+async function createUserIfNeeded({ email }) {
   const mutation = `
     mutation createUserIfNeeded($email: String!) {
       insert_user_one(
@@ -64,9 +64,9 @@ async function createUserIfNeeded({ email, issuer }) {
   const res = await fetch(
     `http${process.env.NEXT_PUBLIC_HASURA_DOMAIN}/v1/graphql`,
     {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({ query: mutation, variables: { email } }),
-      headers: { "x-hasura-admin-secret": "password" },
+      headers: { 'x-hasura-admin-secret': 'password' },
     }
   );
   const data = await res.json();

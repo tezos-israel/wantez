@@ -1,12 +1,12 @@
-import React from "react";
-import Head from "next/head";
-import PropTypes from "prop-types";
+import React from 'react';
+import Head from 'next/head';
+import PropTypes from 'prop-types';
 
-import { useAuthContext } from "hooks/AuthContext";
+import { useAuthContext } from 'hooks/AuthContext';
 
-import NavBar from "./Nav";
+import NavBar from './Nav';
 
-import { useTezosContext } from "hooks/TezosContext";
+import { useTezosContext } from 'hooks/TezosContext';
 
 function Layout({ children, title }) {
   const { user, loading: userLoading, setUser, magic } = useAuthContext();
@@ -17,7 +17,7 @@ function Layout({ children, title }) {
   return (
     <div className="flex flex-col h-screen">
       <Head>
-        <title>{title ? `${title} - ` : ""}Wantez</title>
+        <title>{title ? `${title} - ` : ''}Wantez</title>
       </Head>
 
       <NavBar

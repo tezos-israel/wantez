@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "yarn workspace web dev"
+    "dev": "yarn workspace web dev",
+    "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\""
   },
   "workspaces": [
     "web",

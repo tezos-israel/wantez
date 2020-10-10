@@ -1,11 +1,11 @@
-import React, { createContext, useEffect, useContext } from "react";
-import { useBountiesContract } from "./use-bounties-contract";
-import { useBalanceState } from "./use-balance-state";
-import { useWallet } from "./use-wallet";
-import { useOnRouteChange } from "./useOnRouteChange";
+import React, { createContext, useEffect, useContext } from 'react';
+import { useBountiesContract } from './use-bounties-contract';
+import { useBalanceState } from './use-balance-state';
+import { useWallet } from './use-wallet';
+import { useOnRouteChange } from './useOnRouteChange';
 
 export const TezosContext = createContext({
-  address: "",
+  address: '',
   balance: 0,
   bounties: [],
   connected: false,

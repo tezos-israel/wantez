@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Tezos } from "@taquito/taquito";
+import { useState, useEffect } from 'react';
+import { Tezos } from '@taquito/taquito';
 
 export function useContract(contractAddress) {
   const [contract, setContract] = useState(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [storage, setStorage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [operationsCount, setOperationsCounter] = useState(0);
@@ -24,7 +24,7 @@ export function useContract(contractAddress) {
   };
 
   function clearError() {
-    setError("");
+    setError('');
   }
 
   function increaseOperationsCount() {

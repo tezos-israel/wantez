@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Tezos } from "@taquito/taquito";
+import { useState, useEffect } from 'react';
+import { Tezos } from '@taquito/taquito';
 
-export function useBalanceState(address = "", contractOperationsCount = 0) {
+export function useBalanceState(address = '', contractOperationsCount = 0) {
   const [balance, setBalance] = useState(0);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export function useBalanceState(address = "", contractOperationsCount = 0) {
   return { balance, error, loading, clearError };
 
   function clearError() {
-    setError("");
+    setError('');
   }
 
   async function loadBalance(address) {

@@ -35,8 +35,8 @@ function main(user, context, callback) {
       request.post(
         {
           headers: {
-            "content-type": "application/json",
-            "x-hasura-admin-secret": adminSecret,
+            'content-type': 'application/json',
+            'x-hasura-admin-secret': adminSecret,
           },
           url: url,
           body: JSON.stringify({
@@ -70,7 +70,7 @@ function main(user, context, callback) {
         ({ provider, user_id }) =>
           `{ site: "${provider}", handle: "${user_id}", userId: "${id}" }`
       )
-      .join(", ");
+      .join(', ');
     return `
 			mutation {
   			insert_socialAccount(objects: [${socialAccounts}], on_conflict: {constraint: socialAccount_pkey, update_columns: handle}) {

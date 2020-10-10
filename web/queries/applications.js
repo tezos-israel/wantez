@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const CREATE_APPLICATION = gql`
   mutation($details: String!, $bountyId: uuid!, $paymentAddress: String!) {

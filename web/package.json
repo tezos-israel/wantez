@@ -7,7 +7,6 @@
     "build": "next build",
     "predev": "docker-compose up -d",
     "start": "next start",
-    "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\"",
     "posttest": "npm run format",
     "lint": "eslint . --cache --fix",
     "pretest": "npm run lint"

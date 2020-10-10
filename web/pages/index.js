@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import { useQuery } from "@apollo/client";
+import { useQuery } from '@apollo/client';
 
-import { useTezosContext } from "hooks/TezosContext";
-import { BountiesTable } from "components/BountiesTable";
+import { useTezosContext } from 'hooks/TezosContext';
+import { BountiesTable } from 'components/BountiesTable';
 
-import { GET_BOUNTIES } from "queries/bounties";
-import Layout from "components/Layout";
+import { GET_BOUNTIES } from 'queries/bounties';
+import Layout from 'components/Layout';
 
 const Home = () => {
   const { data, ...queryState } = useQuery(GET_BOUNTIES);

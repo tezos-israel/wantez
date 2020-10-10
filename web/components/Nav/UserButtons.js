@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function UserMenu({ user, loading, inverted, onLogout }) {
   if (loading) {
@@ -10,7 +10,12 @@ export default function UserMenu({ user, loading, inverted, onLogout }) {
   return (
     <>
       {user ? (
-        <button type="button" color="primary" inverted={inverted} onClick={onLogout}>
+        <button
+          type="button"
+          color="primary"
+          inverted={inverted}
+          onClick={onLogout}
+        >
           Log out
         </button>
       ) : (

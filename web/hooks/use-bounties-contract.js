@@ -1,12 +1,12 @@
-import { useReducer } from "react";
-import { useContract } from "./use-contract";
+import { useReducer } from 'react';
+import { useContract } from './use-contract';
 
-const CONTRACT_ADDRESS = "KT1PkEPjZZ7enjoeePcnFhR83AwX2UFjkETL";
+const CONTRACT_ADDRESS = 'KT1PkEPjZZ7enjoeePcnFhR83AwX2UFjkETL';
 const types = {
-  OPERATION_STARTED: "OPERATION_STARTED",
-  OPERATION_FINISHED: "OPERATION_FINISHED",
-  OPERATION_FAILED: "OPERATION_FAILED",
-  CLEAR_ERROR: "CLEAR_ERROR",
+  OPERATION_STARTED: 'OPERATION_STARTED',
+  OPERATION_FINISHED: 'OPERATION_FINISHED',
+  OPERATION_FAILED: 'OPERATION_FAILED',
+  CLEAR_ERROR: 'CLEAR_ERROR',
 };
 
 export function useBountiesContract() {
@@ -49,7 +49,7 @@ export function useBountiesContract() {
     } catch (error) {
       dispatch({
         type: types.OPERATION_FAILED,
-        error: error.message || "Failed",
+        error: error.message || 'Failed',
       });
       throw error;
     }

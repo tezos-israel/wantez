@@ -1,12 +1,12 @@
-import { decryptCookie } from "lib/cookie";
+import { decryptCookie } from 'lib/cookie';
 
 export default async (req, res) => {
   const { method } = req;
 
-  if (method !== "GET") {
+  if (method !== 'GET') {
     return res
       .status(400)
-      .json({ message: "This route only accepts GET requests" });
+      .json({ message: 'This route only accepts GET requests' });
   }
 
   try {

@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import { Magic } from "magic-sdk";
-import fetch from "isomorphic-unfetch";
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { Magic } from 'magic-sdk';
+import fetch from 'isomorphic-unfetch';
 /* initializing context API values */
 const AuthContext = createContext();
 

@@ -1,9 +1,9 @@
-import fetch from "isomorphic-unfetch";
-import { HttpLink, ApolloClient } from "@apollo/client";
-import { InMemoryCache } from "@apollo/client/cache";
-import { onError } from "@apollo/client/link/error";
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { SubscriptionClient } from "subscriptions-transport-ws";
+import fetch from 'isomorphic-unfetch';
+import { HttpLink, ApolloClient } from '@apollo/client';
+import { InMemoryCache } from '@apollo/client/cache';
+import { onError } from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 let accessToken = null;
 const HASURA_DOMAIN = process.env.NEXT_PUBLIC_HASURA_DOMAIN;
@@ -24,7 +24,7 @@ const requestAccessToken = async () => {
 onError(({ networkError }) => {
   if (
     networkError &&
-    networkError.name === "ServerError" &&
+    networkError.name === 'ServerError' &&
     networkError.statusCode === 401
   ) {
     accessToken = null;
@@ -34,7 +34,7 @@ onError(({ networkError }) => {
 const createHttpLink = (headers) => {
   const httpLink = new HttpLink({
     uri: `http${HASURA_DOMAIN}/v1/graphql`,
-    credentials: "include",
+    credentials: 'include',
     headers, // auth token is fetched on the server side
     fetch,
   });
@@ -61,7 +61,7 @@ const createWSLink = () => {
 };
 
 export default function createApolloClient(initialState, headers) {
-  const ssrMode = typeof window === "undefined";
+  const ssrMode = typeof window === 'undefined';
   let link;
   if (ssrMode) {
     link = createHttpLink(headers); // executed on server
