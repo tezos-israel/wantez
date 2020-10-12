@@ -7,6 +7,7 @@ import { BountiesTable } from 'components/BountiesTable';
 
 import { GET_BOUNTIES } from 'queries/bounties';
 import Layout from 'components/Layout';
+import { Filter } from 'components/Filter';
 
 const Home = () => {
   const { data, ...queryState } = useQuery(GET_BOUNTIES);
@@ -26,7 +27,7 @@ const Home = () => {
         </div>
       ) : (
         <div className="grid grid-cols-6 flex-1 w-full">
-          <div className="">filter</div>
+          <Filter />
           <div className="col-span-5 flex flex-col">
             <div className="tag-list h-16">tags</div>
             <div className="flex-auto">
