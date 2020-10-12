@@ -1,0 +1,1 @@
+export { BountiesList } from './BountiesList';

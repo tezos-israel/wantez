@@ -1,3 +1,3 @@
 export { Filter } from './Filter';
-export { BountiesTable } from './BountiesTable';
+export { BountiesList } from './BountiesList';
 export { TagsList } from './TagsList';
