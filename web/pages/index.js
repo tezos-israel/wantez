@@ -3,11 +3,11 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 
 import { useTezosContext } from 'hooks/TezosContext';
-import { BountiesTable } from 'components/BountiesTable';
 
 import { GET_BOUNTIES } from 'queries/bounties';
 import Layout from 'components/Layout';
-import { Filter } from 'components/Filter';
+import { BountiesTable } from 'components/Dashboard/BountiesTable';
+import { Filter } from 'components/Dashboard/Filter';
 
 const Home = () => {
   const { data, ...queryState } = useQuery(GET_BOUNTIES);
@@ -26,10 +26,10 @@ const Home = () => {
           {error.message}
         </div>
       ) : (
-        <div className="grid grid-cols-6 flex-1 w-full">
+        <div className="grid flex-1 w-full grid-cols-6">
           <Filter />
-          <div className="col-span-5 flex flex-col">
-            <div className="tag-list h-16">tags</div>
+          <div className="flex flex-col col-span-5">
+            <div className="h-16 tag-list">tags</div>
             <div className="flex-auto">
               <BountiesTable bounties={data.bounty} />
             </div>
