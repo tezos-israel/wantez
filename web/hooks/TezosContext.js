@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useBountiesContract } from './use-bounties-contract';
 import { useBalanceState } from './use-balance-state';
 import { useWallet } from './use-wallet';
@@ -14,6 +14,8 @@ export const TezosContext = createContext({
   issueBounty() {},
   refundBounty() {},
   approveApplication() {},
+  connectToContract() {},
+  connectToWallet() {},
 });
 
 export const useTezosContext = () => useContext(TezosContext);
@@ -48,11 +50,6 @@ export function TezosProvider({ children }) {
     clearBalanceError();
   });
 
-  useEffect(() => {
-    connect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const loading =
     operationState.loading ||
     contractState.loading ||
@@ -76,14 +73,11 @@ export function TezosProvider({ children }) {
         issueBounty,
         refundBounty,
         approveApplication,
+        connectToWallet,
+        connectToContract,
       }}
     >
       {children}
     </TezosContext.Provider>
   );
-
-  async function connect() {
-    await connectToWallet();
-    await connectToContract();
-  }
 }

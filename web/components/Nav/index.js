@@ -7,7 +7,9 @@ import logo from './site-logo.svg';
 import UserButtons from './UserButtons';
 
 export default function Nav({ loading, user, balance, address, onLogout }) {
-  const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
+  const shortAddress = address
+    ? `${address.substr(0, 5)}...${address.substr(-5)}`
+    : '';
   return (
     <nav
       className="fixed flex items-center justify-end w-full h-20 px-6 bg-gradient-to-l"
@@ -27,8 +29,14 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
         </>
       )}
       <div className="flex items-center space-x-4">
-        <div>{!loading && shortAddress}</div>
-        <div>{!loading && balance}</div>
+        {!loading && address ? (
+          <div>
+            <div>{shortAddress}</div>
+            <div>{balance}</div>
+          </div>
+        ) : (
+          <div className="text-sm text-red-600">Not connected to wallet</div>
+        )}
         <UserButtons user={user} loading={loading} onLogout={onLogout} />
       </div>
     </nav>
