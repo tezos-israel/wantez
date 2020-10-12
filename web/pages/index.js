@@ -6,8 +6,7 @@ import { useTezosContext } from 'hooks/TezosContext';
 
 import { GET_BOUNTIES } from 'queries/bounties';
 import Layout from 'components/Layout';
-import { BountiesTable } from 'components/Dashboard/BountiesTable';
-import { Filter } from 'components/Dashboard/Filter';
+import { BountiesTable, Filter, TagsList } from 'components/Dashboard';
 
 const Home = () => {
   const { data, ...queryState } = useQuery(GET_BOUNTIES);
@@ -29,7 +28,9 @@ const Home = () => {
         <div className="grid flex-1 w-full grid-cols-6">
           <Filter />
           <div className="flex flex-col col-span-5">
-            <div className="h-16 tag-list">tags</div>
+            <div className="h-20 tag-list">
+              <TagsList />
+            </div>
             <div className="flex-auto">
               <BountiesTable bounties={data.bounty} />
             </div>
