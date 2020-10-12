@@ -9,8 +9,8 @@ import UserButtons from './UserButtons';
 export default function Nav({ loading, user, balance, address, onLogout }) {
   const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
   return (
-    <div
-      className="h-20 bg-gradient-to-l  flex items-center px-6 justify-end"
+    <nav
+      className="fixed flex items-center justify-end w-full h-20 px-6 bg-gradient-to-l"
       style={{
         '--gradient-color-stops': '#0e453c, #06211c',
       }}
@@ -26,12 +26,12 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
           </button>
         </>
       )}
-      <div className="flex space-x-4 items-center">
+      <div className="flex items-center space-x-4">
         <div>{!loading && shortAddress}</div>
         <div>{!loading && balance}</div>
         <UserButtons user={user} loading={loading} onLogout={onLogout} />
       </div>
-    </div>
+    </nav>
   );
 }
 
