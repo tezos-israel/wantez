@@ -1,10 +1,17 @@
 import React from 'react';
+
+import { FilterOption } from './FilterOption';
 import headerIcon from './filter-header-icon.svg';
 
 export function Filter() {
   return (
-    <div className="bg-gradient-to-b to-blue-900 from-blue-400 p-10">
-      <h2 className="flex text-3xl font-bold capitalize text-teal-400">
+    <div
+      className="p-10 bg-gradient-to-b"
+      style={{
+        '--gradient-color-stops': '#2d7df8, #0a2c61',
+      }}
+    >
+      <h2 className="flex mb-6 text-3xl font-bold text-teal-400 capitalize">
         <img
           src={headerIcon}
           alt="filter"
@@ -13,15 +20,11 @@ export function Filter() {
         />
         Filter
       </h2>
-      <div>
-        <h3>Status</h3>
-        <ul>
-          <li>3 work submitted</li>
-          <li>3 work submitted</li>
-          <li>3 work submitted</li>
-          <li>3 work submitted</li>
-        </ul>
-      </div>
+      <FilterOption />
+      <div className="my-6 border-t-2 border-white border-dashed" />
+      <FilterOption />
+      <div className="my-6 border-t-2 border-white border-dashed" />
+      <FilterOption />
     </div>
   );
 }

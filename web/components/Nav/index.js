@@ -9,7 +9,12 @@ import UserButtons from './UserButtons';
 export default function Nav({ loading, user, balance, address, onLogout }) {
   const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
   return (
-    <div className="h-20 bg-gradient-to-l from-green-900 to-black flex items-center px-6 justify-end">
+    <div
+      className="h-20 bg-gradient-to-l  flex items-center px-6 justify-end"
+      style={{
+        '--gradient-color-stops': '#0e453c, #06211c',
+      }}
+    >
       <Link href="/">
         <img src={logo} alt="logo" className="mb-1 mr-auto" />
       </Link>
