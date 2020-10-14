@@ -66,7 +66,7 @@ async function createUserIfNeeded({ email }) {
     {
       method: 'POST',
       body: JSON.stringify({ query: mutation, variables: { email } }),
-      headers: { 'x-hasura-admin-secret': 'password' },
+      headers: { 'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET },
     }
   );
   const data = await res.json();
