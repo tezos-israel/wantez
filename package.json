@@ -2,7 +2,7 @@
   "name": "wantez",
   "version": "0.0.1",
   "main": "index.js",
-  "repository": "git@gitlab.com:chiptus/gitez.git",
+  "repository": "git@gitlab.com:tezosisrael/wantez.git",
   "author": "Chaim Lev-Ari <chiptus@gmail.com>",
   "license": "MIT",
   "private": true,
