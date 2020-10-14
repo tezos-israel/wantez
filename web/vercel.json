@@ -2,7 +2,7 @@
   "env": {
     "NEXT_PUBLIC_HASURA_DOMAIN": "s://fun-joey-30.hasura.app",
     "NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY": "pk_test_A8C0CF234484565D",
-    "NEXT_PUBLIC_SERVER_URL": "https://wantez.vercel.app",
+    "NEXT_PUBLIC_SERVER_URL": "",
     "ENCRYPTION_SECRET": "@cookie_encryption_key",
     "MAGIC_SECRET_KEY": "@magic_secret_key"
   },
@@ -10,7 +10,7 @@
     "env": {
       "NEXT_PUBLIC_HASURA_DOMAIN": "s://fun-joey-30.hasura.app",
       "NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY": "pk_test_A8C0CF234484565D",
-      "NEXT_PUBLIC_SERVER_URL": "https://wantez.vercel.app",
+      "NEXT_PUBLIC_SERVER_URL": "",
       "ENCRYPTION_SECRET": "@cookie_encryption_key",
       "MAGIC_SECRET_KEY": "@magic_secret_key"
     }
