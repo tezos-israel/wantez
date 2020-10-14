@@ -1,26 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 
+import { useBoolean } from 'hooks/useBoolean';
+import { LoginModal } from 'components/LoginModal';
 import { Button } from 'components/shared/Button';
 
 export default function UserMenu({ user, loading, onLogout }) {
+  const [isModalOpen, openModal, closeModal] = useBoolean();
+
   if (loading) {
     return null;
   }
+
   return (
     <>
       {user ? (
-        <Button type="button" color="primary" onClick={onLogout}>
-          Log out
-        </Button>
+        <div>
+          <span>{user.email}</span>
+          <Button type="button" color="primary" onClick={onLogout}>
+            Log out
+          </Button>
+        </div>
       ) : (
-        <Link href="/login" passHref>
-          <a>
-            <Button color="primary">Log in / Sign up</Button>
-          </a>
-        </Link>
+        <Button color="primary" onClick={openModal}>
+          Log in / Sign up
+        </Button>
       )}
+      <LoginModal isOpen={isModalOpen} onDismiss={closeModal} />
     </>
   );
 }

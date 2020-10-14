@@ -4,6 +4,7 @@ import { withApollo } from '../lib/withApollo';
 
 import { TezosProvider } from '../hooks/TezosContext';
 import { AuthProvider } from '../hooks/AuthContext';
+import '@reach/dialog/styles.css';
 import 'styles/_app.css';
 import 'styles/tailwind.css';
 

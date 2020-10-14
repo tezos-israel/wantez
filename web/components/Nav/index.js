@@ -10,6 +10,7 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
   const shortAddress = address
     ? `${address.substr(0, 5)}...${address.substr(-5)}`
     : '';
+
   return (
     <nav
       className="fixed flex items-center justify-end w-full h-20 px-6 bg-gradient-to-l"
@@ -23,9 +24,9 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
 
       {!loading && user && (
         <>
-          <button type="submit">
+          {/* <button type="submit">
             <Link href="/bounty/create">Create Bounty</Link>
-          </button>
+          </button> */}
         </>
       )}
       <div className="flex items-center space-x-4">
