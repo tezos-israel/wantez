@@ -12,8 +12,7 @@
     "pretest": "npm run lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.3",
-    "@auth0/nextjs-auth0": "^0.15.0",
+    "@apollo/client": "^3.2.4",
     "@date-io/date-fns": "^2.10.6",
     "@hapi/iron": "^6.0.0",
     "@hookform/error-message": "^0.0.4",
