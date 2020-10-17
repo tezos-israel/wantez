@@ -76,6 +76,7 @@
 - table:
     schema: public
     name: applicationStatusType
+  is_enum: true
   array_relationships:
   - name: applications
     using:
@@ -88,9 +89,20 @@
     schema: public
     name: bounty
   object_relationships:
+  - name: application
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: application
+        column_mapping:
+          id: bountyId
   - name: bountyStatusType
     using:
       foreign_key_constraint_on: status
+  - name: categoryByCategory
+    using:
+      foreign_key_constraint_on: category
   - name: funder
     using:
       foreign_key_constraint_on: funderId
@@ -123,15 +135,17 @@
   - role: public
     permission:
       columns:
-      - contractAddress
+      - category
       - createdAt
       - deadline
       - description
+      - experienceLevel
       - fee
       - funderId
       - id
       - issueUrl
       - status
+      - timeCommitment
       - title
       - updatedAt
       filter: {}
@@ -139,15 +153,17 @@
   - role: user
     permission:
       columns:
-      - contractAddress
+      - category
       - createdAt
       - deadline
       - description
+      - experienceLevel
       - fee
       - funderId
       - id
       - issueUrl
       - status
+      - timeCommitment
       - title
       - updatedAt
       filter: {}
@@ -156,10 +172,13 @@
   - role: user
     permission:
       columns:
+      - category
       - deadline
       - description
+      - experienceLevel
       - issueUrl
       - status
+      - timeCommitment
       - title
       filter:
         funderId:
@@ -176,6 +195,7 @@
 - table:
     schema: public
     name: bountyStatusTypes
+  is_enum: true
   array_relationships:
   - name: bounties
     using:
@@ -184,6 +204,36 @@
         table:
           schema: public
           name: bounty
+- table:
+    schema: public
+    name: category
+  is_enum: true
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - category
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - category
+      filter: {}
+- table:
+    schema: public
+    name: experienceLevel
+  is_enum: true
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - experienceLevel
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - experienceLevel
+      filter: {}
 - table:
     schema: public
     name: site
@@ -202,6 +252,10 @@
   - name: siteBySite
     using:
       foreign_key_constraint_on: site
+- table:
+    schema: public
+    name: timeCommitmentTypes
+  is_enum: true
 - table:
     schema: public
     name: user
