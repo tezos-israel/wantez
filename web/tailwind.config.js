@@ -11,6 +11,9 @@ module.exports = {
       width: {
         content: 'fit-content',
       },
+      fontFamily: {
+        header: ['Oswald'],
+      },
     },
   },
   variants: {
