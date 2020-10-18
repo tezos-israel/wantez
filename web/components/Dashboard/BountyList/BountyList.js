@@ -21,7 +21,7 @@ export function BountyList({ bounties }) {
         {bounties.map((bounty) => (
           <BountyListItem
             key={bounty.id}
-            title="Browser Automation: Tool To Automate Dune Analytics Refreshs"
+            title={bounty.title}
             imgUrl="https://via.placeholder.com/100"
           />
         ))}
