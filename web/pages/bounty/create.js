@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Layout from 'components/Layout';
+import { BountyForm } from 'components/BountyForm';
+
 import logoUrl from './create-icon.svg';
 import halfCirclePaper from './half-circle-paper.svg';
 
@@ -20,13 +22,10 @@ export default function CreateBounty() {
             </div>
           </div>
           <div className="bg-white">
-            <div
-              style={{ marginTop: '-6px', width: '97%' }}
-              className="mx-auto mb-10"
-            >
+            <div className="absolute mx-4 transform -translate-y-1/2">
               <img src={halfCirclePaper} />
             </div>
-            <form action="">Form</form>
+            <BountyForm />
           </div>
         </div>
       </div>
