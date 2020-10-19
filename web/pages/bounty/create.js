@@ -4,7 +4,6 @@ import Layout from 'components/Layout';
 import { BountyForm } from 'components/BountyForm';
 
 import logoUrl from './create-icon.svg';
-import halfCirclePaper from './half-circle-paper.svg';
 
 export default function CreateBounty() {
   return (
@@ -21,12 +20,8 @@ export default function CreateBounty() {
               Fund your OSS issue and work with talented developers!
             </div>
           </div>
-          <div className="bg-white">
-            <div className="absolute mx-4 transform -translate-y-1/2">
-              <img src={halfCirclePaper} />
-            </div>
-            <BountyForm />
-          </div>
+
+          <BountyForm />
         </div>
       </div>
     </Layout>
