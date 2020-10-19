@@ -14,6 +14,10 @@ module.exports = {
       fontFamily: {
         header: ['Oswald'],
       },
+      inset: {
+        '-1/2': '-50%',
+        '-35': '-35%',
+      },
     },
   },
   variants: {
