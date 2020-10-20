@@ -10,7 +10,12 @@ import { useTezosContext } from 'hooks/TezosContext';
 
 function Layout({ children, title }) {
   const { user, loading: userLoading, setUser, magic } = useAuthContext();
-  const { address, balance, ...tezosState } = useTezosContext();
+  const {
+    address,
+    balance,
+    connectToWallet,
+    ...tezosState
+  } = useTezosContext();
 
   const loading = userLoading || tezosState.loading;
 
@@ -26,6 +31,7 @@ function Layout({ children, title }) {
         user={user}
         loading={loading}
         onLogout={handleLogout}
+        onClickWallet={!address ? connectToWallet : () => {}}
       />
 
       <main className="flex flex-col items-center justify-center flex-auto mt-20">

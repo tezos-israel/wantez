@@ -4,13 +4,17 @@ import Link from 'next/link';
 
 import logo from './site-logo.svg';
 
-import UserButtons from './UserButtons';
+import { UserMenu } from './UserMenu';
+import { WalletMenu } from './WalletMenu';
 
-export default function Nav({ loading, user, balance, address, onLogout }) {
-  const shortAddress = address
-    ? `${address.substr(0, 5)}...${address.substr(-5)}`
-    : '';
-
+export default function Nav({
+  loading,
+  user,
+  balance,
+  address,
+  onLogout,
+  onClickWallet,
+}) {
   return (
     <nav
       className="fixed z-50 flex items-center w-full h-20 px-6 bg-gradient-to-l"
@@ -28,15 +32,14 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
       </div>
 
       <div className="flex items-center ml-auto space-x-4">
-        {!loading && address ? (
-          <div>
-            <div>{shortAddress}</div>
-            <div>{balance}</div>
-          </div>
-        ) : (
-          <div className="text-sm text-red-600">Not connected to wallet</div>
-        )}
-        <UserButtons user={user} loading={loading} onLogout={onLogout} />
+        <div className="h-8 border-r-2 border-teal-500"></div>
+        <WalletMenu
+          address={address}
+          balance={balance}
+          onClick={onClickWallet}
+        />
+        <div className="h-8 border-r-2 border-teal-500"></div>
+        <UserMenu user={user} loading={loading} onLogout={onLogout} />
       </div>
     </nav>
   );
@@ -48,4 +51,5 @@ Nav.propTypes = {
   address: PropTypes.string,
   balance: PropTypes.number,
   onLogout: PropTypes.func.isRequired,
+  onClickWallet: PropTypes.func.isRequired,
 };
