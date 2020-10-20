@@ -2,6 +2,8 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 import { FieldGroup } from 'components/shared/FieldGroup';
+import { FormField } from 'components/shared/FormField';
+import { OptionsField } from 'components/shared/OptionsField';
 
 import { BountyCategory } from './BountyCategory';
 
@@ -50,10 +52,40 @@ export function BountyForm() {
           </FieldGroup>
         </div>
       </div>
-      <div className="p-10 mt-2 bg-white">
-        <FieldGroup title="Details"></FieldGroup>
-
-        <FieldGroup title="PricingF"></FieldGroup>
+      <div className="p-10 mt-2 space-y-6 bg-white">
+        <FieldGroup title="Details">
+          <div className="grid grid-cols-3 gap-3">
+            <FormField title="Experience Level" fieldId="beginner-input">
+              <OptionsField
+                optionsName="experienceLevel"
+                options={[
+                  { value: 'beginner', title: 'Beginner' },
+                  { value: 'medium', title: 'Medium' },
+                  { value: 'pro', title: 'Pro' },
+                ]}
+              />
+            </FormField>
+            <FormField title="Time Commitment" fieldId="hours-input">
+              <OptionsField
+                optionsName="timeCommitment"
+                options={[
+                  { value: 'hours', title: 'Hours' },
+                  { value: 'days', title: 'Days' },
+                  { value: 'weeks', title: 'Weeks' },
+                  { value: 'months', title: 'Months' },
+                ]}
+              />
+            </FormField>
+          </div>
+        </FieldGroup>
+        {/*         
+        <FieldGroup title="Pricing">
+          <div className="grid grid-cols-3 gap-3">
+            <FormField title="Amount (XTZ)"></FormField>
+            <FormField title="USD $"></FormField>
+            <FormField title="Est. Hours of works"></FormField>
+          </div>
+        </FieldGroup> */}
       </div>
     </form>
   );
