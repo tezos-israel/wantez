@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import logo from './site-logo.svg';
 
-import { Button } from 'components/shared/Button';
 import UserButtons from './UserButtons';
 
 export default function Nav({ loading, user, balance, address, onLogout }) {
@@ -13,33 +11,23 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
     ? `${address.substr(0, 5)}...${address.substr(-5)}`
     : '';
 
-  const router = useRouter();
-
-  const isBountiesPage = router.pathname === '/';
-  const isCreateBountyPage = router.pathname === '/bounty/create';
-
   return (
     <nav
-      className="fixed z-50 flex items-center justify-end w-full h-20 px-6 bg-gradient-to-l"
+      className="fixed z-50 flex items-center w-full h-20 px-6 bg-gradient-to-l"
       style={{
         '--gradient-color-stops': '#0e453c, #06211c',
       }}
     >
       <Link href="/">
-        <img src={logo} alt="logo" className="mb-1 mr-auto" />
+        <img src={logo} alt="logo" className="mb-1" />
       </Link>
 
-      {(!loading && user && isBountiesPage && (
-        <Button>
-          <Link href="/bounty/create">Create Bounty</Link>
-        </Button>
-      )) ||
-        (isCreateBountyPage && (
-          <Button>
-            <Link href="/">Bounties</Link>
-          </Button>
-        ))}
-      <div className="flex items-center space-x-4">
+      <div className="ml-20 space-x-6 text-white">
+        <Link href="/">Explore</Link>
+        {user && <Link href="/bounty/create">Fund</Link>}
+      </div>
+
+      <div className="flex items-center ml-auto space-x-4">
         {!loading && address ? (
           <div>
             <div>{shortAddress}</div>
