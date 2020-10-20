@@ -20,7 +20,7 @@ export default function Nav({ loading, user, balance, address, onLogout }) {
 
   return (
     <nav
-      className="fixed flex items-center justify-end w-full h-20 px-6 bg-gradient-to-l"
+      className="fixed z-50 flex items-center justify-end w-full h-20 px-6 bg-gradient-to-l"
       style={{
         '--gradient-color-stops': '#0e453c, #06211c',
       }}

@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import { FieldGroup } from 'components/shared/FieldGroup';
+import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
 
@@ -36,7 +36,7 @@ export function BountyForm() {
               </label>
             )}
           >
-            <input className="border border-solid border-grey-500 form-input " />
+            <input className="border border-gray-500 rounded-none form-input " />
           </FieldGroup>
           <div className="my-6 border-t-2 border-blue-500 border-dashed" />
           <FieldGroup title="Issue Category">
@@ -78,14 +78,69 @@ export function BountyForm() {
             </FormField>
           </div>
         </FieldGroup>
-        {/*         
+
         <FieldGroup title="Pricing">
           <div className="grid grid-cols-3 gap-3">
-            <FormField title="Amount (XTZ)"></FormField>
-            <FormField title="USD $"></FormField>
-            <FormField title="Est. Hours of works"></FormField>
+            <FormField title="Amount (XTZ)" fieldId="amount-input">
+              <input
+                type="number"
+                className="w-full border border-gray-500 rounded-none form-input"
+              />
+            </FormField>
+            <FormField title="USD $" fieldId="usd-input">
+              <input
+                type="number"
+                className="w-full border border-gray-500 rounded-none form-input"
+              />
+            </FormField>
+            <FormField title="Est. Hours of works" fieldId="est-hours-input">
+              <input
+                type="number"
+                className="w-full border border-gray-500 rounded-none form-input"
+              />
+            </FormField>
           </div>
-        </FieldGroup> */}
+        </FieldGroup>
+      </div>
+      <div className="px-10 py-4 mt-2 bg-white">
+        <FieldGroupTitle title="FEATURE YOUR BOUNTY" bottomGap="mb-2" />
+        <p className="text-sm text-gray-500">
+          Get more visibility and feature your bounty at the top of Issue
+          Explorer - Coming soon!
+        </p>
+      </div>
+      <div className="p-10 mt-2 bg-white">
+        <FieldGroup title="Total">
+          <div className="text-4xl font-bold text-blue-500">0.001 XTZ</div>
+          <p className="text-xs text-green-600">
+            Bounty 0.0010 ETH ($0.38) + 0 ETH Gitcoin Platform Fee
+          </p>
+        </FieldGroup>
+        <div className="my-6 border-t-2 border-blue-500 border-dashed" />
+        <label className="block">
+          <input
+            className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
+            type="checkbox"
+          />
+          <span className="text-xs text-gray-600">
+            I have read, understand, and agree to, the Terms of Service.
+          </span>
+        </label>
+        <label className="block">
+          <input
+            className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
+            type="checkbox"
+          />
+          <span className="text-xs text-gray-600 ">
+            Payment Upon Completion. Upon delivery of work, I agree to pay the
+            proposed amount to the fulfiller(s) if the submitted fulfillment
+            meets the standards I have set forth.
+          </span>
+        </label>
+
+        <button className="block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md">
+          Fund Issue
+        </button>
       </div>
     </form>
   );
