@@ -6,7 +6,7 @@ import headerIcon from './filter-header-icon.svg';
 export function Filter() {
   return (
     <div
-      className="p-10 bg-gradient-to-b"
+      className="p-10 bg-gradient-to-b h-full"
       style={{
         '--gradient-color-stops': '#2d7df8, #0a2c61',
       }}
