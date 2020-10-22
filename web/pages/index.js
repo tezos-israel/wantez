@@ -25,9 +25,11 @@ const Home = () => {
           {error.message}
         </div>
       ) : (
-        <div className="grid flex-1 w-full grid-cols-6">
-          <Filter />
-          <div className="flex flex-col col-span-5">
+        <div className="grid flex-1 w-full grid-cols-4">
+          <div className="col-span-1">
+            <Filter />
+          </div>
+          <div className="flex flex-col col-span-3">
             <div className="h-20 tag-list">
               <TagsList />
             </div>
