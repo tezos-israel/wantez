@@ -6,7 +6,7 @@ import { useTezosContext } from 'hooks/TezosContext';
 
 import { GET_BOUNTIES } from 'queries/bounties';
 import Layout from 'components/Layout';
-import { IssueList, Filter, TagsList } from 'components/Dashboard';
+import { WantezList, Filter, TagsList } from 'components/Dashboard';
 
 export default function ExplorePage() {
   const { data, ...queryState } = useQuery(GET_BOUNTIES);
@@ -34,7 +34,7 @@ export default function ExplorePage() {
               <TagsList />
             </div>
             <div className="flex-auto">
-              <IssueList bounties={data.bounty} />
+              <WantezList bounties={data.bounty} />
             </div>
           </div>
         </div>

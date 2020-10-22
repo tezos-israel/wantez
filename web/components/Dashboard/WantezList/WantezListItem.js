@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function BountyListItem({ title, imgUrl }) {
+export function WantezListItem({ title, imgUrl }) {
   return (
     <div className="flex h-32 py-4 pl-8 mr-8 border-4 border-l-0 border-blue-500 border-solid ">
       <div className="h-50 w-50">
@@ -39,7 +39,7 @@ export function BountyListItem({ title, imgUrl }) {
   );
 }
 
-BountyListItem.propTypes = {
+WantezListItem.propTypes = {
   title: PropTypes.string.isRequired,
   imgUrl: PropTypes.string.isRequired,
 };
