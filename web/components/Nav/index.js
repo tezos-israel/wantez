@@ -16,12 +16,7 @@ export default function Nav({
   onClickWallet,
 }) {
   return (
-    <nav
-      className="fixed z-50 flex items-center w-full h-20 px-6 bg-gradient-to-l"
-      style={{
-        '--gradient-color-stops': '#0e453c, #06211c',
-      }}
-    >
+    <nav className="fixed z-50 flex items-center w-full h-20 px-6 bg-gradient-to-l from-nava to-navb">
       <Link href="/">
         <img src={logo} alt="logo" className="mb-1" />
       </Link>

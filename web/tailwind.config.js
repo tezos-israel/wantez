@@ -18,6 +18,10 @@ module.exports = {
         '-1/2': '-50%',
         '-35': '-35%',
       },
+      gradientColorStops: {
+        nava: '#0e453c',
+        navb: '#06211c',
+      },
     },
   },
   variants: {

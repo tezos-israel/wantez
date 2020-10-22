@@ -24,9 +24,9 @@ const categories = [
 export function IssueForm() {
   return (
     <form>
-      <div className="bg-white ">
-        <div className="mx-4 transform -translate-y-1/2 ">
-          <img src={halfCirclePaper} />
+      <div className="bg-white">
+        <div className="mx-4 transform -translate-y-1/2">
+          <img src={halfCirclePaper} className="w-full" />
         </div>
         <div className="p-10">
           <FieldGroup

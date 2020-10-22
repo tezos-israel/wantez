@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useAuthContext } from 'hooks/AuthContext';
 
 import NavBar from './Nav';
-
+import { Footer } from './Footer';
 import { useTezosContext } from 'hooks/TezosContext';
 
 function Layout({ children, title }) {
@@ -37,6 +37,7 @@ function Layout({ children, title }) {
       <main className="flex flex-col items-center justify-center flex-auto mt-20">
         {children}
       </main>
+      <Footer />
     </div>
   );
 
