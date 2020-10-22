@@ -27,8 +27,8 @@ export default function Nav({
       </Link>
 
       <div className="ml-20 space-x-6 text-white">
-        <Link href="/">Explore</Link>
-        {user && <Link href="/bounty/create">Fund</Link>}
+        <Link href="/explore">Explore</Link>
+        {user && <Link href="/fund">Fund</Link>}
       </div>
 
       <div className="flex items-center ml-auto space-x-4">

@@ -1,3 +1,3 @@
 export { Filter } from './Filter';
-export { BountyList } from './BountyList';
+export { WantezList } from './WantezList';
 export { TagsList } from './TagsList';

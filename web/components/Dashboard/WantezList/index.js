@@ -1,0 +1,1 @@
+export { WantezList } from './WantezList';

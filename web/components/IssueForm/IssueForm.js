@@ -5,7 +5,7 @@ import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
 
-import { BountyCategory } from './BountyCategory';
+import { IssueCategory } from './IssueCategory';
 
 import halfCirclePaper from './half-circle-paper.svg';
 import CategoryFrontend from './CategoryFrontend.svg';
@@ -21,7 +21,7 @@ const categories = [
   { title: 'Other', id: 'other' },
 ];
 
-export function BountyForm() {
+export function IssueForm() {
   return (
     <form>
       <div className="bg-white ">
@@ -46,7 +46,7 @@ export function BountyForm() {
             </p>
             <div className="flex mt-3 space-x-4">
               {categories.map((category) => (
-                <BountyCategory {...category} key={category.title} />
+                <IssueCategory {...category} key={category.title} />
               ))}
             </div>
           </FieldGroup>
@@ -103,9 +103,9 @@ export function BountyForm() {
         </FieldGroup>
       </div>
       <div className="px-10 py-4 mt-2 bg-white">
-        <FieldGroupTitle title="FEATURE YOUR BOUNTY" bottomGap="mb-2" />
+        <FieldGroupTitle title="FEATURE YOUR Issue" bottomGap="mb-2" />
         <p className="text-sm text-gray-500">
-          Get more visibility and feature your bounty at the top of Issue
+          Get more visibility and feature your issue at the top of Issue
           Explorer - Coming soon!
         </p>
       </div>
@@ -113,7 +113,7 @@ export function BountyForm() {
         <FieldGroup title="Total">
           <div className="text-4xl font-bold text-blue-500">0.001 XTZ</div>
           <p className="text-xs text-green-600">
-            Bounty 0.0010 ETH ($0.38) + 0 ETH Gitcoin Platform Fee
+            Issue 0.0010 ETH ($0.38) + 0 ETH Gitcoin Platform Fee
           </p>
         </FieldGroup>
         <div className="my-6 border-t-2 border-blue-500 border-dashed" />

@@ -10,9 +10,9 @@
   - tag
   - search box
 - sort
-- bounty list
+- wantez list
 
-  - bounty item
+  - wantez item
     - icon
     - title
     - wrapper

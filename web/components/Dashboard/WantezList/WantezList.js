@@ -1,9 +1,9 @@
 import React from 'react';
 import propTypes from 'prop-types';
 // import Link from 'next/link';
-import { BountyListItem } from './BountyListItem';
+import { WantezListItem } from './WantezListItem';
 
-export function BountyList({ bounties }) {
+export function WantezList({ bounties }) {
   return (
     <div className="flex flex-col">
       <div className="flex justify-between px-8 py-4">
@@ -18,10 +18,10 @@ export function BountyList({ bounties }) {
         </div>
       </div>
       <div className="space-y-4">
-        {bounties.map((bounty) => (
-          <BountyListItem
-            key={bounty.id}
-            title={bounty.title}
+        {bounties.map((Wantez) => (
+          <WantezListItem
+            key={Wantez.id}
+            title={Wantez.title}
             imgUrl="https://via.placeholder.com/100"
           />
         ))}
@@ -35,6 +35,6 @@ export function BountyList({ bounties }) {
   );
 }
 
-BountyList.propTypes = {
+WantezList.propTypes = {
   bounties: propTypes.array.isRequired,
 };

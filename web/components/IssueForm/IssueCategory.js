@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function BountyCategory({ title, imgUrl, id }) {
+export function IssueCategory({ title, imgUrl, id }) {
   const inputId = `input-${id}`;
   return (
     <>
@@ -35,7 +35,7 @@ export function BountyCategory({ title, imgUrl, id }) {
   );
 }
 
-BountyCategory.propTypes = {
+IssueCategory.propTypes = {
   title: PropTypes.string.isRequired,
   imgUrl: PropTypes.string,
   id: PropTypes.string.isRequired,

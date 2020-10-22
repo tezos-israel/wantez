@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Layout from 'components/Layout';
-import { BountyForm } from 'components/BountyForm';
+import { IssueForm } from 'components/IssueForm';
 
 import logoUrl from './create-icon.svg';
 
-export default function CreateBounty() {
+export default function FundIssuePage() {
   return (
     <Layout>
       <div style={{ backgroundColor: '#1d2129' }} className="flex-auto w-full">
@@ -21,7 +21,7 @@ export default function CreateBounty() {
             </div>
           </div>
 
-          <BountyForm />
+          <IssueForm />
         </div>
       </div>
     </Layout>
