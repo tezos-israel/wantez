@@ -31,8 +31,8 @@ export function useBountiesContract() {
     bounties: storage,
     connect,
     clearErrors,
-    issueBounty,
-    refundBounty,
+    fundIssue,
+    refundWantez,
     approveApplication,
   };
 
@@ -60,25 +60,23 @@ export function useBountiesContract() {
     clearContractError();
   }
 
-  function issueBounty(bounty) {
+  function fundIssue(wantez) {
     return callMethod(
       async (methods) =>
         await methods
-          .issueBounty(bounty.id, bounty.deadline)
-          .send({ amount: bounty.fee })
+          .issueBounty(wantez.id, wantez.deadline)
+          .send({ amount: wantez.fee })
     );
   }
 
-  function refundBounty(bounty) {
-    return callMethod(
-      async (methods) => await methods.refundBounty(bounty.id).send()
-    );
+  function refundWantez({ id }) {
+    return callMethod(async (methods) => await methods.refundBounty(id).send());
   }
 
-  function approveApplication(bountyId, paymentAddress) {
+  function approveApplication(wantezId, paymentAddress) {
     return callMethod(
       async (methods) =>
-        await methods.approveApplication(paymentAddress, bountyId).send()
+        await methods.approveApplication(paymentAddress, wantezId).send()
     );
   }
 }
