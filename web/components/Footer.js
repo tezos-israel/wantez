@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import logo from './Nav/site-logo.svg';
+import logo from 'images/site-logo.svg';
 
 export function Footer() {
   return (
