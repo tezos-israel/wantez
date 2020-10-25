@@ -1,5 +1,6 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useFormik } from 'formik';
 
 import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
@@ -13,6 +14,10 @@ import CategoryBackend from './CategoryBackend.svg';
 import CategoryDesign from './CategoryDesign.svg';
 import CategoryDocs from './CategoryDocs.svg';
 
+import { schema } from './form-validation';
+
+const FEE_PERCENT = 0;
+
 const categories = [
   { title: 'Frontend', imgUrl: CategoryFrontend, id: 'frontend' },
   { title: 'Backend', imgUrl: CategoryBackend, id: 'backend' },
@@ -21,9 +26,44 @@ const categories = [
   { title: 'Other', id: 'other' },
 ];
 
-export function IssueForm() {
+export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
+  const [priceILS, setPriceILS] = useState(0);
+  const formik = useFormik({
+    initialValues: {
+      issueUrl: '',
+      categories: [],
+      experienceLevel: 'beginner',
+      timeCommitment: 'hours',
+      price: 0,
+      estHours: 0,
+      disclaimerAgree: true,
+      paymentAgree: true,
+    },
+    onSubmit: handleSubmit,
+    validationSchema: schema,
+  });
+
+  const loadPriceAsync = useCallback(
+    debounce(async (price) => {
+      const res = await fetch(
+        'https://api.coingecko.com/api/v3/simple/price?ids=tezos&vs_currencies=ILS'
+      );
+      const {
+        tezos: { ils },
+      } = await res.json();
+      setPriceILS(Math.ceil(price * ils * 100) / 100);
+    }, 1000),
+    []
+  );
+
+  useEffect(() => {
+    loadPriceAsync(formik.values.price);
+  }, [formik.values.price]);
+
+  const fee = formik.values.price * FEE_PERCENT;
+
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="bg-white">
         <div className="mx-4 transform -translate-y-1/2">
           <img src={halfCirclePaper} className="w-full" />
@@ -36,7 +76,17 @@ export function IssueForm() {
               </label>
             )}
           >
-            <input className="border border-gray-500 rounded-none form-input " />
+            <input
+              name="issueUrl"
+              id="url-input"
+              className={`border border-gray-500 rounded-none form-input ${
+                formik.touched.issueUrl && formik.errors.issueUrl
+                  ? 'border-red-500'
+                  : ''
+              }`}
+              onChange={formik.handleChange}
+              value={formik.values.issueUrl}
+            />
           </FieldGroup>
           <div className="my-6 border-t-2 border-blue-500 border-dashed" />
           <FieldGroup title="Issue Category">
@@ -46,7 +96,12 @@ export function IssueForm() {
             </p>
             <div className="flex mt-3 space-x-4">
               {categories.map((category) => (
-                <IssueCategory {...category} key={category.title} />
+                <IssueCategory
+                  {...category}
+                  key={category.title}
+                  onChange={formik.handleChange}
+                  value={formik.values.categories}
+                />
               ))}
             </div>
           </FieldGroup>
@@ -55,7 +110,10 @@ export function IssueForm() {
       <div className="p-10 mt-2 space-y-6 bg-white">
         <FieldGroup title="Details">
           <div className="grid grid-cols-3 gap-3">
-            <FormField title="Experience Level" fieldId="beginner-input">
+            <FormField
+              title="Experience Level"
+              fieldId={`${formik.values.experienceLevel}-input`}
+            >
               <OptionsField
                 optionsName="experienceLevel"
                 options={[
@@ -63,9 +121,14 @@ export function IssueForm() {
                   { value: 'medium', title: 'Medium' },
                   { value: 'pro', title: 'Pro' },
                 ]}
+                onChange={formik.handleChange}
+                value={formik.values.experienceLevel}
               />
             </FormField>
-            <FormField title="Time Commitment" fieldId="hours-input">
+            <FormField
+              title="Time Commitment"
+              fieldId={`${formik.values.timeCommitment}-input`}
+            >
               <OptionsField
                 optionsName="timeCommitment"
                 options={[
@@ -74,6 +137,8 @@ export function IssueForm() {
                   { value: 'weeks', title: 'Weeks' },
                   { value: 'months', title: 'Months' },
                 ]}
+                onChange={formik.handleChange}
+                value={formik.values.timeCommitment}
               />
             </FormField>
           </div>
@@ -84,19 +149,37 @@ export function IssueForm() {
             <FormField title="Amount (XTZ)" fieldId="amount-input">
               <input
                 type="number"
-                className="w-full border border-gray-500 rounded-none form-input"
+                id="amount-input"
+                name="price"
+                className={`w-full border border-gray-500 rounded-none form-input ${
+                  (formik.touched.price && formik.errors.price) ||
+                  formik.values.price > balance
+                    ? 'border-red-500'
+                    : ''
+                }`}
+                onChange={formik.handleChange}
+                value={formik.values.price}
               />
             </FormField>
-            <FormField title="USD $" fieldId="usd-input">
+            <FormField title="ILS" fieldId="usd-input">
               <input
                 type="number"
                 className="w-full border border-gray-500 rounded-none form-input"
+                disabled
+                defaultValue={priceILS}
               />
             </FormField>
             <FormField title="Est. Hours of works" fieldId="est-hours-input">
               <input
                 type="number"
-                className="w-full border border-gray-500 rounded-none form-input"
+                className={`w-full border border-gray-500 rounded-none form-input ${
+                  formik.touched.estHours && formik.errors.estHours
+                    ? 'border-red-500'
+                    : ''
+                }`}
+                name="estHours"
+                value={formik.values.estHours}
+                onChange={formik.handleChange}
               />
             </FormField>
           </div>
@@ -111,9 +194,12 @@ export function IssueForm() {
       </div>
       <div className="p-10 mt-2 bg-white">
         <FieldGroup title="Total">
-          <div className="text-4xl font-bold text-blue-500">0.001 XTZ</div>
+          <div className="text-4xl font-bold text-blue-500">
+            {formik.values.price + fee} XTZ
+          </div>
           <p className="text-xs text-green-600">
-            Issue 0.0010 ETH ($0.38) + 0 ETH Gitcoin Platform Fee
+            Issue {formik.values.price} XTZ ({priceILS} ILS) + {fee} XTZ Gitcoin
+            Platform Fee
           </p>
         </FieldGroup>
         <div className="my-6 border-t-2 border-blue-500 border-dashed" />
@@ -121,6 +207,9 @@ export function IssueForm() {
           <input
             className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
             type="checkbox"
+            name="disclaimerAgree"
+            value={formik.values.disclaimerAgree}
+            onChange={formik.handleChange}
           />
           <span className="text-xs text-gray-600">
             I have read, understand, and agree to, the Terms of Service.
@@ -130,6 +219,9 @@ export function IssueForm() {
           <input
             className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
             type="checkbox"
+            name="paymentAgree"
+            value={formik.values.paymentAgree}
+            onChange={formik.handleChange}
           />
           <span className="text-xs text-gray-600 ">
             Payment Upon Completion. Upon delivery of work, I agree to pay the
@@ -138,10 +230,55 @@ export function IssueForm() {
           </span>
         </label>
 
-        <button className="block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md">
+        <button
+          className="block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={!isConnected || !isLoggedIn}
+          title={
+            !isConnected
+              ? 'Please connect to a wallet'
+              : !isLoggedIn
+              ? 'Please log in'
+              : ''
+          }
+        >
           Fund Issue
         </button>
       </div>
     </form>
   );
+
+  function handleSubmit(values) {
+    onSubmit(values);
+  }
+}
+
+IssueForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  isConnected: PropTypes.bool.isRequired,
+  balance: PropTypes.number.isRequired,
+};
+
+// https://davidwalsh.name/javascript-debounce-function
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce(func, wait, immediate) {
+  let timeout;
+  return function (...args) {
+    const later = () => {
+      timeout = null;
+      if (!immediate) {
+        return func.apply(this, args);
+      }
+    };
+
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) {
+      return func.apply(this, args);
+    }
+  };
 }

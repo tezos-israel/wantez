@@ -1,11 +1,70 @@
 import React from 'react';
+import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 import Layout from 'components/Layout';
 import { IssueForm } from 'components/IssueForm';
 
+import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from 'queries/bounties';
+import { useTezosContext } from 'hooks/TezosContext';
+import { useAuthContext } from 'hooks/AuthContext';
+
 import logoUrl from './create-icon.svg';
 
 export default function FundIssuePage() {
+  const router = useRouter();
+  const { user } = useAuthContext();
+  const { address, balance, issueBounty } = useTezosContext();
+
+  const [deleteBounty] = useMutation(DELETE_BOUNTY, {
+    update: updateCacheAfterDelete,
+  });
+  const [createBounty] = useMutation(SAVE_BOUNTY, {
+    update: updateCache,
+    onCompleted,
+  });
+
+  function updateCache(cache, { data }) {
+    let existingBountiesQuery = null;
+    try {
+      existingBountiesQuery = cache.readQuery({
+        query: GET_BOUNTIES,
+      });
+    } catch (e) {
+      return;
+    }
+
+    if (!existingBountiesQuery) {
+      return;
+    }
+
+    const newBounty = data.insert_bounty_one;
+
+    cache.writeQuery({
+      query: GET_BOUNTIES,
+      data: { bounty: [newBounty, ...existingBountiesQuery.bounty] },
+    });
+  }
+
+  function updateCacheAfterDelete(cache, { data }) {
+    const existingBountiesQuery = cache.readQuery({
+      query: GET_BOUNTIES,
+    });
+
+    if (!existingBountiesQuery) {
+      return;
+    }
+    console.log({ existingBountiesQuery });
+    const bountyId = data.delete_bounty_by_pk.id;
+
+    cache.writeQuery({
+      query: GET_BOUNTIES,
+      data: {
+        bounty: existingBountiesQuery.bounty.filter((b) => b.id !== bountyId),
+      },
+    });
+  }
+
   return (
     <Layout>
       <div
@@ -24,9 +83,39 @@ export default function FundIssuePage() {
             </div>
           </div>
 
-          <IssueForm />
+          <IssueForm
+            onSubmit={handleSubmit}
+            isLoggedIn={!!user}
+            isConnected={!!address}
+            balance={balance}
+          />
         </div>
       </div>
     </Layout>
   );
+
+  async function handleSubmit(values) {
+    try {
+      await createBounty({ variables: values });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function onCompleted({ insert_bounty_one: bounty }) {
+    try {
+      await issueBounty({
+        ...bounty,
+        deadline: Number(new Date(bounty.deadline)),
+      });
+      router.push('/');
+    } catch (error) {
+      console.error(error);
+      try {
+        await deleteBounty({ variables: { id: bounty.id } });
+      } catch (deleteError) {
+        console.error(deleteError);
+      }
+    }
+  }
 }

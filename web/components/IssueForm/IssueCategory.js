@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function IssueCategory({ title, imgUrl, id }) {
+export function IssueCategory({ title, imgUrl, id, onChange, value }) {
   const inputId = `input-${id}`;
   return (
     <>
@@ -19,9 +19,12 @@ export function IssueCategory({ title, imgUrl, id }) {
       <div className="relative">
         <input
           type="checkbox"
-          name="category"
+          name="categories"
           id={inputId}
           className="absolute w-5 h-5 my-2 ml-3 opacity-0"
+          value={id}
+          checked={value.includes(id)}
+          onChange={onChange}
         />
         <label
           htmlFor={inputId}
@@ -39,4 +42,6 @@ IssueCategory.propTypes = {
   title: PropTypes.string.isRequired,
   imgUrl: PropTypes.string,
   id: PropTypes.string.isRequired,
+  value: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
