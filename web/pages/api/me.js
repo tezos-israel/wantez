@@ -12,7 +12,11 @@ export default async (req, res) => {
   try {
     const userFromCookie = await decryptCookie(req.cookies.auth);
     /* send back response with user obj */
-    return res.json({ authorized: true, user: userFromCookie });
+    return res.json({
+      authorized: true,
+      user: userFromCookie,
+      token: req.cookies.auth,
+    });
   } catch (error) {
     /* if there's no valid auth cookie, user is not logged in */
     return res.json({ authorized: false, error });

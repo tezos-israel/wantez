@@ -10,6 +10,14 @@ const HASURA_DOMAIN = process.env.NEXT_PUBLIC_HASURA_DOMAIN;
 
 const requestAccessToken = async () => {
   if (accessToken) return;
+
+  const res = await fetch(`/api/me`);
+  if (res.ok) {
+    const json = await res.json();
+    accessToken = json.token;
+  } else {
+    accessToken = null;
+  }
 };
 
 // // remove cached token on 401 from the server
