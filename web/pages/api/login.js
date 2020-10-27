@@ -1,7 +1,7 @@
 const fetch = require('isomorphic-unfetch');
 
 import { magic } from 'lib/magic';
-import { encryptCookie, cookie } from 'lib/cookie';
+import { encryptCookie, cookieOptions } from 'lib/cookie';
 import { serialize } from 'cookie';
 
 export default async (req, res) => {
@@ -12,18 +12,18 @@ export default async (req, res) => {
   }
 
   /* strip token from Authorization header */
-  let DIDT = magic.utils.parseAuthorizationHeader(req.headers.authorization);
+  const didt = magic.utils.parseAuthorizationHeader(req.headers.authorization);
 
   try {
     /* validate token to ensure request came from the issuer */
-    await magic.token.validate(DIDT);
+    await magic.token.validate(didt);
   } catch (e) {
     console.error('failed validation', e);
     return res.status(e.status || 500).send({ error: e.message });
   }
 
   /* decode token to get claim obj with data */
-  let claim = magic.token.decode(DIDT)[1];
+  const claim = magic.token.decode(didt)[1];
 
   /* get user data from Magic */
   const userMetadata = await magic.users.getMetadataByIssuer(claim.iss);
@@ -32,6 +32,13 @@ export default async (req, res) => {
     /* check if user is already in */
     const { id } = await createUserIfNeeded(userMetadata);
     userMetadata.id = id;
+
+    userMetadata['https://hasura.io/jwt/claims'] = {
+      'x-hasura-default-role': 'user',
+      // do some custom logic to decide allowed roles
+      'x-hasura-allowed-roles': ['user'],
+      'x-hasura-user-id': id,
+    };
   } catch (e) {
     console.error('failed creating user object', e);
     return res.status(e.status || 500).send({ error: e.message });
@@ -39,7 +46,7 @@ export default async (req, res) => {
 
   try {
     const token = await encryptCookie(userMetadata);
-    await res.setHeader('Set-Cookie', serialize('auth', token, cookie));
+    await res.setHeader('Set-Cookie', serialize('auth', token, cookieOptions));
   } catch (e) {
     console.error('failed creating cookie', e);
     return res.status(e.status || 500).send({ error: e.message });

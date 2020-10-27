@@ -1,5 +1,5 @@
 import { magic } from 'lib/magic';
-import { cookie, decryptCookie } from 'lib/cookie';
+import { cookieOptions, decryptCookie } from 'lib/cookie';
 import { serialize } from 'cookie';
 
 export default async (req, res) => {
@@ -7,7 +7,7 @@ export default async (req, res) => {
   res.setHeader(
     'Set-Cookie',
     serialize('auth', '', {
-      ...cookie,
+      ...cookieOptions,
       expires: new Date(Date.now() - 1),
     })
   );
