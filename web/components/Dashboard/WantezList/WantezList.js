@@ -18,11 +18,16 @@ export function WantezList({ bounties }) {
         </div>
       </div>
       <div className="space-y-4">
-        {bounties.map((Wantez) => (
+        {bounties.map((item) => (
           <WantezListItem
-            key={Wantez.id}
-            title={Wantez.title}
-            imgUrl="https://via.placeholder.com/100"
+            key={item.id}
+            title={item.title}
+            fee={item.fee}
+            status={item.status}
+            imgUrl={item.imageUrl || 'https://via.placeholder.com/100'}
+            createdAt={item.createdAt}
+            applicationsCount={item.applications_aggregate.aggregate.count}
+            experienceLevel={item.experienceLevel}
           />
         ))}
       </div>

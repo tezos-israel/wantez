@@ -149,6 +149,7 @@
       - fee
       - funderId
       - id
+      - imageUrl
       - issueUrl
       - status
       - timeCommitment
@@ -166,6 +167,7 @@
       - fee
       - funderId
       - id
+      - imageUrl
       - issueUrl
       - status
       - timeCommitment
@@ -180,6 +182,7 @@
       - deadline
       - description
       - experienceLevel
+      - imageUrl
       - issueUrl
       - status
       - timeCommitment

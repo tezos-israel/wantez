@@ -7,6 +7,9 @@ export const GET_BOUNTIES = gql`
       id
       fee
       status
+      experienceLevel
+      imageUrl
+      createdAt
       applications_aggregate {
         aggregate {
           count
