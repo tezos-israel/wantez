@@ -247,8 +247,28 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
     </form>
   );
 
-  function handleSubmit(values) {
-    onSubmit(values);
+  function handleSubmit({
+    price: fee,
+    experienceLevel,
+    categories,
+    timeCommitment,
+    // estHours,
+    issueUrl,
+    // title = 'example',
+    // description = 'description',
+    deadline = '2021-08-12T08:56:37.331336+00:00',
+  }) {
+    onSubmit({
+      fee,
+      experienceLevel,
+      categories: categories.map((category) => ({ category })),
+      timeCommitment,
+      // estHours,
+      issueUrl,
+      // title,
+      // description,
+      deadline,
+    });
   }
 }
 

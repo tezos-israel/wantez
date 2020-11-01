@@ -39,21 +39,29 @@ export const BOUNTY_QUERY = gql`
   }
 `;
 
+// $estHours: numeric
+// $title: String!
+// $description: String!
+
 export const SAVE_BOUNTY = gql`
   mutation(
-    $title: String!
-    $issueUrl: String!
-    $description: String!
     $fee: numeric
+    $experienceLevel: experienceLevel_enum
+    $categories: [bounty_category_insert_input!]!
+    $timeCommitment: timeCommitmentTypes_enum
+    $issueUrl: String!
     $deadline: timestamptz!
   ) {
     insert_bounty_one(
       object: {
-        title: $title
-        issueUrl: $issueUrl
-        description: $description
         fee: $fee
+        experienceLevel: $experienceLevel
+        timeCommitment: $timeCommitment
+        issueUrl: $issueUrl
+        title: "example"
+        description: "example description"
         deadline: $deadline
+        categories: { data: $categories }
       }
     ) {
       id

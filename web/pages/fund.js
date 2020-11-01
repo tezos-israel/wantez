@@ -14,7 +14,7 @@ import logoUrl from './create-icon.svg';
 export default function FundIssuePage() {
   const router = useRouter();
   const { user } = useAuthContext();
-  const { address, balance, issueBounty } = useTezosContext();
+  const { address, balance, fundIssue } = useTezosContext();
 
   const [deleteBounty] = useMutation(DELETE_BOUNTY, {
     update: updateCacheAfterDelete,
@@ -94,9 +94,9 @@ export default function FundIssuePage() {
     </Layout>
   );
 
-  async function handleSubmit(values) {
+  async function handleSubmit(variables) {
     try {
-      await createBounty({ variables: values });
+      await createBounty({ variables });
     } catch (e) {
       console.error(e);
     }
@@ -104,11 +104,11 @@ export default function FundIssuePage() {
 
   async function onCompleted({ insert_bounty_one: bounty }) {
     try {
-      await issueBounty({
+      await fundIssue({
         ...bounty,
         deadline: Number(new Date(bounty.deadline)),
       });
-      router.push('/');
+      router.push('/explore');
     } catch (error) {
       console.error(error);
       try {
