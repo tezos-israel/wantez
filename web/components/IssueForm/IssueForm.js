@@ -198,7 +198,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
             {formik.values.price + fee} XTZ
           </div>
           <p className="text-xs text-green-600">
-            Issue {formik.values.price} XTZ ({priceILS} ILS) + {fee} XTZ Gitcoin
+            Issue {formik.values.price} XTZ ({priceILS} ILS) + {fee} XTZ Wantez
             Platform Fee
           </p>
         </FieldGroup>
