@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "dev": "yarn workspace web dev",
-    "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\""
+    "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\"",
+    "pull-env": "vercel env pull ./web/.env.local"
   },
   "workspaces": [
     "web",
