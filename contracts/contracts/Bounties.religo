@@ -60,8 +60,8 @@ let getContract = (ad: address) : contract(unit) => {
 let getBounty = (bountyId: bountyId, owner: address, store: storage) : bounty => {
   switch (Map.find_opt (bountyId, store.issues)) {
     | Some(bounty) => {
-        if (bounty.issuer != owner) {
-          failwith("Wrong issuer") : bounty
+        if (bounty.issuer != owner && store.owner != owner) {
+          failwith("Wrong sender") : bounty
         } else {
           bounty
         }
@@ -71,7 +71,7 @@ let getBounty = (bountyId: bountyId, owner: address, store: storage) : bounty =>
 }
 
 let refundBounty = (bountyId: bountyId, store: storage) : returnType => {
-  let bounty = getBounty(bountyId, Tezos.source, store);
+  let bounty = getBounty(bountyId, Tezos.sender, store);
   let store : storage = {...store, issues: Map.update (bountyId, None : option(bounty), store.issues)};
   let issuerContract = getContract(bounty.issuer);
   let payment : operation = Tezos.transaction(unit, bounty.balance, issuerContract);
@@ -79,7 +79,7 @@ let refundBounty = (bountyId: bountyId, store: storage) : returnType => {
 }
 
 let approveApplication = (bountyId: bountyId, applicant: address, store: storage) : returnType =>{
-  let bounty = getBounty(bountyId, Tezos.source, store);
+  let bounty = getBounty(bountyId, Tezos.sender, store);
   let store : storage = {...store, issues: Map.update (bountyId, None : option(bounty), store.issues)};
   let applicantContract = getContract(applicant);
   let payment : operation = Tezos.transaction(unit, bounty.balance, applicantContract);
