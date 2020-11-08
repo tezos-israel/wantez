@@ -17,9 +17,11 @@ const jwtOptions = {
 };
 
 export function decryptCookie(cookie) {
+  console.log('dec cookie',{isServer: typeof window !== 'undefined'})
   return jwt.verify(cookie, process.env.ENCRYPTION_SECRET, jwtOptions);
 }
 
 export function encryptCookie(userMetadata) {
+  console.log('enc cookie',{isServer: typeof window !== 'undefined'})
   return jwt.sign(userMetadata, process.env.ENCRYPTION_SECRET, jwtOptions);
 }
