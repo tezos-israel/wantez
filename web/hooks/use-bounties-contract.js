@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import { useContract } from './use-contract';
 
-const CONTRACT_ADDRESS = 'KT1PkEPjZZ7enjoeePcnFhR83AwX2UFjkETL';
+const CONTRACT_ADDRESS = 'KT1JLDYeV6VYN6imHmEbSnpYuoz8xZ8DMew9';
 const types = {
   OPERATION_STARTED: 'OPERATION_STARTED',
   OPERATION_FINISHED: 'OPERATION_FINISHED',
