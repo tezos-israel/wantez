@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function IssueCategory({ title, imgUrl, id, onChange, value }) {
+export function IssueCategory({ title, icon: Icon, id, onChange, value }) {
   const inputId = `input-${id}`;
   return (
     <>
@@ -28,9 +28,10 @@ export function IssueCategory({ title, imgUrl, id, onChange, value }) {
         />
         <label
           htmlFor={inputId}
-          className="flex py-1 pl-2 pr-5 font-bold border-2 border-gray-500 focus:border-blue-500 w-content"
+          className="flex items-center py-1 pl-2 pr-5 font-bold border-2 border-gray-500 focus:border-blue-500 w-content"
         >
-          <img src={imgUrl} className="mr-2" aria-hidden="true" />
+          {/* <div>{icon}</div> */}
+          {Icon && <Icon className="mr-2" aria-hidden="true" />}
           {title}
         </label>
       </div>
@@ -40,7 +41,7 @@ export function IssueCategory({ title, imgUrl, id, onChange, value }) {
 
 IssueCategory.propTypes = {
   title: PropTypes.string.isRequired,
-  imgUrl: PropTypes.string,
+  icon: PropTypes.func,
   id: PropTypes.string.isRequired,
   value: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,

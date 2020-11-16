@@ -9,7 +9,7 @@ import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from 'queries/bounties';
 import { useTezosContext } from 'hooks/TezosContext';
 import { useAuthContext } from 'hooks/AuthContext';
 
-import logoUrl from './create-icon.svg';
+import Logo from './create-icon.svg';
 
 export default function FundIssuePage() {
   const router = useRouter();
@@ -74,7 +74,7 @@ export default function FundIssuePage() {
         <div className="w-10/12 mx-auto mt-10">
           <div className="grid items-center mb-4 text-blue-500 auto-cols-max">
             <div className="mr-5">
-              <img src={logoUrl} />
+              <Logo />
             </div>
 
             <h2 className="text-4xl font-header">FUND ISSUE</h2>

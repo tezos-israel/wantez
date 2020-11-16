@@ -1,11 +1,11 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import logo from 'images/site-logo.svg';
+import Logo from '../images/site-logo.svg';
 
 export function Footer() {
   return (
     <div className="bg-gradient-to-l from-nava to-navb flex justify-between p-10 items-end">
-      <img src={logo} alt="logo" className="mb-1" />
+      <Logo className="mb-1" />
       <div className="text-sm text-gray-600">
         © All rights reserved to Tezos Israel 2020
       </div>

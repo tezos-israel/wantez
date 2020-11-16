@@ -13,13 +13,13 @@ export function WalletMenu({ address = '', onClick }) {
           address ? 'logged-in' : 'logged-out'
         }`}
       >
-        {/* <img className="" src={Caret} /> */}
+        {/* <Caret /> */}
         {address && <span className="text-xs text-white">{shortAddress}</span>}
         <button className="relative" onClick={onClick}>
           {!address && (
             <div className="absolute bottom-0 left-0 w-2 h-2 bg-red-500 rounded-full"></div>
           )}
-          <img src={WalletIcon} />
+          <WalletIcon />
         </button>
       </div>
     </>

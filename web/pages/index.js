@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 
-import logo from 'images/site-logo.svg';
+import Logo from 'images/site-logo.svg';
 
 import { UserButtons } from 'components/UserButtons';
 
@@ -18,7 +18,7 @@ export default function IndexPage() {
           <UserButtons />
         </div>
         <div className="flex justify-center items-start h-screen flex-col w-7/12 mx-auto">
-          <img src={logo} className="w-1/2" />
+          <Logo className="w-1/2" />
           <div className="mt-10 text-6xl">Join the Community</div>
           <div className="mt-40 flex w-full space-x-4 justify-center">
             <Link href="/explore">

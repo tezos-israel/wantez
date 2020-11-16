@@ -8,7 +8,7 @@ import { OptionsField } from 'components/shared/OptionsField';
 
 import { IssueCategory } from './IssueCategory';
 
-import halfCirclePaper from './half-circle-paper.svg';
+import HalfCirclePaper from './half-circle-paper.svg';
 import CategoryFrontend from './CategoryFrontend.svg';
 import CategoryBackend from './CategoryBackend.svg';
 import CategoryDesign from './CategoryDesign.svg';
@@ -19,10 +19,10 @@ import { schema } from './form-validation';
 const FEE_PERCENT = 0;
 
 const categories = [
-  { title: 'Frontend', imgUrl: CategoryFrontend, id: 'frontend' },
-  { title: 'Backend', imgUrl: CategoryBackend, id: 'backend' },
-  { title: 'Design', imgUrl: CategoryDesign, id: 'design' },
-  { title: 'Documentation', imgUrl: CategoryDocs, id: 'documentation' },
+  { title: 'Frontend', icon: CategoryFrontend, id: 'frontend' },
+  { title: 'Backend', icon: CategoryBackend, id: 'backend' },
+  { title: 'Design', icon: CategoryDesign, id: 'design' },
+  { title: 'Documentation', icon: CategoryDocs, id: 'documentation' },
   { title: 'Other', id: 'other' },
 ];
 
@@ -66,7 +66,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="bg-white">
         <div className="mx-4 transform -translate-y-1/2">
-          <img src={halfCirclePaper} className="w-full" />
+          <HalfCirclePaper className="w-full" />
         </div>
         <div className="p-10">
           <FieldGroup

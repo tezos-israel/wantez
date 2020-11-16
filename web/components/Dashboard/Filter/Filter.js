@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FilterOption } from './FilterOption';
-import headerIcon from './filter-header-icon.svg';
+import HeaderIcon from './filter-header-icon.svg';
 
 export function Filter() {
   return (
@@ -12,12 +12,7 @@ export function Filter() {
       }}
     >
       <h2 className="flex mb-6 text-3xl font-bold text-teal-400 capitalize">
-        <img
-          src={headerIcon}
-          alt="filter"
-          aria-hidden="true"
-          className="mr-3"
-        />
+        <HeaderIcon alt="filter" aria-hidden="true" className="mr-3" />
         Filter
       </h2>
       <FilterOption />
