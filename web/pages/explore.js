@@ -25,12 +25,12 @@ export default function ExplorePage() {
           {error.message}
         </div>
       ) : (
-        <div className="grid flex-1 w-full grid-cols-4">
-          <div className="col-span-1">
+        <div className="flex flex-1 w-full">
+          <div className="relative z-10 w-1/4">
             <Filter />
           </div>
-          <div className="flex flex-col col-span-3">
-            <div className="tag-list h-20">
+          <div className="flex flex-col flex-1">
+            <div className="h-20 tag-list">
               <TagsList />
             </div>
             <div className="flex-auto">
