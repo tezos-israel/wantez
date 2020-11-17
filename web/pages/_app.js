@@ -11,11 +11,13 @@ import 'styles/tailwind.css';
 // eslint-disable-next-line react/prop-types
 function App({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <TezosProvider>
-        <Component {...pageProps} />
-      </TezosProvider>
-    </AuthProvider>
+    <div id="app">
+      <AuthProvider>
+        <TezosProvider>
+          <Component {...pageProps} />
+        </TezosProvider>
+      </AuthProvider>
+    </div>
   );
 }
 
