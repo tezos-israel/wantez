@@ -29,7 +29,7 @@ export function WantezListItem({
         }
 
         .item:hover .click-to-open {
-          opacity: 1;
+          opacity: 1 !important;
         }
 
         .click-to-open {
@@ -38,9 +38,9 @@ export function WantezListItem({
           line-height: 2rem;
         }
       `}</style>
-      <div className="item flex h-32 py-4 pl-8 mr-8 border-4 border-l-0 border-blue-500 border-solid text-blue-500 relative transition-all duration-500 ease-in-out cursor-pointer">
-        <div className="absolute bg-blue-500 click-to-open h-32 w-8 border-r-2 border-dashed text-xs opacity-0 text-white transition duration-500 ease-in-out">
-          <div className="transform rotate-90 w-32 h-8 origin-bottom-left -translate-y-full text-center">
+      <div className="relative flex h-32 py-4 pl-8 mr-8 text-blue-500 transition-all duration-500 ease-in-out border-4 border-l-0 border-blue-500 border-solid cursor-pointer item">
+        <div className="absolute w-8 h-32 text-xs text-white transition duration-500 ease-in-out bg-blue-500 border-r-2 border-dashed opacity-0 click-to-open">
+          <div className="flex items-center justify-center w-32 h-8 text-center origin-bottom-left transform rotate-90 -translate-y-full">
             <div className="transform rotate-180">Click to open</div>
           </div>
         </div>
@@ -52,9 +52,9 @@ export function WantezListItem({
           <div className="col-span-10">
             <span className="font-bold">{title}</span>
           </div>
-          <div className="col-span-1 col-start-12  text-right">
+          <div className="col-span-1 col-start-12 text-right">
             <div className="font-bold">{fee} XTZ</div>
-            <div className="text-gray-500 font-medium">{feeInILS} ILS</div>
+            <div className="font-medium text-gray-500">{feeInILS} ILS</div>
           </div>
           <div className="flex items-end col-span-9 space-x-4">
             <div className="flex items-center text-xs text-gray-500 capitalize">
