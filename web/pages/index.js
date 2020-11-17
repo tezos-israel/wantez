@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 
-import Logo from 'images/site-logo.svg';
+import Logo from '../images/site-logo.svg';
 
 import { UserButtons } from 'components/UserButtons';
 
@@ -13,7 +13,7 @@ export default function IndexPage() {
         <title>Wantez</title>
       </Head>
 
-      <div className="bg-gradient-to-l from-nava to-navb w-full h-screen text-white">
+      <div className="w-full h-screen text-white bg-gradient-to-l from-nava to-navb">
         <div className="absolute top-0 right-0 mt-4 mr-4">
           <UserButtons />
         </div>
