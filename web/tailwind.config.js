@@ -1,4 +1,5 @@
 module.exports = {
+  important: true,
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
@@ -25,8 +26,10 @@ module.exports = {
     },
   },
   variants: {
-    opacity: ['disabled'],
-    cursor: ['disabled'],
+    boxShadow: ({ after }) => after(['focus-within']),
+    cursor: ({ after }) => after(['disabled']),
+    opacity: ({ after }) => after(['disabled', 'focus-within']),
+    outline: ({ after }) => after(['focus-within']),
   },
   plugins: [require('@tailwindcss/custom-forms')],
 };

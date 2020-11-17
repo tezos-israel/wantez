@@ -1,20 +1,29 @@
 import React from 'react';
 import propTypes from 'prop-types';
-// import Link from 'next/link';
+import sortArray from 'sort-array';
+
 import { WantezListItem } from './WantezListItem';
 import { Sort } from './Sort';
 
 export function WantezList({ bounties }) {
+  const [sort, setSort] = React.useState('createdAt');
+  const [sortDir, setSortDir] = React.useState('asc');
+  const sortedBounties = sortArray([...bounties], {
+    by: sort,
+    order: sortDir,
+    customOrders: { experience: ['beginner', 'medium', 'pro'] },
+  });
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-between px-8 py-4">
         <div className="text-sm font-bold text-gray-500">
           {bounties.length} open wantez
         </div>
-        <Sort />
+        <Sort value={sort} dir={sortDir} onChange={handleSortChange} />
       </div>
       <div className="space-y-4">
-        {bounties.map((item) => (
+        {sortedBounties.map((item) => (
           <WantezListItem
             key={item.id}
             title={item.title}
@@ -34,6 +43,11 @@ export function WantezList({ bounties }) {
       )}
     </div>
   );
+
+  function handleSortChange(sort, asc) {
+    setSort(sort);
+    setSortDir(asc);
+  }
 }
 
 WantezList.propTypes = {
