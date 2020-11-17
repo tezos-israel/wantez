@@ -51,6 +51,7 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-preset-env": "^6.7.0",
+    "prettier-plugin-tailwind-css": "^1.4.0",
     "styled-jsx-plugin-postcss": "^3.0.2"
   }
 }

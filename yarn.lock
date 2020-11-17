@@ -7075,7 +7075,14 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
-prettier@^2.1.2:
+prettier-plugin-tailwind-css@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwind-css/-/prettier-plugin-tailwind-css-1.4.0.tgz#c3a5561a9484d5c39f7d98962b7b03389055409d"
+  integrity sha512-VnS+V7gAJ7LeO3nVEiFLk8359EsYF7jIZMU43PNiw4IQjKUHFd7tazfCG3hKF5/bw5D5c28b8SzuIN2Rczy7uA==
+  dependencies:
+    prettier "^2.0.5"
+
+prettier@^2.0.5, prettier@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
   integrity sha512-16c7K+x4qVlJg9rEbXl7HEGmQyZlG4R9AgP+oHKRMsMsuk8s+ATStlf1NpDqyBI1HpVyfjLOeMhH2LvuNvV5Vg==

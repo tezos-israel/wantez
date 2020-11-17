@@ -27,7 +27,7 @@ export function Sort({ value, dir, onChange }) {
         {({ value, valueLabel }) => (
           <>
             <ListboxButton
-              className="w-48 text-sm text-blue-500 capitalize border-0 focus:outline-black"
+              className="focus:outline-black w-48 text-sm text-blue-500 capitalize border-0"
               arrow={
                 <Caret className="w-4 h-4 text-blue-500 stroke-current stroke-2" />
               }

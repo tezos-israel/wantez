@@ -72,12 +72,12 @@ export default function FundIssuePage() {
         className="flex-auto w-full pb-20"
       >
         <div className="w-10/12 mx-auto mt-10">
-          <div className="grid items-center mb-4 text-blue-500 auto-cols-max">
+          <div className="auto-cols-max grid items-center mb-4 text-blue-500">
             <div className="mr-5">
               <Logo />
             </div>
 
-            <h2 className="text-4xl font-header">FUND ISSUE</h2>
+            <h2 className="font-header text-4xl">FUND ISSUE</h2>
             <div className="col-start-2 text-gray-600">
               Fund your OSS issue and work with talented developers!
             </div>

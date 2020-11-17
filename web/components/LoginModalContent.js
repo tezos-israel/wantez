@@ -28,7 +28,7 @@ export function LoginModalContent({
           Enter Your Email
         </label>
         <input
-          className="w-64 mt-1 form-input"
+          className="form-input w-64 mt-1"
           type="email"
           id="email-input"
           value={email}

@@ -26,7 +26,7 @@ export function UserMenu({ user }) {
 
   return (
     <>
-      <div className="flex items-center ">
+      <div className=" flex items-center">
         <span className="text-xs text-white">{user.email}</span>
         <img
           src={`https://www.gravatar.com/avatar/${hash}?s=40`}

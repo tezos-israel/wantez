@@ -10,7 +10,7 @@ export function Checkbox({ label, name }) {
         type="checkbox"
         id={id}
         name={name}
-        className="bg-transparent form-checkbox"
+        className="form-checkbox bg-transparent"
       />
 
       <span className="ml-2">{label}</span>

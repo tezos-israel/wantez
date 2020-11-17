@@ -28,7 +28,7 @@ export function IssueCategory({ title, icon: Icon, id, onChange, value }) {
         />
         <label
           htmlFor={inputId}
-          className="flex items-center py-1 pl-2 pr-5 font-bold border-2 border-gray-500 focus:border-blue-500 w-content"
+          className="focus:border-blue-500 w-content flex items-center py-1 pl-2 pr-5 font-bold border-2 border-gray-500"
         >
           {/* <div>{icon}</div> */}
           {Icon && <Icon className="mr-2" aria-hidden="true" />}

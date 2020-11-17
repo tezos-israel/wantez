@@ -164,7 +164,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
             <FormField title="ILS" fieldId="usd-input">
               <input
                 type="number"
-                className="w-full border border-gray-500 rounded-none form-input"
+                className="form-input w-full border border-gray-500 rounded-none"
                 disabled
                 defaultValue={priceILS}
               />
@@ -205,7 +205,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
         <div className="my-6 border-t-2 border-blue-500 border-dashed" />
         <label className="block">
           <input
-            className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
+            className="form-checkbox mr-2 text-green-600 border-gray-500 rounded-none"
             type="checkbox"
             name="disclaimerAgree"
             value={formik.values.disclaimerAgree}
@@ -217,13 +217,13 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
         </label>
         <label className="block">
           <input
-            className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
+            className="form-checkbox mr-2 text-green-600 border-gray-500 rounded-none"
             type="checkbox"
             name="paymentAgree"
             value={formik.values.paymentAgree}
             onChange={formik.handleChange}
           />
-          <span className="text-xs text-gray-600 ">
+          <span className=" text-xs text-gray-600">
             Payment Upon Completion. Upon delivery of work, I agree to pay the
             proposed amount to the fulfiller(s) if the submitted fulfillment
             meets the standards I have set forth.
@@ -231,7 +231,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
         </label>
 
         <button
-          className="block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md disabled:cursor-not-allowed disabled:opacity-50"
+          className="disabled:cursor-not-allowed disabled:opacity-50 block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md"
           disabled={!isConnected || !isLoggedIn}
           title={
             !isConnected

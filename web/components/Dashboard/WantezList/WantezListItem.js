@@ -38,8 +38,8 @@ export function WantezListItem({
           line-height: 2rem;
         }
       `}</style>
-      <div className="relative flex h-32 py-4 pl-8 mr-8 text-blue-500 transition-all duration-500 ease-in-out border-4 border-l-0 border-blue-500 border-solid cursor-pointer item">
-        <div className="absolute w-8 h-32 text-xs text-white transition duration-500 ease-in-out bg-blue-500 border-r-2 border-dashed opacity-0 click-to-open">
+      <div className="item relative flex h-32 py-4 pl-8 mr-8 text-blue-500 transition-all duration-500 ease-in-out border-4 border-l-0 border-blue-500 border-solid cursor-pointer">
+        <div className="click-to-open absolute w-8 h-32 text-xs text-white transition duration-500 ease-in-out bg-blue-500 border-r-2 border-dashed opacity-0">
           <div className="flex items-center justify-center w-32 h-8 text-center origin-bottom-left transform rotate-90 -translate-y-full">
             <div className="transform rotate-180">Click to open</div>
           </div>

@@ -3,7 +3,7 @@ import React from 'react';
 export function SearchBox() {
   return (
     <div>
-      <input className="border-2 border-blue-500 border-solid form-input" />
+      <input className="form-input border-2 border-blue-500 border-solid" />
     </div>
   );
 }

@@ -30,7 +30,7 @@ export default function ExplorePage() {
             <Filter />
           </div>
           <div className="flex flex-col col-span-3">
-            <div className="h-20 tag-list">
+            <div className="tag-list h-20">
               <TagsList />
             </div>
             <div className="flex-auto">

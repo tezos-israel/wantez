@@ -13,17 +13,17 @@ export default function IndexPage() {
         <title>Wantez</title>
       </Head>
 
-      <div className="w-full h-screen bg-gradient-to-l from-nava to-navb text-white">
-        <div className="absolute right-0 top-0 mt-4 mr-4">
+      <div className="bg-gradient-to-l from-nava to-navb w-full h-screen text-white">
+        <div className="absolute top-0 right-0 mt-4 mr-4">
           <UserButtons />
         </div>
-        <div className="flex justify-center items-start h-screen flex-col w-7/12 mx-auto">
+        <div className="flex flex-col items-start justify-center w-7/12 h-screen mx-auto">
           <Logo className="w-1/2" />
           <div className="mt-10 text-6xl">Join the Community</div>
-          <div className="mt-40 flex w-full space-x-4 justify-center">
+          <div className="flex justify-center w-full mt-40 space-x-4">
             <Link href="/explore">
               <a
-                className="block w-1/3 py-5 uppercase text-center bg-black rounded-md"
+                className="block w-1/3 py-5 text-center uppercase bg-black rounded-md"
                 style={{
                   backgroundImage: 'linear-gradient(264deg, #2a77ec, #0c326d)',
                 }}
@@ -32,7 +32,7 @@ export default function IndexPage() {
               </a>
             </Link>
             <Link href="/fund">
-              <a className="block w-1/3 py-5 uppercase text-center border-2 rounded-md border-white">
+              <a className="block w-1/3 py-5 text-center uppercase border-2 border-white rounded-md">
                 Fund
               </a>
             </Link>
