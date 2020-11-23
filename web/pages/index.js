@@ -13,14 +13,14 @@ export default function IndexPage() {
         <title>Wantez</title>
       </Head>
 
-      <div className="w-full h-screen text-white bg-gradient-to-l from-nava to-navb">
+      <div className="bg-gradient-to-l from-nava to-navb w-full h-screen text-white">
         <div className="absolute top-0 right-0 mt-4 mr-4">
           <UserButtons />
         </div>
-        <div className="flex flex-col items-start justify-center w-7/12 h-screen mx-auto">
-          <Logo className="w-1/2" />
+        <div className="flex flex-col items-start justify-center w-1/2 h-screen mx-auto">
+          <Logo />
           <div className="mt-10 text-6xl">Join the Community</div>
-          <div className="flex justify-center w-full mt-40 space-x-4">
+          <div className="flex w-full mt-40 space-x-4">
             <Link href="/explore">
               <a
                 className="block w-1/3 py-5 text-center uppercase bg-black rounded-md"
