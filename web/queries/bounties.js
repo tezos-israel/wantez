@@ -10,6 +10,7 @@ export const GET_BOUNTIES = gql`
       experienceLevel
       imageUrl
       createdAt
+      timeCommitment
       applications_aggregate {
         aggregate {
           count
