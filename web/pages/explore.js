@@ -15,6 +15,21 @@ export default function ExplorePage() {
   const loading = tezosState.loading || queryState.loading;
   const error = tezosState.error || queryState.error;
 
+  const [filterValues, setFilterValues] = React.useState({
+    timeCommitment: [],
+    experienceLevel: [],
+  });
+
+  const bounties =
+    data &&
+    data.bounty.filter(
+      (gig) =>
+        (!filterValues.timeCommitment.length ||
+          filterValues.timeCommitment.includes(gig.timeCommitment)) &&
+        (!filterValues.experienceLevel.length ||
+          filterValues.experienceLevel.includes(gig.experienceLevel))
+    );
+
   return (
     <Layout>
       {loading ? (
@@ -27,18 +42,22 @@ export default function ExplorePage() {
       ) : (
         <div className="flex flex-1 w-full">
           <div className="relative z-10 w-1/4">
-            <Filter />
+            <Filter value={filterValues} onChange={handleFilterChange} />
           </div>
           <div className="flex flex-col flex-1">
-            <div className="h-20 tag-list">
+            <div className="tag-list h-20">
               <TagsList />
             </div>
             <div className="flex-auto">
-              <WantezList bounties={data.bounty} />
+              <WantezList bounties={bounties} />
             </div>
           </div>
         </div>
       )}
     </Layout>
   );
+
+  function handleFilterChange(value) {
+    setFilterValues(value);
+  }
 }
