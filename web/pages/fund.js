@@ -15,7 +15,47 @@ export default function FundIssuePage() {
   const router = useRouter();
   const { user } = useAuthContext();
   const { address, balance, fundIssue } = useTezosContext();
+  const createBounty = useCreateBounty(fundIssue, router);
 
+  return (
+    <Layout>
+      <div
+        style={{ backgroundColor: '#1d2129' }}
+        className="flex-auto w-full pb-20"
+      >
+        <div className="w-10/12 mx-auto mt-10">
+          <div className="auto-cols-max grid items-center mb-4 text-blue-500">
+            <div className="mr-5">
+              <Logo />
+            </div>
+
+            <h2 className="font-header text-4xl">FUND ISSUE</h2>
+            <div className="col-start-2 text-gray-600">
+              Fund your OSS issue and work with talented developers!
+            </div>
+          </div>
+
+          <IssueForm
+            onSubmit={handleSubmit}
+            isLoggedIn={!!user}
+            isConnected={!!address}
+            balance={balance}
+          />
+        </div>
+      </div>
+    </Layout>
+  );
+
+  async function handleSubmit(variables) {
+    try {
+      await createBounty({ variables });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+}
+
+function useCreateBounty(fundIssue, router) {
   const [deleteBounty] = useMutation(DELETE_BOUNTY, {
     update: updateCacheAfterDelete,
   });
@@ -23,6 +63,8 @@ export default function FundIssuePage() {
     update: updateCache,
     onCompleted,
   });
+
+  return createBounty;
 
   function updateCache(cache, { data }) {
     let existingBountiesQuery = null;
@@ -63,43 +105,6 @@ export default function FundIssuePage() {
         bounty: existingBountiesQuery.bounty.filter((b) => b.id !== bountyId),
       },
     });
-  }
-
-  return (
-    <Layout>
-      <div
-        style={{ backgroundColor: '#1d2129' }}
-        className="flex-auto w-full pb-20"
-      >
-        <div className="w-10/12 mx-auto mt-10">
-          <div className="auto-cols-max grid items-center mb-4 text-blue-500">
-            <div className="mr-5">
-              <Logo />
-            </div>
-
-            <h2 className="font-header text-4xl">FUND ISSUE</h2>
-            <div className="col-start-2 text-gray-600">
-              Fund your OSS issue and work with talented developers!
-            </div>
-          </div>
-
-          <IssueForm
-            onSubmit={handleSubmit}
-            isLoggedIn={!!user}
-            isConnected={!!address}
-            balance={balance}
-          />
-        </div>
-      </div>
-    </Layout>
-  );
-
-  async function handleSubmit(variables) {
-    try {
-      await createBounty({ variables });
-    } catch (e) {
-      console.error(e);
-    }
   }
 
   async function onCompleted({ insert_bounty_one: bounty }) {
