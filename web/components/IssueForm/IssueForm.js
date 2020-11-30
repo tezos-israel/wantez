@@ -27,7 +27,6 @@ const categories = [
 ];
 
 export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
-  const [priceILS, setPriceILS] = useState(0);
   const formik = useFormik({
     initialValues: {
       issueUrl: '',
@@ -43,23 +42,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
     validationSchema: schema,
   });
 
-  const loadPriceAsync = useCallback(
-    debounce(async (price) => {
-      const res = await fetch(
-        'https://api.coingecko.com/api/v3/simple/price?ids=tezos&vs_currencies=ILS'
-      );
-      const {
-        tezos: { ils },
-      } = await res.json();
-      setPriceILS(Math.ceil(price * ils * 100) / 100);
-    }, 1000),
-    []
-  );
-
-  useEffect(() => {
-    loadPriceAsync(formik.values.price);
-  }, [formik.values.price]);
-
+  const priceFiat = usePrice('ils', formik.values.price);
   const fee = formik.values.price * FEE_PERCENT;
 
   return (
@@ -166,7 +149,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
                 type="number"
                 className="form-input w-full border border-gray-500 rounded-none"
                 disabled
-                defaultValue={priceILS}
+                value={priceFiat}
               />
             </FormField>
             <FormField title="Est. Hours of works" fieldId="est-hours-input">
@@ -198,7 +181,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
             {formik.values.price + fee} XTZ
           </div>
           <p className="text-xs text-green-600">
-            Issue {formik.values.price} XTZ ({priceILS} ILS) + {fee} XTZ Wantez
+            Issue {formik.values.price} XTZ ({priceFiat} ILS) + {fee} XTZ Wantez
             Platform Fee
           </p>
         </FieldGroup>
@@ -278,6 +261,28 @@ IssueForm.propTypes = {
   isConnected: PropTypes.bool.isRequired,
   balance: PropTypes.number.isRequired,
 };
+
+function usePrice(priceXTZ, currency) {
+  const [priceFiat, setPriceFiat] = useState(0);
+
+  const loadPriceAsync = useCallback(
+    debounce(async (price) => {
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=tezos&vs_currencies=${currency}`
+      );
+      const { tezos: response } = await res.json();
+      const responsePrice = response[currency];
+      setPriceFiat(Math.ceil(price * responsePrice * 100) / 100);
+    }, 1000),
+    []
+  );
+
+  useEffect(() => {
+    loadPriceAsync(priceXTZ);
+  }, [priceXTZ]);
+
+  return priceFiat;
+}
 
 // https://davidwalsh.name/javascript-debounce-function
 // Returns a function, that, as long as it continues to be invoked, will not
