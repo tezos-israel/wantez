@@ -1,13 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import ReactMarkdown from 'react-markdown';
 import { useFormik } from 'formik';
+
+import { debounce } from 'lib/debounce';
 
 import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
 
-import { IssueTags } from './IssueTags';
+import { useRepoInfo } from './use-repo-info';
 
+import { IssueTags } from './IssueTags';
 import { IssueCategory } from './IssueCategory';
 
 import HalfCirclePaper from './half-circle-paper.svg';
@@ -60,8 +64,16 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
     validationSchema: schema,
   });
 
-  const priceFiat = usePrice('ils', formik.values.price);
+  const priceFiat = usePrice(formik.values.price, 'ils');
   const fee = formik.values.price * FEE_PERCENT;
+  const {
+    title,
+    description,
+    imageUrl: repoImageUrl,
+    error: repoInfoError,
+    loading: loadingRepoInfo,
+    onUrlChange: updateRepoInfo,
+  } = useRepoInfo(formik.values.issueUrl);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -70,25 +82,40 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
           <HalfCirclePaper className="w-full" />
         </div>
         <div className="p-10">
-          <FieldGroup
-            renderTitle={(className) => (
-              <label htmlFor="url-input" className={className}>
-                Issue Url
-              </label>
-            )}
-          >
-            <input
-              name="issueUrl"
-              id="url-input"
-              className={`border border-gray-500 rounded-none form-input ${
-                formik.touched.issueUrl && formik.errors.issueUrl
-                  ? 'border-red-500'
-                  : ''
-              }`}
-              onChange={formik.handleChange}
-              value={formik.values.issueUrl}
-            />
-          </FieldGroup>
+          <div className="space-y-5">
+            <FieldGroup
+              renderTitle={(className) => (
+                <label htmlFor="url-input" className={className}>
+                  Issue Url
+                </label>
+              )}
+            >
+              <input
+                name="issueUrl"
+                id="url-input"
+                className={`border border-gray-500 rounded-none form-input ${
+                  formik.touched.issueUrl && formik.errors.issueUrl
+                    ? 'border-red-500'
+                    : ''
+                }`}
+                onChange={(e) => handleUrlChange(e.target.value)}
+                value={formik.values.issueUrl}
+              />
+            </FieldGroup>
+            <FieldGroup title="Gig info">
+              {loadingRepoInfo ? (
+                <div>Loading</div>
+              ) : repoInfoError ? (
+                <p className="text-red-500">{repoInfoError}</p>
+              ) : (
+                <>
+                  <img src={repoImageUrl} className="w-32" />
+                  <h2 className="text-xl font-bold">{title}</h2>
+                  <ReactMarkdown>{description}</ReactMarkdown>
+                </>
+              )}
+            </FieldGroup>
+          </div>
           <div className="my-6 border-t-2 border-blue-500 border-dashed" />
           <FieldGroup title="Issue Category">
             <p className="text-sm text-gray-500">
@@ -178,7 +205,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
             <FormField title="ILS" fieldId="usd-input">
               <input
                 type="number"
-                className="form-input w-full border border-gray-500 rounded-none"
+                className="w-full border border-gray-500 rounded-none form-input"
                 disabled
                 value={priceFiat}
               />
@@ -219,7 +246,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
         <div className="my-6 border-t-2 border-blue-500 border-dashed" />
         <label className="block">
           <input
-            className="form-checkbox mr-2 text-green-600 border-gray-500 rounded-none"
+            className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
             type="checkbox"
             name="disclaimerAgree"
             value={formik.values.disclaimerAgree}
@@ -231,13 +258,13 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
         </label>
         <label className="block">
           <input
-            className="form-checkbox mr-2 text-green-600 border-gray-500 rounded-none"
+            className="mr-2 text-green-600 border-gray-500 rounded-none form-checkbox"
             type="checkbox"
             name="paymentAgree"
             value={formik.values.paymentAgree}
             onChange={formik.handleChange}
           />
-          <span className=" text-xs text-gray-600">
+          <span className="text-xs text-gray-600 ">
             Payment Upon Completion. Upon delivery of work, I agree to pay the
             proposed amount to the fulfiller(s) if the submitted fulfillment
             meets the standards I have set forth.
@@ -245,7 +272,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
         </label>
 
         <button
-          className="disabled:cursor-not-allowed disabled:opacity-50 block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md"
+          className="block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md disabled:cursor-not-allowed disabled:opacity-50"
           disabled={!isConnected || !isLoggedIn}
           title={
             !isConnected
@@ -254,12 +281,18 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
               ? 'Please log in'
               : ''
           }
+          type="submit"
         >
           Fund Issue
         </button>
       </div>
     </form>
   );
+
+  function handleUrlChange(url) {
+    formik.setFieldValue('issueUrl', url);
+    updateRepoInfo(url);
+  }
 
   function handleSubmit({
     price: fee,
@@ -269,8 +302,6 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
     // estHours,
     tags,
     issueUrl,
-    // title = 'example',
-    // description = 'description',
     deadline = '2021-08-12T08:56:37.331336+00:00',
   }) {
     onSubmit({
@@ -278,6 +309,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
       experienceLevel,
       categories: categories.map((category) => ({ category })),
       timeCommitment,
+      imageUrl: repoImageUrl,
       // estHours,
       issueUrl,
       // title,
@@ -288,6 +320,8 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
           on_conflict: { constraint: 'tags_pkey', update_columns: ['name'] },
         },
       })),
+      title,
+      description,
       deadline,
     });
   }
@@ -320,28 +354,4 @@ function usePrice(priceXTZ, currency) {
   }, [priceXTZ]);
 
   return priceFiat;
-}
-
-// https://davidwalsh.name/javascript-debounce-function
-// Returns a function, that, as long as it continues to be invoked, will not
-// be triggered. The function will be called after it stops being called for
-// N milliseconds. If `immediate` is passed, trigger the function on the
-// leading edge, instead of the trailing.
-function debounce(func, wait, immediate) {
-  let timeout;
-  return function (...args) {
-    const later = () => {
-      timeout = null;
-      if (!immediate) {
-        return func.apply(this, args);
-      }
-    };
-
-    const callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) {
-      return func.apply(this, args);
-    }
-  };
 }

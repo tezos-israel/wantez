@@ -60,6 +60,9 @@ export const SAVE_BOUNTY = gql`
     $issueUrl: String!
     $deadline: timestamptz!
     $tags: [bounty_tags_insert_input!]!
+    $imageUrl: String!
+    $title: String!
+    $description: String!
   ) {
     insert_bounty_one(
       object: {
@@ -67,8 +70,9 @@ export const SAVE_BOUNTY = gql`
         experienceLevel: $experienceLevel
         timeCommitment: $timeCommitment
         issueUrl: $issueUrl
-        title: "example"
-        description: "example description"
+        title: $title
+        description: $description
+        imageUrl: $imageUrl
         deadline: $deadline
         categories: { data: $categories }
         bounty_tags: { data: $tags }

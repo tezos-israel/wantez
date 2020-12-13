@@ -46,7 +46,7 @@ export function WantezListItem({
             <div className="transform rotate-180">Click to open</div>
           </div>
         </div>
-        <div className="h-50 w-50">
+        <div className="w-24 h-24">
           <img src={imgUrl} className="object-cover w-full h-full" />
         </div>
 
