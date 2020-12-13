@@ -112,6 +112,13 @@
           name: application
         column_mapping:
           id: bountyId
+  - name: bounty_tags
+    using:
+      foreign_key_constraint_on:
+        column: bounty_id
+        table:
+          schema: public
+          name: bounty_tags
   - name: categories
     using:
       foreign_key_constraint_on:
@@ -265,6 +272,65 @@
             _eq: X-Hasura-User-Id
 - table:
     schema: public
+    name: bounty_tags
+  object_relationships:
+  - name: bounty
+    using:
+      foreign_key_constraint_on: bounty_id
+  - name: tag
+    using:
+      foreign_key_constraint_on: tag_id
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        bounty:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
+      columns:
+      - bounty_id
+      - tag_id
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - bounty_id
+      - tag_id
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - bounty_id
+      - tag_id
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - bounty_id
+      - tag_id
+      filter:
+        bounty:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
+      check:
+        bounty:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        bounty:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
+- table:
+    schema: public
     name: category
   is_enum: true
   select_permissions:
@@ -311,6 +377,51 @@
   - name: siteBySite
     using:
       foreign_key_constraint_on: site
+- table:
+    schema: public
+    name: tags
+  configuration:
+    custom_root_fields:
+      insert: insert_tags
+      insert_one: insert_tag
+      select_by_pk: tag
+      select: tags
+      delete_by_pk: delete_tag
+      update_by_pk: update_tag
+    custom_column_names: {}
+  array_relationships:
+  - name: tag_bounties
+    using:
+      foreign_key_constraint_on:
+        column: tag_id
+        table:
+          schema: public
+          name: bounty_tags
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - name
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - name
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - name
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - name
+      filter: {}
+      check: null
 - table:
     schema: public
     name: timeCommitmentTypes

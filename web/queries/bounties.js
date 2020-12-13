@@ -11,6 +11,11 @@ export const GET_BOUNTIES = gql`
       imageUrl
       createdAt
       timeCommitment
+      bounty_tags {
+        tag {
+          name
+        }
+      }
       applications_aggregate {
         aggregate {
           count
@@ -46,7 +51,6 @@ export const BOUNTY_QUERY = gql`
 // $estHours: numeric
 // $title: String!
 // $description: String!
-
 export const SAVE_BOUNTY = gql`
   mutation(
     $fee: numeric
@@ -55,6 +59,7 @@ export const SAVE_BOUNTY = gql`
     $timeCommitment: timeCommitmentTypes_enum
     $issueUrl: String!
     $deadline: timestamptz!
+    $tags: [bounty_tags_insert_input!]!
   ) {
     insert_bounty_one(
       object: {
@@ -66,6 +71,7 @@ export const SAVE_BOUNTY = gql`
         description: "example description"
         deadline: $deadline
         categories: { data: $categories }
+        bounty_tags: { data: $tags }
       }
     ) {
       id

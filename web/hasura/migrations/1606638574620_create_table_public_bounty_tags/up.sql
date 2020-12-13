@@ -1,0 +1,1 @@
+CREATE TABLE "public"."bounty_tags"("bounty_id" uuid NOT NULL, "tag" text NOT NULL, PRIMARY KEY ("bounty_id","tag") , FOREIGN KEY ("tag") REFERENCES "public"."tags"("name") ON UPDATE cascade ON DELETE cascade, FOREIGN KEY ("bounty_id") REFERENCES "public"."bounty"("id") ON UPDATE cascade ON DELETE cascade);

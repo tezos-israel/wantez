@@ -96,7 +96,7 @@ function useCreateBounty(fundIssue, router) {
     if (!existingBountiesQuery) {
       return;
     }
-    console.log({ existingBountiesQuery });
+
     const bountyId = data.delete_bounty_by_pk.id;
 
     cache.writeQuery({

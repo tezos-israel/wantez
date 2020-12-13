@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useQuery } from '@apollo/client';
 
@@ -9,26 +9,34 @@ import Layout from 'components/Layout';
 import { WantezList, Filter, TagsList } from 'components/Dashboard';
 
 export default function ExplorePage() {
+  const [tags, setTags] = useState([]);
+
   const { data, ...queryState } = useQuery(GET_BOUNTIES);
   const { ...tezosState } = useTezosContext();
 
   const loading = tezosState.loading || queryState.loading;
   const error = tezosState.error || queryState.error;
 
-  const [filterValues, setFilterValues] = React.useState({
+  const [filterValues, setFilterValues] = useState({
     timeCommitment: [],
     experienceLevel: [],
   });
 
   const bounties =
     data &&
-    data.bounty.filter(
-      (gig) =>
-        (!filterValues.timeCommitment.length ||
-          filterValues.timeCommitment.includes(gig.timeCommitment)) &&
-        (!filterValues.experienceLevel.length ||
-          filterValues.experienceLevel.includes(gig.experienceLevel))
-    );
+    data.bounty
+      .filter(
+        (gig) =>
+          (!filterValues.timeCommitment.length ||
+            filterValues.timeCommitment.includes(gig.timeCommitment)) &&
+          (!filterValues.experienceLevel.length ||
+            filterValues.experienceLevel.includes(gig.experienceLevel))
+      )
+      .filter((gig) =>
+        tags.every((tag) =>
+          gig.bounty_tags.some((bountyTag) => bountyTag.tag.name === tag)
+        )
+      );
 
   return (
     <Layout>
@@ -46,7 +54,7 @@ export default function ExplorePage() {
           </div>
           <div className="flex flex-col flex-1">
             <div className="tag-list h-20">
-              <TagsList />
+              <TagsList tags={tags} onChange={setTags} />
             </div>
             <div className="flex-auto">
               <WantezList bounties={bounties} />

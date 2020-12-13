@@ -12,6 +12,7 @@ export function WantezListItem({
   experienceLevel,
   createdAt,
   applicationsCount,
+  tags,
 }) {
   const levelClass = getLevelClass(experienceLevel);
   const feeInILS = fee * 2;
@@ -39,8 +40,8 @@ export function WantezListItem({
           line-height: 2rem;
         }
       `}</style>
-      <div className="relative flex h-32 py-4 pl-8 mr-8 text-blue-500 transition-all duration-500 ease-in-out border-4 border-l-0 border-blue-500 border-solid cursor-pointer item">
-        <div className="absolute w-8 h-32 text-xs text-white transition duration-500 ease-in-out bg-blue-500 border-r-2 border-dashed click-to-open">
+      <div className="item relative flex h-32 py-4 pl-8 mr-8 text-blue-500 transition-all duration-500 ease-in-out border-4 border-l-0 border-blue-500 border-solid cursor-pointer">
+        <div className="click-to-open absolute w-8 h-32 text-xs text-white transition duration-500 ease-in-out bg-blue-500 border-r-2 border-dashed">
           <div className="flex items-center justify-center w-32 h-8 text-center origin-bottom-left transform rotate-90 -translate-y-full">
             <div className="transform rotate-180">Click to open</div>
           </div>
@@ -75,14 +76,16 @@ export function WantezListItem({
               {applicationsCount} Applications
             </div>
           </div>
-          {/* <div className="flex items-end justify-end col-span-3 space-x-4">
-            <div className="px-3 py-1 text-xs font-bold text-white bg-red-500 rounded-sm">
-              js
-            </div>
-            <div className="px-3 py-1 text-xs font-bold text-white bg-red-500 rounded-sm">
-              react
-            </div>
-          </div> */}
+          <div className="flex items-end justify-end col-span-3 space-x-4">
+            {tags.map((tag) => (
+              <div
+                key={tag}
+                className="px-3 py-1 text-xs font-bold text-white bg-red-500 rounded-sm"
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div
@@ -111,6 +114,7 @@ WantezListItem.propTypes = {
   experienceLevel: PropTypes.oneOf(['beginner', 'medium', 'pro']),
   createdAt: PropTypes.string.isRequired,
   applicationsCount: PropTypes.number.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 function getLevelClass(experienceLevel) {

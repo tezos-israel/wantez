@@ -6,6 +6,8 @@ import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
 
+import { IssueTags } from './IssueTags';
+
 import { IssueCategory } from './IssueCategory';
 
 import HalfCirclePaper from './half-circle-paper.svg';
@@ -26,18 +28,34 @@ const categories = [
   { title: 'Other', id: 'other' },
 ];
 
+// import { v4 as uuid } from 'uuid';
+// const demoValues = {
+//   issueUrl: 'https://github.com/issues?' + uuid(),
+//   categories: ['frontend'],
+//   experienceLevel: 'beginner',
+//   timeCommitment: 'hours',
+//   price: 1,
+//   estHours: 3,
+//   disclaimerAgree: true,
+//   paymentAgree: true,
+//   tags: ['hello', 'hey'],
+// };
+
+const initialValues = {
+  issueUrl: '',
+  categories: [],
+  experienceLevel: 'beginner',
+  timeCommitment: 'hours',
+  price: 0,
+  estHours: 0,
+  disclaimerAgree: true,
+  paymentAgree: true,
+  tags: [],
+};
+
 export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
   const formik = useFormik({
-    initialValues: {
-      issueUrl: '',
-      categories: [],
-      experienceLevel: 'beginner',
-      timeCommitment: 'hours',
-      price: 0,
-      estHours: 0,
-      disclaimerAgree: true,
-      paymentAgree: true,
-    },
+    initialValues,
     onSubmit: handleSubmit,
     validationSchema: schema,
   });
@@ -86,6 +104,19 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
                   value={formik.values.categories}
                 />
               ))}
+            </div>
+          </FieldGroup>
+          <div className="my-6 border-t-2 border-blue-500 border-dashed" />
+          <FieldGroup title="Issue Tags">
+            <p className="text-sm text-gray-500">
+              Pick the most accurate tags for this issue to get the right
+              contributors
+            </p>
+            <div className="flex mt-3 space-x-4">
+              <IssueTags
+                value={formik.values.tags}
+                onChange={formik.setFieldValue}
+              />
             </div>
           </FieldGroup>
         </div>
@@ -236,6 +267,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
     categories,
     timeCommitment,
     // estHours,
+    tags,
     issueUrl,
     // title = 'example',
     // description = 'description',
@@ -250,6 +282,12 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
       issueUrl,
       // title,
       // description,
+      tags: tags.map((name) => ({
+        tag: {
+          data: { name },
+          on_conflict: { constraint: 'tags_pkey', update_columns: ['name'] },
+        },
+      })),
       deadline,
     });
   }

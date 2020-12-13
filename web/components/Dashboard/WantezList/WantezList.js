@@ -33,6 +33,7 @@ export function WantezList({ bounties }) {
             createdAt={item.createdAt}
             applicationsCount={item.applications_aggregate.aggregate.count}
             experienceLevel={item.experienceLevel}
+            tags={item.bounty_tags.map((bountyTag) => bountyTag.tag.name)}
           />
         ))}
       </div>
