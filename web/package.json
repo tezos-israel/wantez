@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "yarn docker",
     "dev": "next dev",
     "build": "next build",
-    "predev": "docker-compose up -d",
+    "docker": "docker-compose up -d",
     "start": "next start",
     "posttest": "npm run format",
     "lint": "eslint . --cache --fix",
-    "pretest": "npm run lint"
+    "pretest": "npm run lint",
+    "precreate:db": "yarn docker",
+    "create:db": "yarn hasura migrate --project ./hasura --admin-secret password apply && yarn hasura metadata --project ./hasura --admin-secret password apply"
   },
   "dependencies": {
     "@apollo/client": "^3.2.4",

@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "dev": "yarn workspace web dev",
-    "create:db": "yarn workspace web hasura migrate --project ./hasura --admin-secret password apply && yarn workspace web hasura metadata --project ./hasura --admin-secret password apply",
+    "create:db": "yarn workspace web create:db",
     "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\"",
     "pull-env": "vercel env pull ./web/.env.local"
   },

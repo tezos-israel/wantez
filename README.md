@@ -10,7 +10,6 @@
 
 ```
 yarn
-yarn workspace web hasura migrate --project ./hasura --admin-secret password apply
-yarn workspace web hasura metadata --project ./hasura --admin-secret password apply
+yarn create:db
 yarn dev
 ```
