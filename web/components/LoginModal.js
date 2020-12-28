@@ -44,7 +44,7 @@ export function LoginModal({ isOpen, onDismiss }) {
 
   async function authenticateWithDb(authToken) {
     /* Pass the Decentralized ID token in the Authorization header to the database */
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`, {
+    const res = await fetch('/api/login', {
       method: 'POST',
       headers: new Headers({
         Authorization: `Bearer ${authToken}`,

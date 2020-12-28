@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
       await setMagic(m);
 
       /* On page refresh, send a request to /api/me to see if there's a valid user session */
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/me`);
+      const res = await fetch('/api/me');
       const { authorized, user } = await res.json();
 
       /* If the user has a valid session with our server, it will return {authorized: true, user: user} */

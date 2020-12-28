@@ -35,7 +35,7 @@ export function UserButtons() {
    * Log the user out of their session with Magic
    */
   async function handleLogout() {
-    await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/logout`);
+    await fetch('/api/logout');
     setUser(null);
     await magic.user.logout();
   }
