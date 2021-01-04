@@ -6,7 +6,8 @@ import Layout from 'components/Layout';
 import { IssueForm } from 'components/IssueForm';
 
 import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from 'queries/bounties';
-import { useTezosContext } from 'hooks/TezosContext';
+import { useGigsContractContext } from 'hooks/GigsContractContext';
+import { useWalletContext } from 'hooks/WalletContext';
 import { useAuthContext } from 'hooks/AuthContext';
 
 import Logo from './create-icon.svg';
@@ -14,7 +15,9 @@ import Logo from './create-icon.svg';
 export default function FundIssuePage() {
   const router = useRouter();
   const { user } = useAuthContext();
-  const { address, balance, fundIssue } = useTezosContext();
+
+  const { address, balance } = useWalletContext();
+  const { fundIssue } = useGigsContractContext();
   const createBounty = useCreateBounty(fundIssue, router);
 
   return (

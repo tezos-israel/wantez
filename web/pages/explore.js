@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 import { useQuery } from '@apollo/client';
 
-import { useTezosContext } from 'hooks/TezosContext';
-
 import { GET_BOUNTIES } from 'queries/bounties';
 import Layout from 'components/Layout';
 import { WantezList, Filter, TagsList } from 'components/Dashboard';
@@ -11,11 +9,7 @@ import { WantezList, Filter, TagsList } from 'components/Dashboard';
 export default function ExplorePage() {
   const [tags, setTags] = useState([]);
 
-  const { data, ...queryState } = useQuery(GET_BOUNTIES);
-  const { ...tezosState } = useTezosContext();
-
-  const loading = tezosState.loading || queryState.loading;
-  const error = tezosState.error || queryState.error;
+  const { data, loading, error } = useQuery(GET_BOUNTIES);
 
   const [filterValues, setFilterValues] = useState({
     timeCommitment: [],
@@ -45,7 +39,7 @@ export default function ExplorePage() {
       ) : error ? (
         <div className="alert" severity="error">
           <div className="alert-title">Failed loading bounties</div>
-          {error.message}
+          {error.message || error}
         </div>
       ) : (
         <div className="flex flex-1 w-full">

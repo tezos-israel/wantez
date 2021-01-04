@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 import { useAuthContext } from 'hooks/AuthContext';
-import { useTezosContext } from 'hooks/TezosContext';
+import { useWalletContext } from 'hooks/WalletContext';
 
 import { UserMenu } from './UserMenu';
 import { WalletMenu } from './WalletMenu';
@@ -12,18 +12,18 @@ export function UserButtons() {
   const {
     address,
     balance,
-    connectToWallet,
-    ...tezosState
-  } = useTezosContext();
+    connect,
+    loading: walletLoading,
+  } = useWalletContext();
 
-  const loading = userLoading || tezosState.loading;
+  const loading = userLoading || walletLoading;
   return (
     <div className="flex items-center ml-auto space-x-4">
       <div className="h-8 border-r-2 border-teal-500"></div>
       <WalletMenu
         address={address}
         balance={balance}
-        onClick={!address ? connectToWallet : () => {}}
+        onClick={!address ? connect : () => {}}
       />
       <div className="h-8 border-r-2 border-teal-500"></div>
       <UserMenu user={user} loading={loading} onLogout={handleLogout} />
