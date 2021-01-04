@@ -1,27 +1,38 @@
 import fetch from 'isomorphic-unfetch';
-import { HttpLink, ApolloClient } from '@apollo/client';
+import { ApolloClient, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { InMemoryCache } from '@apollo/client/cache';
 import { onError } from '@apollo/client/link/error';
-import { WebSocketLink } from '@apollo/client/link/ws';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 let accessToken = null;
 const HASURA_DOMAIN = process.env.NEXT_PUBLIC_HASURA_DOMAIN;
 
-const requestAccessToken = async () => {
-  if (accessToken) return;
+const httpLink = createHttpLink({
+  uri: `http${HASURA_DOMAIN}/v1/graphql`,
+  credentials: 'include',
+  fetch,
+});
 
-  const res = await fetch(`/api/me`);
-  if (res.ok) {
-    const json = await res.json();
-    accessToken = json.token;
-  } else {
-    accessToken = null;
+const authLink = setContext(async function authLink(req, { headers }) {
+  const isServer = typeof window === 'undefined';
+  let baseUrl = '';
+  if (isServer) {
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    baseUrl = req ? `${protocol}://${req.headers.host}` : '';
   }
-};
+  await requestAccessToken(baseUrl);
+  return accessToken
+    ? {
+        headers: {
+          ...headers,
+          authorization: `Bearer ${accessToken}`,
+        },
+      }
+    : { headers };
+});
 
-// // remove cached token on 401 from the server
-onError(({ networkError }) => {
+// remove cached token on 401 from the server
+onError(function onApolloError({ networkError }) {
   if (
     networkError &&
     networkError.name === 'ServerError' &&
@@ -31,46 +42,29 @@ onError(({ networkError }) => {
   }
 });
 
-const createHttpLink = (headers) => {
-  const httpLink = new HttpLink({
-    uri: `http${HASURA_DOMAIN}/v1/graphql`,
-    credentials: 'include',
-    headers, // auth token is fetched on the server side
-    fetch,
-  });
-  return httpLink;
-};
+export default function createApolloClient(initialState) {
+  const onServer = typeof window === 'undefined';
+  const cache = new InMemoryCache().restore(initialState);
 
-const createWSLink = () => {
-  return new WebSocketLink(
-    new SubscriptionClient(`ws${HASURA_DOMAIN}/v1/graphql`, {
-      lazy: true,
-      reconnect: true,
-      connectionParams: async () => {
-        await requestAccessToken(); // happens on the client
-        return (
-          accessToken && {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-      },
-    })
-  );
-};
-
-export default function createApolloClient(initialState, headers) {
-  const ssrMode = typeof window === 'undefined';
-  let link;
-  if (ssrMode) {
-    link = createHttpLink(headers); // executed on server
-  } else {
-    link = createWSLink(); // executed on client
-  }
   return new ApolloClient({
-    ssrMode,
-    link,
-    cache: new InMemoryCache().restore(initialState),
+    ssrMode: onServer,
+    link: authLink.concat(httpLink),
+    cache,
   });
+}
+
+async function requestAccessToken(baseUrl = '') {
+  if (accessToken) return;
+  try {
+    const res = await fetch(`${baseUrl}/api/me`);
+    if (res.ok) {
+      const json = await res.json();
+      accessToken = json.token;
+    } else {
+      accessToken = null;
+    }
+  } catch (e) {
+    console.error('failed loading access token', e);
+    accessToken = null;
+  }
 }
