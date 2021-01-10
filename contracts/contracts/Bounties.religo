@@ -36,7 +36,7 @@ let issueBounty = (bountyId: bountyId, deadline: date, issuer: address, store: s
     (failwith ("Amount needs to be positive") : returnType)
   } else {
     switch (Map.find_opt (bountyId, store.issues) : option(bounty)) {
-      | Some(bounty) => failwith ("Bounty exists") : returnType
+      | Some(bounty) => (failwith ("Bounty exists") : returnType)
       | None => {
         let bounty : bounty = {
           bountyId: bountyId,
@@ -61,12 +61,12 @@ let getBounty = (bountyId: bountyId, owner: address, store: storage) : bounty =>
   switch (Map.find_opt (bountyId, store.issues)) {
     | Some(bounty) => {
         if (bounty.issuer != owner && store.owner != owner) {
-          failwith("Wrong sender") : bounty
+          (failwith("Wrong sender") : bounty)
         } else {
           bounty
         }
     }
-    | None => failwith ("Can't find bounty") : bounty
+    | None => (failwith ("Can't find bounty") : bounty)
   }
 }
 
