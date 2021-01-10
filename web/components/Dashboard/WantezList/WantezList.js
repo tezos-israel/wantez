@@ -7,7 +7,7 @@ import { Sort } from './Sort';
 
 export function WantezList({ bounties }) {
   const [sort, setSort] = React.useState('createdAt');
-  const [sortDir, setSortDir] = React.useState('asc');
+  const [sortDir, setSortDir] = React.useState('desc');
   const sortedBounties = sortArray([...bounties], {
     by: sort,
     order: sortDir,
