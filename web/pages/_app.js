@@ -8,7 +8,7 @@ import { WalletProvider } from 'hooks/WalletContext';
 import { AuthProvider } from '../hooks/AuthContext';
 import '@reach/dialog/styles.css';
 import 'styles/_app.css';
-import 'styles/tailwind.css';
+import 'tailwindcss/tailwind.css';
 
 // eslint-disable-next-line react/prop-types
 function App({ Component, pageProps }) {

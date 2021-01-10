@@ -42,11 +42,11 @@ export default function ExplorePage() {
           {error.message || error}
         </div>
       ) : (
-        <div className="flex flex-1 w-full">
+        <div className="flex flex-1 w-full overflow-hidden">
           <div className="relative z-10 w-1/4">
             <Filter value={filterValues} onChange={handleFilterChange} />
           </div>
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-col flex-1 overflow-auto">
             <div className="tag-list h-20">
               <TagsList tags={tags} onChange={setTags} />
             </div>

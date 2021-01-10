@@ -19,12 +19,7 @@ const timeCommitmentOptions = [
 
 export function Filter({ value, onChange }) {
   return (
-    <div
-      className="bg-gradient-to-b h-full p-10"
-      style={{
-        '--gradient-color-stops': '#2d7df8, #0a2c61',
-      }}
-    >
+    <div className="bg-gradient-to-b to-filtera from-filterb h-full p-10">
       <h2 className="flex mb-6 text-3xl font-bold text-teal-400 capitalize">
         <HeaderIcon alt="filter" aria-hidden="true" className="mr-3" />
         Filter

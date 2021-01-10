@@ -22,10 +22,7 @@ export default function FundIssuePage() {
 
   return (
     <Layout>
-      <div
-        style={{ backgroundColor: '#1d2129' }}
-        className="flex-auto w-full pb-20"
-      >
+      <div className="bg-fund flex-auto w-full pb-20 overflow-auto">
         <div className="w-10/12 mx-auto mt-10">
           <div className="auto-cols-max grid items-center mb-4 text-blue-500">
             <div className="mr-5">

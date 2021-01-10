@@ -1,11 +1,6 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-    defaultLineHeights: true,
-    standardFontWeights: true,
-  },
-  purge: ['./components/**/*.{js,ts,jsx,tsx}', './pages/**/*.{js,ts,jsx,tsx}'],
+  purge: ['./pages/**/*.js', './components/**/*.js'],
+  darkMode: false,
   theme: {
     extend: {
       width: {
@@ -21,6 +16,11 @@ module.exports = {
       gradientColorStops: {
         nava: '#0e453c',
         navb: '#06211c',
+        filtera: '#0a2c61',
+        filterb: '#2d7df8',
+      },
+      backgroundColor: {
+        fund: '#1d2129',
       },
     },
   },
@@ -30,5 +30,5 @@ module.exports = {
     opacity: ({ after }) => after(['disabled', 'focus-within']),
     outline: ({ after }) => after(['focus-within']),
   },
-  plugins: [require('@tailwindcss/custom-forms')],
+  plugins: [require('@tailwindcss/forms')],
 };
