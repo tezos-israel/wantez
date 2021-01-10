@@ -91,6 +91,7 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
               )}
             >
               <input
+                type="text"
                 name="issueUrl"
                 id="url-input"
                 className={`border border-gray-500 rounded-none form-input ${

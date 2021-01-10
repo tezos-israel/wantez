@@ -1,0 +1,20 @@
+.item {
+  --move-left: 32px;
+  left: 0;
+}
+
+.item:hover {
+  @apply bg-blue-500;
+  @apply text-white;
+  left: var(--move-left);
+}
+
+.item:hover .clickToOpen {
+  opacity: 1 !important;
+}
+
+.clickToOpen {
+  left: calc(-1 * var(--move-left));
+  top: -4px;
+  line-height: 2rem;
+}

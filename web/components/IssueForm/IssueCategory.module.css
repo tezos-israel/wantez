@@ -1,0 +1,7 @@
+.input:focus + label {
+  @apply border-blue-200;
+}
+
+.input:checked + label {
+  @apply border-blue-500;
+}

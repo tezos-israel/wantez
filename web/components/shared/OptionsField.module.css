@@ -1,0 +1,18 @@
+.optionsFieldItem label {
+  transition-property: margin, border-color;
+}
+
+.optionsFieldItem input:focus + label {
+  @apply border-blue-200;
+}
+
+.optionsFieldItem input:checked + label {
+  @apply border-blue-500;
+  @apply font-bold;
+  @apply border-2;
+  @apply mt-2;
+}
+
+.optionsFieldItem div + div input:not(:checked) + label {
+  margin-left: -1px;
+}

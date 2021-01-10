@@ -5,7 +5,7 @@ export function IssueTags({ value: tags, onChange }) {
   const [value, setValue] = useState('');
   return (
     <div
-      tabIndex="0"
+      tabIndex="-1"
       className="form-input flex w-full h-10 space-x-4 border border-gray-500 rounded-none"
     >
       {tags.map((tag, index) => (
