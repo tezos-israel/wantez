@@ -4,7 +4,7 @@ import { useContract } from '@tezos-il/tezos-react-hooks';
 
 import { useOnRouteChange } from './useOnRouteChange';
 
-const CONTRACT_ADDRESS = 'KT1JLDYeV6VYN6imHmEbSnpYuoz8xZ8DMew9';
+const CONTRACT_ADDRESS = 'KT1Dr671HNAjRkctThNeX96qz2J7eRY2Ggef';
 
 export const GigsContractContext = createContext({
   connected: false,
@@ -19,7 +19,7 @@ export const GigsContractContext = createContext({
 
 export const useGigsContractContext = () => useContext(GigsContractContext);
 
-export function WalletProvider({ children }) {
+export function GigContractProvider({ children }) {
   const {
     contract,
     error,

@@ -897,10 +897,10 @@
     bs58check "^2.1.2"
     buffer "^5.6.0"
 
-"@tezos-il/tezos-react-hooks@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@tezos-il/tezos-react-hooks/-/tezos-react-hooks-0.0.8.tgz#53f23f8ee4ffa18caf6870a6f356e07e76c112a2"
-  integrity sha512-6qPk+rOSG3Is8zo4z2XlBqP+jKXotj9YxQ/9IM5jUgLTevfAcvnLuSivWlZAtPm2/fCn/eE5c6MK3zpdR9zLbw==
+"@tezos-il/tezos-react-hooks@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@tezos-il/tezos-react-hooks/-/tezos-react-hooks-0.0.9.tgz#95cd1db00526ec2e70c9fae7e9a82d230fa1b8d7"
+  integrity sha512-1Nh2Ycwjq9OsYT+8TN5WX1QFQQu3Tdzp+ugR71KKIzmYpxYopzI3sNWunCFSuNFfb6jZZgF2BvwgC2kFaor7Ig==
 
 "@types/bn.js@^4.11.3":
   version "4.11.6"

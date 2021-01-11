@@ -25,7 +25,7 @@
     "@tailwindcss/forms": "^0.2.1",
     "@taquito/beacon-wallet": "^7.1.0-beta.0",
     "@taquito/taquito": "^7.1.0-beta.0",
-    "@tezos-il/tezos-react-hooks": "^0.0.8",
+    "@tezos-il/tezos-react-hooks": "^0.0.9",
     "apollo-fetch": "^0.7.0",
     "autoprefixer": "^10.2.0",
     "date-fns": "^2.16.1",
