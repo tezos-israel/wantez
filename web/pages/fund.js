@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
@@ -15,10 +15,11 @@ import Logo from './create-icon.svg';
 export default function FundIssuePage() {
   const router = useRouter();
   const { user } = useAuthContext();
+  const [loading, setLoading] = useState(false);
 
   const { address, balance } = useWalletContext();
   const { fundIssue } = useGigsContractContext();
-  const createBounty = useCreateBounty(fundIssue, router);
+  const createBounty = useCreateBounty(fundIssue, router, setLoading);
 
   return (
     <Layout>
@@ -40,6 +41,7 @@ export default function FundIssuePage() {
             isLoggedIn={!!user}
             isConnected={!!address}
             balance={balance}
+            loading={loading}
           />
         </div>
       </div>
@@ -47,15 +49,20 @@ export default function FundIssuePage() {
   );
 
   async function handleSubmit(variables) {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
     try {
       await createBounty({ variables });
     } catch (e) {
+      setLoading(false);
       console.error(e);
     }
   }
 }
 
-function useCreateBounty(fundIssue, router) {
+function useCreateBounty(fundIssue, router, setLoading) {
   const [deleteBounty] = useMutation(DELETE_BOUNTY, {
     update: updateCacheAfterDelete,
   });
@@ -121,6 +128,8 @@ function useCreateBounty(fundIssue, router) {
       } catch (deleteError) {
         console.error(deleteError);
       }
+    } finally {
+      setLoading(false);
     }
   }
 }

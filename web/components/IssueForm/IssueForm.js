@@ -57,7 +57,13 @@ const initialValues = {
   tags: [],
 };
 
-export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
+export function IssueForm({
+  onSubmit,
+  isConnected,
+  isLoggedIn,
+  balance,
+  loading,
+}) {
   const formik = useFormik({
     initialValues,
     onSubmit: handleSubmit,
@@ -273,8 +279,8 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
         </label>
 
         <button
-          className="disabled:cursor-not-allowed disabled:opacity-50 block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md"
-          disabled={!isConnected || !isLoggedIn}
+          className="disabled:cursor-not-allowed disabled:opacity-50 relative block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md"
+          disabled={!isConnected || !isLoggedIn || loading}
           title={
             !isConnected
               ? 'Please connect to a wallet'
@@ -285,6 +291,9 @@ export function IssueForm({ onSubmit, isConnected, isLoggedIn, balance }) {
           type="submit"
         >
           Fund Issue
+          {loading && (
+            <span className="right-3 absolute lowercase">Loading</span>
+          )}
         </button>
       </div>
     </form>
@@ -333,6 +342,7 @@ IssueForm.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   isConnected: PropTypes.bool.isRequired,
   balance: PropTypes.number.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 function usePrice(priceXTZ, currency) {
