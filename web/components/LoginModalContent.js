@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useFormik } from 'formik';
+import { string, object } from 'yup';
+import classnames from 'classnames';
 
 import { Button } from 'components/shared/Button';
+import { FormField } from 'components/shared/FormField';
+
+const validationSchema = object().shape({
+  email: string().email().required(),
+});
 
 export function LoginModalContent({
   isLoading,
   onSubmit,
   disableLogin,
-  clearError,
-  error,
   isUserLoggedIn,
 }) {
-  const [email, setEmail] = useState('');
+  const formik = useFormik({
+    onSubmit,
+    validationSchema,
+    initialValues: { email: '' },
+  });
 
   if (isLoading) {
     return 'Loading...';
@@ -22,46 +31,40 @@ export function LoginModalContent({
   }
 
   return (
-    <form className="flex flex-col">
-      <div className="flex flex-col items-center">
-        <label htmlFor="email-input" className="text-gray-700">
-          Enter Your Email
-        </label>
+    <form className="flex flex-col" onSubmit={formik.handleSubmit}>
+      <FormField
+        title="Enter Your Email"
+        fieldId="email-input"
+        error={formik.errors.email}
+      >
         <input
-          className="form-input w-64 mt-1"
+          className={classnames('w-64 mt-1', {
+            'border-red-500': formik.touched.email && formik.errors.email,
+          })}
           type="email"
+          name="email"
           id="email-input"
-          value={email}
-          onChange={onChangeEmail}
+          value={formik.values.email}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
         />
-      </div>
-      <div className="error-msg">{error}</div>
+      </FormField>
+
       <Button
         className="mt-10"
         type="submit"
         value="Log in"
-        disabled={!email || disableLogin}
-        onClick={(e) => {
-          e.preventDefault();
-          onSubmit(email);
-        }}
+        disabled={!formik.isValid || disableLogin}
       >
         Log in
       </Button>
     </form>
   );
-
-  function onChangeEmail(event) {
-    clearError(); // remove error msg
-    setEmail(event.target.value);
-  }
 }
 
 LoginModalContent.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   disableLogin: PropTypes.bool.isRequired,
-  clearError: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired,
   isUserLoggedIn: PropTypes.bool.isRequired,
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function FormField({ title, fieldId, children }) {
+export function FormField({ title, fieldId, error = '', children }) {
   return (
     <div>
       <label
@@ -11,11 +11,13 @@ export function FormField({ title, fieldId, children }) {
         {title}
       </label>
       {children}
+      {error && <div className="text-sm text-red-500">{error}</div>}
     </div>
   );
 }
 
 FormField.propTypes = {
   title: PropTypes.string.isRequired,
+  error: PropTypes.string,
   fieldId: PropTypes.string.isRequired,
 };

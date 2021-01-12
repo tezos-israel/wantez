@@ -10,7 +10,6 @@ import { LoginModalContent } from './LoginModalContent';
 export function LoginModal({ isOpen, onDismiss }) {
   const { user, setUser, magic, isLoading } = useAuthContext();
 
-  const [errorMsg, setErrorMsg] = useState('');
   const [disableLogin, setDisableLogin] = useState(false);
 
   return (
@@ -22,8 +21,6 @@ export function LoginModal({ isOpen, onDismiss }) {
     >
       <LoginModalContent
         onSubmit={onSubmit}
-        error={errorMsg}
-        clearError={clearError}
         disableLogin={disableLogin}
         isLoading={isLoading}
         isUserLoggedIn={!!user}
@@ -31,13 +28,9 @@ export function LoginModal({ isOpen, onDismiss }) {
     </Dialog>
   );
 
-  function clearError() {
-    setErrorMsg('');
-  }
-
   function onSubmit(email) {
     if (!email) {
-      return setErrorMsg('Email cannot be empty.');
+      return;
     }
     handleLogin(email);
   }
