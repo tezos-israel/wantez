@@ -14,7 +14,7 @@ function Layout({ children, title }) {
 
       <NavBar />
 
-      <main className="flex flex-col items-center justify-center flex-auto mt-20 overflow-hidden">
+      <main className="flex flex-col items-center justify-center flex-auto mt-20">
         {children}
       </main>
       <Footer />

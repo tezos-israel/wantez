@@ -23,7 +23,7 @@ export default function FundIssuePage() {
 
   return (
     <Layout>
-      <div className="bg-fund flex-auto w-full pb-20 overflow-auto">
+      <div className="bg-fund flex-auto w-full pb-20">
         <div className="w-10/12 mx-auto mt-10">
           <div className="auto-cols-max grid items-center mb-4 text-blue-500">
             <div className="mr-5">
