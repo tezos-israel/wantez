@@ -9,13 +9,12 @@ import { debounce } from 'lib/debounce';
 import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
+import { HalfCirclePaper } from 'components/shared/HalfCirclePaper';
 
 import { useRepoInfo } from './use-repo-info';
 
 import { CategoriesField } from './CategoriesField';
 import { IssueTags } from './IssueTags';
-
-import HalfCirclePaper from './half-circle-paper.svg';
 
 import { schema } from './form-validation';
 
@@ -73,9 +72,7 @@ export function IssueForm({
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="bg-white">
-        <div className="mx-4 transform -translate-y-1/2">
-          <HalfCirclePaper className="w-full" />
-        </div>
+        <HalfCirclePaper />
         <div className="p-10">
           <div className="space-y-5">
             <FieldGroup
