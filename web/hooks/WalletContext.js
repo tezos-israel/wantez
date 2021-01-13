@@ -49,7 +49,7 @@ export function WalletProvider({ children }) {
         },
         error,
         loading,
-        balance,
+        balance: balance && balance / 10 ** 6,
         clearErrors,
       }}
     >

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import classnames from 'classnames';
 import { useFormik } from 'formik';
 
 import { debounce } from 'lib/debounce';
@@ -11,26 +12,14 @@ import { OptionsField } from 'components/shared/OptionsField';
 
 import { useRepoInfo } from './use-repo-info';
 
+import { CategoriesField } from './CategoriesField';
 import { IssueTags } from './IssueTags';
-import { IssueCategory } from './IssueCategory';
 
 import HalfCirclePaper from './half-circle-paper.svg';
-import CategoryFrontend from './CategoryFrontend.svg';
-import CategoryBackend from './CategoryBackend.svg';
-import CategoryDesign from './CategoryDesign.svg';
-import CategoryDocs from './CategoryDocs.svg';
 
 import { schema } from './form-validation';
 
 const FEE_PERCENT = 0;
-
-const categories = [
-  { title: 'Frontend', icon: CategoryFrontend, id: 'frontend' },
-  { title: 'Backend', icon: CategoryBackend, id: 'backend' },
-  { title: 'Design', icon: CategoryDesign, id: 'design' },
-  { title: 'Documentation', icon: CategoryDocs, id: 'documentation' },
-  { title: 'Other', id: 'other' },
-];
 
 // import { v4 as uuid } from 'uuid';
 // const demoValues = {
@@ -52,8 +41,8 @@ const initialValues = {
   timeCommitment: 'hours',
   price: 0,
   estHours: 0,
-  disclaimerAgree: true,
-  paymentAgree: true,
+  disclaimerAgree: false,
+  paymentAgree: false,
   tags: [],
 };
 
@@ -96,18 +85,25 @@ export function IssueForm({
                 </label>
               )}
             >
-              <input
-                type="text"
-                name="issueUrl"
-                id="url-input"
-                className={`border border-gray-500 rounded-none form-input ${
-                  formik.touched.issueUrl && formik.errors.issueUrl
-                    ? 'border-red-500'
-                    : ''
-                }`}
-                onChange={(e) => handleUrlChange(e.target.value)}
-                value={formik.values.issueUrl}
-              />
+              <FormField
+                error={formik.touched.issueUrl ? formik.errors.issueUrl : ''}
+              >
+                <input
+                  type="text"
+                  name="issueUrl"
+                  id="url-input"
+                  className={classnames(
+                    'border border-gray-500 rounded-none w-full',
+                    {
+                      'border-red-500':
+                        formik.touched.issueUrl && formik.errors.issueUrl,
+                    }
+                  )}
+                  onChange={(e) => handleUrlChange(e.target.value)}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.issueUrl}
+                />
+              </FormField>
             </FieldGroup>
             <FieldGroup title="Gig info">
               {loadingRepoInfo ? (
@@ -124,22 +120,12 @@ export function IssueForm({
             </FieldGroup>
           </div>
           <div className="my-6 border-t-2 border-blue-500 border-dashed" />
-          <FieldGroup title="Issue Category">
-            <p className="text-sm text-gray-500">
-              Pick the most accurate categories for this issue to get the right
-              contributors
-            </p>
-            <div className="flex mt-3 space-x-4">
-              {categories.map((category) => (
-                <IssueCategory
-                  {...category}
-                  key={category.title}
-                  onChange={formik.handleChange}
-                  value={formik.values.categories}
-                />
-              ))}
-            </div>
-          </FieldGroup>
+          <CategoriesField
+            error={formik.touched.categories ? formik.errors.categories : ''}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.categories}
+          />
           <div className="my-6 border-t-2 border-blue-500 border-dashed" />
           <FieldGroup title="Issue Tags">
             <p className="text-sm text-gray-500">
@@ -194,18 +180,30 @@ export function IssueForm({
 
         <FieldGroup title="Pricing">
           <div className="grid grid-cols-3 gap-3">
-            <FormField title="Amount (XTZ)" fieldId="amount-input">
+            <FormField
+              title="Amount (XTZ)"
+              fieldId="amount-input"
+              error={
+                formik.touched.price
+                  ? formik.errors.price ||
+                    (formik.values.price > balance && 'Balance is insufficient')
+                  : ''
+              }
+            >
               <input
                 type="number"
                 id="amount-input"
                 name="price"
-                className={`w-full border border-gray-500 rounded-none form-input ${
-                  (formik.touched.price && formik.errors.price) ||
-                  formik.values.price > balance
-                    ? 'border-red-500'
-                    : ''
-                }`}
+                className={classnames(
+                  `w-full border border-gray-500 rounded-none`,
+                  {
+                    'border-red-500':
+                      formik.touched.price &&
+                      (formik.errors.price || formik.values.price > balance),
+                  }
+                )}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 value={formik.values.price}
               />
             </FormField>
@@ -217,17 +215,24 @@ export function IssueForm({
                 value={priceFiat}
               />
             </FormField>
-            <FormField title="Est. Hours of works" fieldId="est-hours-input">
+            <FormField
+              title="Est. Hours of works"
+              fieldId="est-hours-input"
+              error={formik.touched.estHours ? formik.errors.estHours : ''}
+            >
               <input
                 type="number"
-                className={`w-full border border-gray-500 rounded-none form-input ${
-                  formik.touched.estHours && formik.errors.estHours
-                    ? 'border-red-500'
-                    : ''
-                }`}
+                className={classnames(
+                  `w-full border border-gray-500 rounded-none`,
+                  {
+                    'border-red-500':
+                      formik.touched.estHours && formik.errors.estHours,
+                  }
+                )}
                 name="estHours"
                 value={formik.values.estHours}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </FormField>
           </div>
@@ -256,20 +261,27 @@ export function IssueForm({
             className="form-checkbox mr-2 text-green-600 border-gray-500 rounded-none"
             type="checkbox"
             name="disclaimerAgree"
-            value={formik.values.disclaimerAgree}
+            checked={formik.values.disclaimerAgree}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
           <span className="text-xs text-gray-600">
             I have read, understand, and agree to, the Terms of Service.
           </span>
         </label>
+        {formik.touched.disclaimerAgree && formik.errors.disclaimerAgree && (
+          <div className="text-sm text-red-500">
+            {formik.errors.disclaimerAgree}
+          </div>
+        )}
         <label className="block">
           <input
             className="form-checkbox mr-2 text-green-600 border-gray-500 rounded-none"
             type="checkbox"
             name="paymentAgree"
-            value={formik.values.paymentAgree}
+            checked={formik.values.paymentAgree}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
           <span className=" text-xs text-gray-600">
             Payment Upon Completion. Upon delivery of work, I agree to pay the
@@ -277,10 +289,15 @@ export function IssueForm({
             meets the standards I have set forth.
           </span>
         </label>
+        {formik.touched.paymentAgree && formik.errors.paymentAgree && (
+          <div className="text-sm text-red-500">
+            {formik.errors.paymentAgree}
+          </div>
+        )}
 
         <button
           className="disabled:cursor-not-allowed disabled:opacity-50 relative block w-1/3 h-10 mx-auto mt-10 text-white uppercase bg-blue-500 rounded-md"
-          disabled={!isConnected || !isLoggedIn || loading}
+          disabled={!formik.isValid || !isConnected || !isLoggedIn || loading}
           title={
             !isConnected
               ? 'Please connect to a wallet'

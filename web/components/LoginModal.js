@@ -28,7 +28,7 @@ export function LoginModal({ isOpen, onDismiss }) {
     </Dialog>
   );
 
-  function onSubmit(email) {
+  function onSubmit({ email }) {
     if (!email) {
       return;
     }

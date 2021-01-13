@@ -1,7 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './IssueCategory.module.css';
-export function IssueCategory({ title, icon: Icon, id, onChange, value }) {
+export function IssueCategory({
+  title,
+  icon: Icon,
+  id,
+  onChange,
+  onBlur,
+  onFocus,
+  value,
+}) {
   const inputId = `input-${id}`;
 
   return (
@@ -14,6 +22,8 @@ export function IssueCategory({ title, icon: Icon, id, onChange, value }) {
         value={id}
         checked={value.includes(id)}
         onChange={onChange}
+        onBlur={(e) => onBlur(e, id)}
+        onFocus={(e) => onFocus(e, id)}
       />
       <label
         htmlFor={inputId}
@@ -32,4 +42,6 @@ IssueCategory.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
 };

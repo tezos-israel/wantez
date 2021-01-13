@@ -19,7 +19,7 @@ const timeCommitmentOptions = [
 
 export function Filter({ value, onChange }) {
   return (
-    <div className="bg-gradient-to-b to-filtera from-filterb h-full p-10">
+    <div className="bg-gradient-to-b to-filtera from-filterb h-full p-10 overflow-auto">
       <h2 className="flex mb-6 text-3xl font-bold text-teal-400 capitalize">
         <HeaderIcon alt="filter" aria-hidden="true" className="mr-3" />
         Filter
