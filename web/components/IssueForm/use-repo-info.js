@@ -21,7 +21,7 @@ export function useRepoInfo() {
     title,
     description,
     error,
-    imageUrl,
+    imageUrl: imageUrl || '',
     loading,
     onUrlChange,
   };
@@ -30,7 +30,7 @@ export function useRepoInfo() {
     const site = parseUrlSite(url);
 
     if (!site) {
-      dispatchError(`${url} is not support`);
+      dispatchError(`${url} is not supported`);
       return;
     }
 
@@ -40,7 +40,7 @@ export function useRepoInfo() {
       case 'gitlab':
         return handleGitlabUrl(url);
       default:
-        dispatchError(`${url} is not support`);
+        dispatchError(`${url} is not supported`);
     }
   }
 
