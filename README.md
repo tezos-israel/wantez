@@ -11,7 +11,7 @@
 ```
 yarn
 vercel env pull ./web/.env.local
-yarn create:db
+yarn db:create
 yarn dev
 ```
 
