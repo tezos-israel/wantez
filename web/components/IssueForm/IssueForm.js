@@ -12,6 +12,7 @@ import { usePrice } from '../../hooks/usePrice';
 
 import { useRepoInfo } from './use-repo-info';
 
+import { IssueUrlField } from './IssueUrlField';
 import { CategoriesField } from './CategoriesField';
 import { IssueTags } from './IssueTags';
 
@@ -59,6 +60,7 @@ export function IssueForm({
 
   const priceFiat = usePrice(formik.values.price, 'ils');
   const fee = formik.values.price * FEE_PERCENT;
+
   const {
     title,
     description,
@@ -74,33 +76,12 @@ export function IssueForm({
         <HalfCirclePaper />
         <div className="p-10">
           <div className="space-y-5">
-            <FieldGroup
-              renderTitle={(className) => (
-                <label htmlFor="url-input" className={className}>
-                  Issue Url
-                </label>
-              )}
-            >
-              <FormField
-                error={formik.touched.issueUrl ? formik.errors.issueUrl : ''}
-              >
-                <input
-                  type="text"
-                  name="issueUrl"
-                  id="url-input"
-                  className={classnames(
-                    'border border-gray-500 rounded-none w-full',
-                    {
-                      'border-red-500':
-                        formik.touched.issueUrl && formik.errors.issueUrl,
-                    }
-                  )}
-                  onChange={(e) => handleUrlChange(e.target.value)}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.issueUrl}
-                />
-              </FormField>
-            </FieldGroup>
+            <IssueUrlField
+              touched={formik.touched.issueUrl}
+              onBlur={formik.handleBlur}
+              onChange={handleUrlChange}
+              value={formik.values.issueUrl}
+            />
             <FieldGroup title="Gig info">
               {loadingRepoInfo ? (
                 <div>Loading</div>
