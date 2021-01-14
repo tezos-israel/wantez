@@ -77,5 +77,5 @@ CategoriesField.propTypes = {
   onBlur: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   value: PropTypes.any.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
 };
