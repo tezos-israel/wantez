@@ -13,14 +13,15 @@ export function IssueUrlField({
   onBlur,
   onChange,
 }) {
-  const [
-    isUniqueURL,
-    isValidatingURL,
-    errorValidatingURL,
-  ] = useUniqueURLValidation(value);
+  const {
+    isUnique,
+    isLoading: isValidatingURL,
+    error: errorValidatingURL,
+    onUrlChange: checkIfUnique,
+  } = useUniqueURLValidation(value);
 
   const error = getError({
-    isUniqueURL,
+    isUnique,
     isValidatingURL,
     errorValidatingURL,
     validationError,
@@ -43,17 +44,23 @@ export function IssueUrlField({
           className={classnames('border border-gray-500 rounded-none w-full', {
             'border-red-500': error,
           })}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
           onBlur={onBlur}
           value={value}
         />
       </FormField>
     </FieldGroup>
   );
+
+  function handleChange(event) {
+    const url = event.target.value;
+    onChange(url);
+    checkIfUnique(url);
+  }
 }
 
 function getError({
-  isUniqueURL,
+  isUnique,
   errorValidatingURL,
   isValidatingURL,
   touched,
@@ -71,7 +78,7 @@ function getError({
     return validationError;
   }
 
-  if (!isUniqueURL) {
+  if (!isUnique) {
     return 'URL should be unique';
   }
 }

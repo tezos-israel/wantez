@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
+import { debounce } from 'lib/debounce';
 
-export function useUniqueURLValidation(issueUrl) {
-  const CHECK_URL_UNIQUENESS = gql`
-    query($issueUrl: String) {
-      bounty_aggregate(where: { issueUrl: { _eq: $issueUrl } }) {
-        aggregate {
-          count
-        }
+const CHECK_URL_UNIQUENESS = gql`
+  query($issueUrl: String) {
+    bounty_aggregate(where: { issueUrl: { _eq: $issueUrl } }) {
+      aggregate {
+        count
       }
     }
-  `;
+  }
+`;
 
-  const [isUnique, setIsUnique] = useState(false);
+export function useUniqueURLValidation() {
+  const [isUnique, setIsUnique] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -20,22 +21,23 @@ export function useUniqueURLValidation(issueUrl) {
     skip: true,
   });
 
-  useEffect(() => {
-    (async function () {
-      setIsLoading(true);
-      const response = await refetch({ issueUrl });
-      if (!response) {
-        setIsUnique(false);
-        setIsLoading(false);
-        setError('');
-        return;
-      }
-      const { data, error } = response;
-      setIsUnique(!!(data && data.bounty_aggregate.aggregate.count === 0));
-      setIsLoading(false);
-      setError(error || '');
-    })();
-  }, [issueUrl]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onUrlChange = useCallback(debounce(handleUrlChange, 1000), []);
 
-  return [isUnique, isLoading, error];
+  return { isUnique, isLoading, error, onUrlChange };
+
+  async function handleUrlChange(issueUrl) {
+    setIsLoading(true);
+    const response = await refetch({ issueUrl });
+    if (!response) {
+      setIsUnique(false);
+      setIsLoading(false);
+      setError('');
+      return;
+    }
+    const { data, error } = response;
+    setIsUnique(!!(data && data.bounty_aggregate.aggregate.count === 0));
+    setIsLoading(false);
+    setError(error || '');
+  }
 }
