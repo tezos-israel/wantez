@@ -1,0 +1,1 @@
+export { GigInfo } from './GigInfo';

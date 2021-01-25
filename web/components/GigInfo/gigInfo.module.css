@@ -1,0 +1,9 @@
+.gigContent {
+  box-shadow: -8px 6px 7px 0 rgba(0, 0, 0, 0.37);
+}
+
+.bgHalfCirclePaper {
+  height: 100%;
+  top: 33px;
+  left: -40px;
+}

@@ -6,6 +6,8 @@ import { GET_BOUNTIES } from 'queries/bounties';
 import Layout from 'components/Layout';
 import { WantezList, Filter, TagsList } from 'components/Dashboard';
 
+import Loader from 'react-loader-spinner';
+
 export default function ExplorePage() {
   const [tags, setTags] = useState([]);
 
@@ -35,7 +37,7 @@ export default function ExplorePage() {
   return (
     <Layout>
       {loading ? (
-        'Loading...'
+        <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
       ) : error ? (
         <div className="alert" severity="error">
           <div className="alert-title">Failed loading bounties</div>

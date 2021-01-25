@@ -10,6 +10,7 @@ function Layout({ children, title }) {
     <div className="flex flex-col h-screen">
       <Head>
         <title>{title ? `${title} - ` : ''}Wantez</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
       <NavBar />

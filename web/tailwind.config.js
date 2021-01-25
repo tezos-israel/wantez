@@ -12,6 +12,7 @@ module.exports = {
       inset: {
         '-1/2': '-50%',
         '-35': '-35%',
+        '-3': '-3em',
       },
       gradientColorStops: {
         nava: '#0e453c',
@@ -21,6 +22,9 @@ module.exports = {
       },
       backgroundColor: {
         fund: '#1d2129',
+      },
+      spacing: {
+        30: '7.5em',
       },
     },
   },

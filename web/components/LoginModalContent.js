@@ -4,6 +4,7 @@ import { string, object } from 'yup';
 import classnames from 'classnames';
 
 import { Button } from 'components/shared/Button';
+import Loader from 'react-loader-spinner';
 import { FormField } from 'components/shared/FormField';
 
 const validationSchema = object().shape({
@@ -23,7 +24,7 @@ export function LoginModalContent({
   });
 
   if (isLoading) {
-    return 'Loading...';
+    return <Loader type="TailSpin" color="#cacaca" height={50} width={50} />;
   }
 
   if (isUserLoggedIn) {

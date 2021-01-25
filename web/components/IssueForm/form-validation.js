@@ -18,7 +18,10 @@ export const schema = object().shape({
 
   // }),
   paymentAgree: boolean().oneOf([true], 'Please select to agree').required(),
-  price: number().positive('Should be a positive integer').integer('Should be a positive integer').required('Please provide price in XTZ'),
+  price: number()
+    .positive('Should be a positive integer')
+    .integer('Should be a positive integer')
+    .required('Please provide price in XTZ'),
   timeCommitment: string()
     .oneOf(['hours', 'days', 'weeks', 'months'])
     .required(),

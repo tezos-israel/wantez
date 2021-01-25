@@ -4,12 +4,12 @@ import ReactMarkdown from 'react-markdown';
 import classnames from 'classnames';
 import { useFormik } from 'formik';
 
-import { debounce } from 'lib/debounce';
-
 import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
 import { HalfCirclePaper } from 'components/shared/HalfCirclePaper';
+
+import { usePrice } from '../../hooks/usePrice';
 
 import { useRepoInfo } from './use-repo-info';
 
@@ -358,25 +358,3 @@ IssueForm.propTypes = {
   balance: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
 };
-
-function usePrice(priceXTZ, currency) {
-  const [priceFiat, setPriceFiat] = useState(0);
-
-  const loadPriceAsync = useCallback(
-    debounce(async (price) => {
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/simple/price?ids=tezos&vs_currencies=${currency}`
-      );
-      const { tezos: response } = await res.json();
-      const responsePrice = response[currency];
-      setPriceFiat(Math.ceil(price * responsePrice * 100) / 100);
-    }, 1000),
-    []
-  );
-
-  useEffect(() => {
-    loadPriceAsync(priceXTZ);
-  }, [priceXTZ]);
-
-  return priceFiat;
-}
