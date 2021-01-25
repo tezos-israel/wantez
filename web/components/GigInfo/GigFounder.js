@@ -20,7 +20,7 @@ function GigFounder({ founder }) {
             </div>
             <div className="info-row lg:flex-row flex flex-col my-1 text-sm">
               <div className="info-label mr-2 font-bold">Founder:</div>
-              <div className="info-value whitespace-nowrap  max-w-full overflow-hidden">
+              <div className="info-value whitespace-nowrap max-w-full overflow-hidden">
                 {founder.hash_key}
               </div>
             </div>
@@ -34,7 +34,6 @@ function GigFounder({ founder }) {
     </div>
   );
 }
-
 GigFounder.propTypes = {
   founder: PropTypes.object,
 };

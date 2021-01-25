@@ -1,11 +1,3 @@
-field:
-focused
-regular
-invalid
-valid
+field: focused regular invalid valid
 
-button
-disabled
-primary
-secondary
-danger
+button disabled primary secondary danger

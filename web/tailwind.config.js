@@ -6,6 +6,7 @@ module.exports = {
       width: {
         content: 'fit-content',
       },
+      height: {},
       fontFamily: {
         header: ['Oswald'],
       },

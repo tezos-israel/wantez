@@ -10,7 +10,8 @@
     "dev": "yarn workspace web dev",
     "create:db": "yarn workspace web create:db",
     "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\"",
-    "pull-env": "vercel env pull ./web/.env.local"
+    "pull-env": "vercel env pull ./web/.env.local",
+    "posttest": "npm run format"
   },
   "workspaces": [
     "web",
@@ -31,7 +32,8 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   },
   "dependencies": {}
 }
