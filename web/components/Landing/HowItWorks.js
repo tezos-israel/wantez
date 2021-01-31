@@ -41,7 +41,10 @@ export default function HowItWorks({ flowCharts }) {
               </div>
             </div>
             {index < steps.length - 1 && (
-              <div className="ml-5 text-xl font-bold">
+              <div
+                className="ml-5 text-xl font-bold"
+                key={`${step.title}Arrow`}
+              >
                 <Arrow />
               </div>
             )}
