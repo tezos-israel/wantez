@@ -1,7 +1,6 @@
-import React from 'react';
 import classnames from 'classnames';
-
-function Divider({ className }) {
+import PropTypes from 'prop-types';
+export default function Divider({ className }) {
   return (
     <div
       className={classnames(
@@ -12,4 +11,6 @@ function Divider({ className }) {
   );
 }
 
-export default Divider;
+Divider.propTypes = {
+  className: PropTypes.string,
+};

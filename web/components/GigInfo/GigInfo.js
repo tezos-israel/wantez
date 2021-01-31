@@ -1,5 +1,3 @@
-import React, { useState, useCallback, useEffect } from 'react';
-
 import { HalfCirclePaper } from '../../components/shared/HalfCirclePaper';
 import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
@@ -7,7 +5,7 @@ import PropTypes from 'prop-types';
 import GigApplications from './GigApplications.js';
 import GigFounder from './GigFounder.js';
 import GigDescription from './GigDescription.js';
-import Divider from '../Divider.js';
+import Divider from '../shared/Divider.js';
 import classnames from 'classnames';
 import { usePrice } from '../../hooks/usePrice';
 
