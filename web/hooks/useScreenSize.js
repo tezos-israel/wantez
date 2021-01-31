@@ -16,6 +16,7 @@ export function useScreenSize() {
     return () => {
       window.removeEventListener('resize', onResizeDebounced);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { height, width };
