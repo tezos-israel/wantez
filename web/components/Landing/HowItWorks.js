@@ -10,7 +10,7 @@ export default function HowItWorks({ flowCharts }) {
   const currentChart = flowCharts.find(({ id }) => chartID === id);
 
   return (
-    <div className="flex flex-col items-center w-1/2 m-auto my-20">
+    <div className="flex flex-col items-center w-1/2 m-auto mb-48">
       <div className="font-museo text-5xl font-bold text-blue-500">
         How does Wantez work?
       </div>
@@ -28,22 +28,24 @@ export default function HowItWorks({ flowCharts }) {
           </button>
         ))}
       </div>
-      <div className="flex items-center space-x-10 select-none">
+      <div className="flex items-center space-x-24 select-none">
         {currentChart.steps.map((step, index, steps) => (
-          <div key={index} className="flex items-center space-x-10">
+          <>
             <div
               className="relative flex flex-col items-center"
               key={step.title}
             >
               <Image src={step.imageUrl} alt="" height="180" width="180" />
-              <div className="absolute bottom-0 -mb-10">{step.title}</div>
+              <div className="font-museo top-full absolute mt-10 text-2xl font-semibold text-center text-blue-500">
+                {step.title}
+              </div>
             </div>
             {index < steps.length - 1 && (
-              <div className="text-xl font-bold">
+              <div className="ml-5 text-xl font-bold">
                 <Arrow />
               </div>
             )}
-          </div>
+          </>
         ))}
       </div>
     </div>
