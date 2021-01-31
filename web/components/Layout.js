@@ -3,7 +3,7 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 
 import NavBar from './Nav';
-import { Footer } from './Footer';
+import Footer from './Footer';
 
 function Layout({ children, title }) {
   return (

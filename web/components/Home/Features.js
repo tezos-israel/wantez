@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Image from 'next/image';
 
-export function Features({ features }) {
+export default function Features({ features }) {
   return (
     <div className="w-1/2 m-auto">
       <div className="space-y-10">

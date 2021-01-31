@@ -1,14 +1,14 @@
 import Divider from 'components/shared/Divider';
-import { Hero } from './Hero';
-import { Features } from './Features';
+import Hero from './Hero';
+import Features from './Features';
 import HowItWorks from './HowItWorks';
 import Vision from './Vision';
 import ContactForm from './ContactForm';
-import { Footer } from '../Footer';
+import Footer from '../Footer';
 
 import data from 'data/home.json';
 
-export function LandingPage() {
+export default function Home() {
   return (
     <>
       <Hero title={data.title} about={data.about} />

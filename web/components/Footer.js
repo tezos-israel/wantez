@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import Logo from '../images/site-logo.svg';
 
-export function Footer() {
+export default function Footer() {
   return (
     <div className="bg-gradient-to-l from-nava to-navb flex items-end justify-between p-10">
       <Logo className="mb-1" />

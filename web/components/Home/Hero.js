@@ -5,7 +5,7 @@ import Section from './Section';
 import Logo from '../../images/site-logo.svg';
 import PrimaryImage from './primary.svg';
 
-export function Hero({ title, about }) {
+export default function Hero({ title, about }) {
   return (
     <Section>
       <div className="pt-30 pb-40">

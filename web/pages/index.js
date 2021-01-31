@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { LandingPage } from 'components/Landing';
+import Home from 'components/Home';
 
 export default function IndexPage() {
   return (
@@ -8,7 +8,7 @@ export default function IndexPage() {
         <title>Wantez</title>
       </Head>
 
-      <LandingPage />
+      <Home />
     </>
   );
 }

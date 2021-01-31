@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 
 import Arrow from './arrow.svg';
 
@@ -30,25 +30,19 @@ export default function HowItWorks({ flowCharts }) {
       </div>
       <div className="flex items-center space-x-24 select-none">
         {currentChart.steps.map((step, index, steps) => (
-          <>
-            <div
-              className="relative flex flex-col items-center"
-              key={step.title}
-            >
+          <Fragment key={step.title}>
+            <div className="relative flex flex-col items-center">
               <Image src={step.imageUrl} alt="" height="180" width="180" />
               <div className="font-museo top-full absolute mt-10 text-2xl font-semibold text-center text-blue-500">
                 {step.title}
               </div>
             </div>
             {index < steps.length - 1 && (
-              <div
-                className="ml-5 text-xl font-bold"
-                key={`${step.title}Arrow`}
-              >
+              <div className="ml-5 text-xl font-bold">
                 <Arrow />
               </div>
             )}
-          </>
+          </Fragment>
         ))}
       </div>
     </div>
