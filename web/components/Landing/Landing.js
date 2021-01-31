@@ -4,6 +4,7 @@ import { Features } from './Features';
 import HowItWorks from './HowItWorks';
 import Vision from './Vision';
 import ContactForm from './ContactForm';
+import { Footer } from '../Footer';
 
 import data from 'data/home.json';
 
@@ -16,6 +17,7 @@ export function LandingPage() {
       <HowItWorks flowCharts={data.flowCharts} />
       <Vision text={data.vision.text} title={data.vision.title} />
       <ContactForm />
+      <Footer />
     </>
   );
 }
