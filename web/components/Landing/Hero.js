@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import Particles from 'react-particles-js';
-import classnames from 'classnames';
 
 import { useScreenSize } from 'hooks/useScreenSize';
 import Logo from '../../images/site-logo.svg';
 import PrimaryImage from './primary.svg';
 import BottomBorder from './bottom-border.svg';
-import styles from './Title.module.css';
 
-export function Title({ title, about }) {
+export function Hero({ title, about }) {
   const { width } = useScreenSize();
   return (
     <div className="bg-gradient-to-br from-blue-900 to-blue-500 pt-30 pb-52 relative w-full overflow-x-hidden text-white">
@@ -16,7 +14,7 @@ export function Title({ title, about }) {
         <Logo />
       </div>
       <div className=" flex items-center justify-center w-1/2 mx-auto">
-        <div className={classnames('text-6xl', styles.title)}>{title}</div>
+        <div className={'text-6xl font-museo'}>{title}</div>
         <PrimaryImage />
       </div>
       <div className="flex items-center justify-center w-1/3 mx-auto mt-10 text-lg text-center">
@@ -32,7 +30,7 @@ export function Title({ title, about }) {
   );
 }
 
-Title.propTypes = {
+Hero.propTypes = {
   title: PropTypes.string.isRequired,
   about: PropTypes.string.isRequired,
 };

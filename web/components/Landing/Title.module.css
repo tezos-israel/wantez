@@ -1,9 +1,0 @@
-@font-face {
-  font-family: 'museo';
-  src: url('./museo-500.otf');
-  font-weight: 500;
-}
-
-.title {
-  font-family: 'museo';
-}
