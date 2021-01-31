@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export function Features({ features }) {
   return (
-    <div className="w-1/2 min-h-screen m-auto">
+    <div className="w-1/2 m-auto">
       <div className="space-y-10">
         {features.map((section, index) => (
           <div

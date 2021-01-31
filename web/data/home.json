@@ -21,19 +21,27 @@
     "text": "Wantez believes in supporting and contributing to the evolution of open source projects. Often, bugs and unsolved errors stifle innovation and progress. Utilizing the Tezos blockchain, we aim to solve these issues through creating a thriving ecosystem built on problem-solving, accelerating innovation, and mutually beneficial collaboration"
   },
 
-  "flowCharts": {
-    "funder": [
-      { "title": "Post", "imageUrl": "https://via.placeholder.com/200" },
-      { "title": "Approve", "imageUrl": "https://via.placeholder.com/200" },
-      {
-        "title": "Upgrade your project",
-        "imageUrl": "https://via.placeholder.com/200"
-      }
-    ],
-    "developer": [
-      { "title": "Search", "imageUrl": "https://via.placeholder.com/200" },
-      { "title": "Work", "imageUrl": "https://via.placeholder.com/200" },
-      { "title": "Get Paid", "imageUrl": "https://via.placeholder.com/200" }
-    ]
-  }
+  "flowCharts": [
+    {
+      "id": "funder",
+      "title": "Funder?",
+      "steps": [
+        { "title": "Post", "imageUrl": "/flow-fund-post.svg" },
+        { "title": "Approve", "imageUrl": "/flow-fund-approve.svg" },
+        {
+          "title": "Upgrade your project",
+          "imageUrl": "/flow-fund-upgrade.svg"
+        }
+      ]
+    },
+    {
+      "id": "developer",
+      "title": "Developer?",
+      "steps": [
+        { "title": "Search", "imageUrl": "/flow-dev-search.svg" },
+        { "title": "Work", "imageUrl": "/flow-dev-work.svg" },
+        { "title": "Get Paid", "imageUrl": "/flow-dev-paid.svg" }
+      ]
+    }
+  ]
 }
