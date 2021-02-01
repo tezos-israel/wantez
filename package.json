@@ -35,5 +35,8 @@
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "resolutions": {
+    "**/*/axios": "^0.21.1"
+  }
 }
