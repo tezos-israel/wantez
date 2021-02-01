@@ -26,6 +26,7 @@ export function WantezList({ bounties }) {
         {sortedBounties.map((item) => (
           <WantezListItem
             key={item.id}
+            id={item.id}
             title={item.title}
             fee={item.fee}
             status={item.status}
