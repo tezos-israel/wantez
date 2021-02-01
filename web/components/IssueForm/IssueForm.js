@@ -1,4 +1,3 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import classnames from 'classnames';

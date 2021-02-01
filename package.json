@@ -11,7 +11,9 @@
     "create:db": "yarn workspace web create:db",
     "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\"",
     "pull-env": "vercel env pull ./web/.env.local",
-    "posttest": "npm run format"
+    "posttest": "npm run format",
+    "lint": "eslint . --cache --fix",
+    "pretest": "npm run lint"
   },
   "workspaces": [
     "web",

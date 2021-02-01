@@ -4,6 +4,7 @@ import { debounce } from 'lib/debounce';
 export function usePrice(priceXTZ, currency) {
   const [priceFiat, setPriceFiat] = useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const loadPriceAsync = useCallback(
     debounce(async (price) => {
       const res = await fetch(
@@ -18,6 +19,7 @@ export function usePrice(priceXTZ, currency) {
 
   useEffect(() => {
     loadPriceAsync(parseInt(priceXTZ));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceXTZ]);
 
   return priceFiat;
