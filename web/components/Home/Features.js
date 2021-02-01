@@ -4,17 +4,17 @@ import Image from 'next/image';
 
 export default function Features({ features }) {
   return (
-    <div className="w-1/2 m-auto">
-      <div className="space-y-10">
+    <div className="sm:w-1/2 sm:mx-auto sm:px-0 px-10">
+      <div className="space-y-30 sm:space-y-10">
         {features.map((section, index) => (
           <div
             className={classnames(
-              'flex items-center',
-              index % 2 ? 'flex-row-reverse' : 'flex-row'
+              'sm:flex sm:items-center space-y-10 sm:space-y-0',
+              index % 2 ? 'sm:flex-row-reverse' : 'sm:flex-row'
             )}
             key={index}
           >
-            <div className="w-80 h-80 mx-10">
+            <div className="sm:w-80 sm:h-80 w-40 h-40 mx-10">
               <Image
                 src={section.imageUrl}
                 alt={section.title}
@@ -24,7 +24,7 @@ export default function Features({ features }) {
                 height="320"
               />
             </div>
-            <div className="flex-1 p-10">
+            <div className="sm:p-10 sm:flex-1">
               <h2 className="font-museo mb-8 text-5xl font-bold text-blue-500">
                 {section.title}
               </h2>

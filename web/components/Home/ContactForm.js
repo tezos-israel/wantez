@@ -27,7 +27,10 @@ export default function ContactForm() {
             handleChange,
             handleBlur,
           }) => (
-            <form className="w-1/4 py-10 mx-auto" onSubmit={handleSubmit}>
+            <form
+              className="sm:w-1/4 sm:px-0 px-10 py-10 mx-auto"
+              onSubmit={handleSubmit}
+            >
               <h2 className="font-museo w-content flex mx-auto text-5xl font-bold text-blue-500">
                 <Logo className="mr-10" />
                 Join us now
