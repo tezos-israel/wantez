@@ -2,18 +2,25 @@
 
 ## Development
 
-- set gitlab ssh keys
+Ensure you have Docker, docker-compose, Node.js, yarn, and vercel installed in the correct versions.
 
-- install deps: yarn, nodejs, docker-compose, vercel
+Install dependencies with yarn:
 
-- run the following commands:
-
-```
+```sh
 yarn
 vercel env pull ./web/.env.local
 yarn db:create
+```
+
+Then build and run the project:
+
+```sh
 yarn dev
 ```
+
+Wantez can now be accessed at <http://localhost:3000>.
+
+Read more at [our contributing guidelines](CONTRIBUTING.md)
 
 ### Commit
 
