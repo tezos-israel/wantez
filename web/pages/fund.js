@@ -74,14 +74,9 @@ function useCreateBounty(fundIssue, router, setLoading) {
   return createBounty;
 
   function updateCache(cache, { data }) {
-    let existingBountiesQuery = null;
-    try {
-      existingBountiesQuery = cache.readQuery({
-        query: GET_BOUNTIES,
-      });
-    } catch (e) {
-      return;
-    }
+    const existingBountiesQuery = cache.readQuery({
+      query: GET_BOUNTIES,
+    });
 
     if (!existingBountiesQuery) {
       return;
