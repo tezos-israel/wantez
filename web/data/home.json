@@ -6,12 +6,12 @@
     {
       "title": "Fund your gig",
       "imageUrl": "/feat-fund-gig.svg",
-      "description": "As an open-source software (OSS) company, start-up, or institution, you post a bounty proposal on the platform of a bug you want solved with details of the job required, the expected timeline, and the amount of the bounty or payment. As the funder, you approve which contributor you want to complete the assignment. Once approved and the contributor has patched any holes, he gets paid in XTZ. This simple process allows you to continue developing and make rapid progress on your open source projects. "
+      "description": "As an open-source software maintainer, you post a bounty proposal on the platform of a bug you want solved with details of the job required, the expected timeline, and the amount of the bounty or payment. As the funder, you approve which contributor you want to complete the assignment. Once the PR is merged, he gets paid in tez. This simple process allows you to continue developing and make rapid progress on your open source projects."
     },
     {
       "title": "Explore gigs",
       "imageUrl": "/feat-explore-gigs.svg",
-      "description": "As a developer, you can scroll through the list of bounties from various OSS, and find projects you want to get paid to work on. With Wantez, you can optimize and utilize your ability to fix issues. Explore tons of open source gigs who are looking for your help!  "
+      "description": "As a developer, you can scroll through the list of bounties from various OSS, and find projects you want to get paid to work on. With Wantez, you can optimize and utilize your ability to fix issues. Explore tons of open source gigs who are looking for your help!"
     }
   ],
 
