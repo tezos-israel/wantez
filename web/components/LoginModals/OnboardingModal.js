@@ -30,7 +30,7 @@ export default function OnboardingModal({ onDismiss, userId }) {
 
   return (
     <Dialog
-      onDismiss={onDismiss}
+      onDismiss={() => onDismiss()}
       aria-label="Welcome Dialog"
       className="w-content"
     >

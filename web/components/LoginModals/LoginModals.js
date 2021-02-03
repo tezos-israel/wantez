@@ -22,7 +22,7 @@ export function LoginModals({ isLoginModalOpen, closeLoginModal }) {
 
   return (
     <>
-      <LoginModal isOpen={isLoginModalOpen} onDismiss={handleFinishLogin} />
+      {isLoginModalOpen && <LoginModal onDismiss={handleFinishLogin} />}
       {isWelcomeModalOpen && (
         <WelcomeModal userId={userId} onDismiss={closeWelcomeModal} />
       )}
@@ -34,6 +34,10 @@ export function LoginModals({ isLoginModalOpen, closeLoginModal }) {
 
   function handleFinishLogin(user) {
     closeLoginModal();
+    if (!user) {
+      return;
+    }
+
     setUserId(user.id);
     if (user.finishedOnboarding) {
       openWelcomeModal();
@@ -42,7 +46,11 @@ export function LoginModals({ isLoginModalOpen, closeLoginModal }) {
     openOnboardingModal();
   }
 
-  function handleFinishOnboarding() {
+  function handleFinishOnboarding(user) {
+    if (!user) {
+      return;
+    }
+
     closeOnboardingModal();
     openWelcomeModal();
   }

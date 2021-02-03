@@ -7,15 +7,14 @@ import { useAuthContext } from 'hooks/AuthContext';
 
 import { LoginModalContent } from './LoginModalContent';
 
-export function LoginModal({ isOpen, onDismiss }) {
+export function LoginModal({ onDismiss }) {
   const { user, setUser, magic, isLoading } = useAuthContext();
 
   const [disableLogin, setDisableLogin] = useState(false);
 
   return (
     <Dialog
-      isOpen={isOpen}
-      onDismiss={onDismiss}
+      onDismiss={() => onDismiss()}
       aria-label="Login Dialog"
       className="w-content"
     >
@@ -81,6 +80,5 @@ export function LoginModal({ isOpen, onDismiss }) {
 }
 
 LoginModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
 };

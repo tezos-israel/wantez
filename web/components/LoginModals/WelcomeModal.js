@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 import { useQuery } from '@apollo/client';
@@ -11,9 +13,13 @@ export default function WelcomeModal({ onDismiss, userId }) {
     variables: { userId },
   });
 
+  useEffect(() => {
+    setTimeout(() => onDismiss(), 5000);
+  }, []);
+
   return (
     <Dialog
-      onDismiss={onDismiss}
+      onDismiss={() => onDismiss()}
       aria-label="Welcome Dialog"
       className="w-content"
     >
