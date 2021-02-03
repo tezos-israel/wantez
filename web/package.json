@@ -19,6 +19,7 @@
     "@apollo/client": "^3.3.7",
     "@date-io/date-fns": "^2.10.8",
     "@hapi/iron": "^6.0.0",
+    "@headlessui/react": "^0.2.0",
     "@magic-sdk/admin": "^1.2.2",
     "@octokit/core": "^3.2.5",
     "@reach/accordion": "^0.13.0",

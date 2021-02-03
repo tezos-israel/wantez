@@ -35,7 +35,7 @@ export function UserButtons() {
       <UserMenu
         user={user}
         loading={loading}
-        onLogout={handleLogout}
+        onLogoutClick={handleLogout}
         onLoginClick={openLoginModal}
       />
     </div>
