@@ -10,7 +10,7 @@ export default function HowItWorks({ flowCharts }) {
   const currentChart = flowCharts.find(({ id }) => chartID === id);
 
   return (
-    <div className="sm:w-1/2 sm:px-0 flex flex-col items-center px-10 m-auto mb-48">
+    <div className="lg:w-1/2 sm:px-0 flex flex-col items-center px-10 m-auto mb-48">
       <div className="font-museo text-5xl font-bold text-blue-500">
         How does Wantez work?
       </div>
@@ -28,11 +28,18 @@ export default function HowItWorks({ flowCharts }) {
           </button>
         ))}
       </div>
-      <div className="sm:flex sm:items-center sm:space-x-24 sm:space-y-0 space-y-24 select-none">
+      <div className="sm:flex sm:items-center sm:justify-between sm:space-y-0 space-y-24 select-none">
         {currentChart.steps.map((step, index, steps) => (
           <Fragment key={step.title}>
             <div className="relative flex flex-col items-center">
-              <Image src={step.imageUrl} alt="" height="180" width="180" />
+              <div className="w-3/4">
+                <Image
+                  src={step.imageUrl}
+                  alt={step.title}
+                  height="180"
+                  width="180"
+                />
+              </div>
               <div className="font-museo top-full sm:absolute mt-10 text-2xl font-semibold text-center text-blue-500">
                 {step.title}
               </div>
@@ -48,7 +55,6 @@ export default function HowItWorks({ flowCharts }) {
     </div>
   );
 }
-
 HowItWorks.propTypes = {
   flowCharts: PropTypes.arrayOf(
     PropTypes.shape({

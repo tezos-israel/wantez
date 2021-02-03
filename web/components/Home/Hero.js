@@ -20,20 +20,22 @@ export default function Hero({ title, about }) {
             </a>
           </Link>
         </div>
-        <div className="sm:w-1/2 flex items-center justify-center mx-auto">
-          <div>
-            <div className={'text-6xl font-museo'}>{title}</div>
-            {showNavigationButtons && (
-              <div className="flex mt-10 space-x-5 text-xl">
-                <LinkButton href="/fund">Fund</LinkButton>
-                <LinkButton href="/explore">Explore</LinkButton>
-              </div>
-            )}
+        <div className="xl:w-1/2 xl:px-0 px-10 mx-auto">
+          <div className="lg:flex-row-reverse lg:space-y-0 flex flex-col items-center justify-center mx-auto space-y-10">
+            <PrimaryImage className="lg:w-1/2 w-11/12" />
+            <div>
+              <div className="sm:text-6xl font-museo text-4xl">{title}</div>
+              {showNavigationButtons && (
+                <div className="sm:space-x-5 sm:flex sm:space-y-0 mt-10 space-y-5 text-xl">
+                  <LinkButton href="/fund">Fund</LinkButton>
+                  <LinkButton href="/explore">Explore</LinkButton>
+                </div>
+              )}
+            </div>
           </div>
-          <PrimaryImage className="sm:block hidden" />
-        </div>
-        <div className="sm:w-1/3 sm:text-center flex items-center justify-center mx-auto mt-10 text-lg">
-          {about}
+          <div className="sm:text-center 2xl:w-1/2 flex items-center justify-center mx-auto mt-10 text-lg">
+            {about}
+          </div>
         </div>
 
         {/* <Particles className="absolute inset-0" /> */}
@@ -50,7 +52,7 @@ Hero.propTypes = {
 function LinkButton({ children, href }) {
   return (
     <Link href={href}>
-      <a className="hover:bg-green-400 block w-40 py-1 text-center border-2 border-green-400 rounded">
+      <a className="hover:bg-green-400 sm:w-40 block py-1 text-center border-2 border-green-400 rounded">
         {children}
       </a>
     </Link>

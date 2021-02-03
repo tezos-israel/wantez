@@ -4,13 +4,13 @@ import Image from 'next/image';
 
 export default function Features({ features }) {
   return (
-    <div className="sm:w-1/2 sm:mx-auto sm:px-0 sm:mt-0 px-10 mt-20">
+    <div className="lg:w-1/2 lg:mx-auto lg:px-0 lg:mt-0 px-10 mt-20">
       <div className="space-y-30 sm:space-y-10">
         {features.map((section, index) => (
           <div
             className={classnames(
-              'sm:flex sm:items-center space-y-10 sm:space-y-0',
-              index % 2 ? 'sm:flex-row-reverse' : 'sm:flex-row'
+              'lg:flex lg:items-center space-y-10 lg:space-y-0',
+              index % 2 ? 'lg:flex-row-reverse' : 'lg:flex-row'
             )}
             key={index}
           >

@@ -28,7 +28,7 @@ export default function ContactForm() {
             handleBlur,
           }) => (
             <form
-              className="sm:w-1/4 sm:px-0 px-10 py-10 mx-auto"
+              className="xl:w-1/4 xl:px-0 lg:w-1/2 px-10 py-10 mx-auto"
               onSubmit={handleSubmit}
             >
               <h2 className="font-museo w-content flex mx-auto text-5xl font-bold text-blue-500">
