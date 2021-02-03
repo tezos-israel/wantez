@@ -2,10 +2,10 @@ import { HalfCirclePaper } from '../../components/shared/HalfCirclePaper';
 import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 
-import GigApplications from './GigApplications.js';
-import GigFounder from './GigFounder.js';
-import GigDescription from './GigDescription.js';
-import Divider from '../shared/Divider.js';
+import GigApplications from './GigApplications';
+import GigFounder from './GigFounder';
+import GigDescription from './GigDescription';
+import Divider from '../shared/Divider';
 import classnames from 'classnames';
 import { usePrice } from '../../hooks/usePrice';
 
