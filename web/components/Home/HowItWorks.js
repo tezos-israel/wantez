@@ -30,7 +30,7 @@ export default function HowItWorks({ flowCharts }) {
       </div>
       <div className="sm:flex sm:items-center sm:justify-between sm:space-y-0 space-y-24 select-none">
         {currentChart.steps.map((step, index, steps) => (
-          <Fragment key={step.title}>
+          <Fragment key={index}>
             <div className="relative flex flex-col items-center">
               <div className="w-3/4">
                 <Image
