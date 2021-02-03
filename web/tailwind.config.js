@@ -6,9 +6,9 @@ module.exports = {
       width: {
         content: 'fit-content',
       },
-      height: {},
       fontFamily: {
         header: ['Oswald'],
+        museo: ['museo'],
       },
       inset: {
         '-1/2': '-50%',

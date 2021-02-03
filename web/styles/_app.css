@@ -2,6 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
 
+@font-face {
+  font-family: 'museo';
+  src: url('./museo-500.otf');
+  font-weight: 500;
+}
+
 body {
   font-family: Montserrat;
 }

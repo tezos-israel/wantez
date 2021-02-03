@@ -21,6 +21,13 @@ export default function FundIssuePage() {
   const { fundIssue } = useGigsContractContext();
   const createBounty = useCreateBounty(fundIssue, router, setLoading);
 
+  if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
+    if (typeof window !== 'undefined') {
+      router.push('/');
+    }
+    return null;
+  }
+
   return (
     <Layout>
       <div className="bg-fund flex-auto w-full pb-20">

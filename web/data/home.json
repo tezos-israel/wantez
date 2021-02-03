@@ -1,0 +1,46 @@
+{
+  "title": "Join the Wantez community",
+  "about": "Creating cooperation between developer teams, freelancers, and entrepreneurs, Wantez incentivizes freelancers across the world to make money for contributing code and fixing bugs. Wantez allows open source maintainers to develop faster, more cost-efficiently operate and patch bugs, and avoid the hassle of hiring more developers.",
+
+  "features": [
+    {
+      "title": "Fund your gig",
+      "imageUrl": "/feat-fund-gig.svg",
+      "description": "As an open-source software maintainer, you post a bounty proposal on the platform of a bug you want solved with details of the job required, the expected timeline, and the amount of the bounty or payment. As the funder, you approve which contributor you want to complete the assignment. Once the PR is merged, he gets paid in tez. This simple process allows you to continue developing and make rapid progress on your open source projects."
+    },
+    {
+      "title": "Explore gigs",
+      "imageUrl": "/feat-explore-gigs.svg",
+      "description": "As a developer, you can scroll through the list of bounties from various OSS, and find projects you want to get paid to work on. With Wantez, you can optimize and utilize your ability to fix issues. Explore tons of open source gigs who are looking for your help!"
+    }
+  ],
+
+  "vision": {
+    "title": "Lets make the world a better place",
+    "text": "Wantez believes in supporting and contributing to the evolution of open source projects. Often, bugs and unsolved errors stifle innovation and progress. Utilizing the Tezos blockchain, we aim to solve these issues through creating a thriving ecosystem built on problem-solving, accelerating innovation, and mutually beneficial collaboration"
+  },
+
+  "flowCharts": [
+    {
+      "id": "funder",
+      "title": "Funder?",
+      "steps": [
+        { "title": "Post", "imageUrl": "/flow-fund-post.svg" },
+        { "title": "Approve", "imageUrl": "/flow-fund-approve.svg" },
+        {
+          "title": "Upgrade your project",
+          "imageUrl": "/flow-fund-upgrade.svg"
+        }
+      ]
+    },
+    {
+      "id": "developer",
+      "title": "Developer?",
+      "steps": [
+        { "title": "Search", "imageUrl": "/flow-dev-search.svg" },
+        { "title": "Work", "imageUrl": "/flow-dev-work.svg" },
+        { "title": "Get Paid", "imageUrl": "/flow-dev-paid.svg" }
+      ]
+    }
+  ]
+}
