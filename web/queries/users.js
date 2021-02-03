@@ -13,3 +13,12 @@ export const ONBOARDING_MUTATION = gql`
     }
   }
 `;
+
+export const FETCH_DETAILS = gql`
+  query fetchUserDetails($userId: uuid!) {
+    userDetails(user_id: $userId) {
+      first_name
+      last_name
+    }
+  }
+`;

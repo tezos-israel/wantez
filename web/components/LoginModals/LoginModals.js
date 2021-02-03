@@ -18,39 +18,32 @@ export function LoginModals({ isLoginModalOpen, closeLoginModal }) {
     openOnboardingModal,
     closeOnboardingModal,
   ] = useBoolean();
-  const [name, setName] = useState('');
   const [userId, setUserId] = useState('');
 
   return (
     <>
       <LoginModal isOpen={isLoginModalOpen} onDismiss={handleFinishLogin} />
-      <WelcomeModal
-        name={name}
-        isOpen={isWelcomeModalOpen}
-        onDismiss={closeWelcomeModal}
-      />
-      <OnboardingModal
-        userId={userId}
-        isOpen={isOnboardingModalOpen}
-        onDismiss={handleFinishOnboarding}
-      />
+      {isWelcomeModalOpen && (
+        <WelcomeModal userId={userId} onDismiss={closeWelcomeModal} />
+      )}
+      {isOnboardingModalOpen && (
+        <OnboardingModal userId={userId} onDismiss={handleFinishOnboarding} />
+      )}
     </>
   );
 
   function handleFinishLogin(user) {
     closeLoginModal();
-    if (user.name) {
-      setName(user.name);
+    setUserId(user.id);
+    if (user.finishedOnboarding) {
       openWelcomeModal();
       return;
     }
-    setUserId(user.id);
     openOnboardingModal();
   }
 
-  function handleFinishOnboarding({ firstName }) {
+  function handleFinishOnboarding() {
     closeOnboardingModal();
-    setName(firstName);
     openWelcomeModal();
   }
 }

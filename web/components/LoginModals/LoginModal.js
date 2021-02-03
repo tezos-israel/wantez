@@ -37,7 +37,7 @@ export function LoginModal({ isOpen, onDismiss }) {
 
   async function authenticateWithDb(authToken) {
     /* Pass the Decentralized ID token in the Authorization header to the database */
-    const res = await fetch('/api/login', {
+    const res = await fetch('/api/login/', {
       method: 'POST',
       headers: new Headers({
         Authorization: `Bearer ${authToken}`,
@@ -45,6 +45,10 @@ export function LoginModal({ isOpen, onDismiss }) {
     });
 
     const data = await res.json();
+
+    if (data.authorized) {
+      data.user.finishedOnboarding = data.finishedOnboarding;
+    }
 
     /* If the user is authorized, return an object containing the user properties (issuer, publicAddress, email) */
     /* Else, the login was not successful and return false */

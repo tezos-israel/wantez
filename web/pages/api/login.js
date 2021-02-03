@@ -27,12 +27,13 @@ export default async function login(req, res) {
 
   /* get user data from Magic */
   const userMetadata = await magic.users.getMetadataByIssuer(claim.iss);
+  let finishedOnboarding = false;
 
   try {
     /* check if user is already in */
-    const { id } = await createUserIfNeeded(userMetadata);
+    const { id, details } = await createUserIfNeeded(userMetadata);
     userMetadata.id = id;
-
+    finishedOnboarding = !!details;
     userMetadata['https://hasura.io/jwt/claims'] = {
       'x-hasura-default-role': 'user',
       // do some custom logic to decide allowed roles
@@ -53,7 +54,7 @@ export default async function login(req, res) {
   }
 
   /* send back response with user obj */
-  return res.json({ authorized: true, user: userMetadata });
+  return res.json({ authorized: true, user: userMetadata, finishedOnboarding });
 }
 
 async function createUserIfNeeded({ email }) {
@@ -65,6 +66,10 @@ async function createUserIfNeeded({ email }) {
       ) {
         id
         email
+        details {
+          first_name
+          last_name
+        }
       }
     }
   `;

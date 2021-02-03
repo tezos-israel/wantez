@@ -1,22 +1,34 @@
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
+import { useQuery } from '@apollo/client';
 
 import Dialog from '@reach/dialog';
 
-export default function WelcomeModal({ isOpen, onDismiss, firstName }) {
+import { FETCH_DETAILS } from 'queries/users';
+
+export default function WelcomeModal({ onDismiss, userId }) {
+  const { data, loading, error } = useQuery(FETCH_DETAILS, {
+    variables: { userId },
+  });
+
   return (
     <Dialog
-      isOpen={isOpen}
       onDismiss={onDismiss}
       aria-label="Welcome Dialog"
       className="w-content"
     >
-      Welcome {firstName}
+      {loading ? (
+        <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
+      ) : error ? (
+        'Failed fetching user details'
+      ) : (
+        `Welcome ${data.userDetails.first_name} ${data.userDetails.last_name}`
+      )}
     </Dialog>
   );
 }
 
 WelcomeModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
-  firstName: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
 };

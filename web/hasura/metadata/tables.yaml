@@ -451,6 +451,15 @@
       delete_by_pk: deleteUser
       update_by_pk: updateUser
     custom_column_names: {}
+  object_relationships:
+  - name: details
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: user_details
+        column_mapping:
+          id: user_id
   array_relationships:
   - name: applications
     using:
@@ -466,13 +475,6 @@
         table:
           schema: public
           name: bounty
-  - name: details
-    using:
-      foreign_key_constraint_on:
-        column: user_id
-        table:
-          schema: public
-          name: user_details
   - name: socialAccounts
     using:
       manual_configuration:

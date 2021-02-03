@@ -15,7 +15,7 @@ const validationSchema = object().shape({
   firstName: string().required('Name is required'),
 });
 
-export default function OnboardingModal({ isOpen, onDismiss, userId }) {
+export default function OnboardingModal({ onDismiss, userId }) {
   const formik = useFormik({
     onSubmit,
     validationSchema,
@@ -30,7 +30,6 @@ export default function OnboardingModal({ isOpen, onDismiss, userId }) {
 
   return (
     <Dialog
-      isOpen={isOpen}
       onDismiss={onDismiss}
       aria-label="Welcome Dialog"
       className="w-content"
@@ -80,7 +79,6 @@ export default function OnboardingModal({ isOpen, onDismiss, userId }) {
 }
 
 OnboardingModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
 };
