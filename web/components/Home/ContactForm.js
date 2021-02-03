@@ -1,9 +1,10 @@
 import classnames from 'classnames';
-import Logo from '../../images/logo.svg';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 
 import { Formik } from 'formik';
 import { string, object } from 'yup';
+
+import { Logo } from 'images';
 
 const validationSchema = object().shape({
   email: string().email().required(),

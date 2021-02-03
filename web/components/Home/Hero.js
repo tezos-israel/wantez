@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 // import Particles from 'react-particles-js';
 import Link from 'next/link';
 
+import { SiteLogo } from 'images';
+
 import Section from './Section';
-import Logo from '../../images/site-logo.svg';
 import PrimaryImage from './primary.svg';
 
 export default function Hero({ title, about }) {
@@ -16,7 +17,7 @@ export default function Hero({ title, about }) {
         <div className="top-5 left-5 absolute">
           <Link href="/">
             <a>
-              <Logo />
+              <SiteLogo />
             </a>
           </Link>
         </div>
