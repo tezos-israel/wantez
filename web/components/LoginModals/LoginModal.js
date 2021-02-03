@@ -64,7 +64,7 @@ export function LoginModal({ isOpen, onDismiss }) {
 
       if (user) {
         setUser(user);
-        onDismiss();
+        onDismiss(user);
       }
     } catch (err) {
       /* If the user clicked "cancel", allow them to click the login again */

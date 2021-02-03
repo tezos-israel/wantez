@@ -4,7 +4,7 @@ import { magic } from 'lib/magic';
 import { encryptCookie, cookieOptions } from 'lib/cookie';
 import { serialize } from 'cookie';
 
-export default async (req, res) => {
+export default async function login(req, res) {
   const { method } = req;
 
   if (method !== 'POST') {
@@ -54,7 +54,7 @@ export default async (req, res) => {
 
   /* send back response with user obj */
   return res.json({ authorized: true, user: userMetadata });
-};
+}
 
 async function createUserIfNeeded({ email }) {
   const mutation = `

@@ -1,6 +1,10 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { Magic } from 'magic-sdk';
 import fetch from 'isomorphic-unfetch';
+import { createContext, useState, useEffect, useContext } from 'react';
+import { Magic } from 'magic-sdk';
+
+import { LoginModals } from 'components/LoginModals';
+import { useBoolean } from 'hooks/useBoolean';
+
 /* initializing context API values */
 const AuthContext = createContext({
   user: null,
@@ -8,6 +12,7 @@ const AuthContext = createContext({
   magic: null,
   isLoading: false,
   setIsLoading: emptyContext,
+  openLoginModal: emptyContext,
 });
 
 export const useAuthContext = () => useContext(AuthContext);
@@ -17,6 +22,7 @@ export function AuthProvider({ children }) {
   const [magic, setMagic] = useState();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoginModalOpen, openLoginModal, closeLoginModal] = useBoolean();
 
   useEffect(() => {
     (async () => {
@@ -43,9 +49,16 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, magic, isLoading, setIsLoading }}
+      value={{ user, setUser, magic, isLoading, setIsLoading, openLoginModal }}
     >
-      {children}
+      <>
+        {children}
+
+        <LoginModals
+          isLoginModalOpen={isLoginModalOpen}
+          closeLoginModal={closeLoginModal}
+        />
+      </>
     </AuthContext.Provider>
   );
 }

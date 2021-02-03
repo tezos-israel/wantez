@@ -8,7 +8,13 @@ import { UserMenu } from './UserMenu';
 import { WalletMenu } from './WalletMenu';
 
 export function UserButtons() {
-  const { user, loading: userLoading, setUser, magic } = useAuthContext();
+  const {
+    user,
+    loading: userLoading,
+    setUser,
+    magic,
+    openLoginModal,
+  } = useAuthContext();
   const {
     address,
     balance,
@@ -26,7 +32,12 @@ export function UserButtons() {
         onClick={!address ? connect : () => {}}
       />
       <div className="h-8 border-r-2 border-teal-500"></div>
-      <UserMenu user={user} loading={loading} onLogout={handleLogout} />
+      <UserMenu
+        user={user}
+        loading={loading}
+        onLogout={handleLogout}
+        onLoginClick={openLoginModal}
+      />
     </div>
   );
 

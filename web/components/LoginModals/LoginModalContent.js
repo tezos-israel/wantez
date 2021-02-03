@@ -36,7 +36,7 @@ export function LoginModalContent({
       <FormField
         title="Enter Your Email"
         fieldId="email-input"
-        error={formik.errors.email}
+        error={formik.touched.email && formik.errors.email}
       >
         <input
           className={classnames('w-64 mt-1', {
