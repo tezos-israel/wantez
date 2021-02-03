@@ -13,6 +13,14 @@ const tezos = new TezosToolkit('https://delphinet.SmartPy.io');
 
 // eslint-disable-next-line react/prop-types
 function App({ Component, pageProps }) {
+  if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
+    return (
+      <div id="app">
+        <Component {...pageProps} />
+      </div>
+    );
+  }
+
   return (
     <div id="app">
       <AuthProvider>

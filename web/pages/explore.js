@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 
 import { GET_BOUNTIES } from 'queries/bounties';
@@ -9,6 +9,7 @@ import { WantezList, Filter, TagsList } from 'components/Dashboard';
 import Loader from 'react-loader-spinner';
 
 export default function ExplorePage() {
+  const router = useRouter();
   const [tags, setTags] = useState([]);
 
   const { data, loading, error } = useQuery(GET_BOUNTIES);
@@ -17,6 +18,13 @@ export default function ExplorePage() {
     timeCommitment: [],
     experienceLevel: [],
   });
+
+  if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
+    if (typeof window !== 'undefined') {
+      router.push('/');
+    }
+    return null;
+  }
 
   const bounties =
     data &&

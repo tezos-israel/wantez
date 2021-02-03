@@ -2,7 +2,13 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Magic } from 'magic-sdk';
 import fetch from 'isomorphic-unfetch';
 /* initializing context API values */
-const AuthContext = createContext();
+const AuthContext = createContext({
+  user: null,
+  setUser: emptyContext,
+  magic: null,
+  isLoading: false,
+  setIsLoading: emptyContext,
+});
 
 export const useAuthContext = () => useContext(AuthContext);
 
@@ -42,4 +48,8 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+function emptyContext() {
+  throw new Error('context is empty');
 }

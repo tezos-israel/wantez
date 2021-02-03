@@ -7,7 +7,13 @@ import GIG_DATA from '../../dummyData/gig.json';
 
 export default function GigPage() {
   const router = useRouter();
-  const { id } = router.query;
+
+  if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
+    if (typeof window !== 'undefined') {
+      router.push('/');
+    }
+    return null;
+  }
 
   return (
     <Layout>
