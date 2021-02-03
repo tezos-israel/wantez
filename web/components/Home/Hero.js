@@ -14,7 +14,11 @@ export default function Hero({ title, about }) {
     <Section>
       <div className="pt-30 sm:px-0 px-10 pb-40">
         <div className="top-5 left-5 absolute">
-          <Logo />
+          <Link href="/">
+            <a>
+              <Logo />
+            </a>
+          </Link>
         </div>
         <div className="sm:w-1/2 flex items-center justify-center mx-auto">
           <div>
