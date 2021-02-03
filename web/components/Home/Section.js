@@ -7,7 +7,7 @@ export default function Section({ children }) {
   return (
     <div className="bg-gradient-to-br from-blue-900 to-blue-500 relative w-full pb-20 overflow-x-hidden text-white">
       {children}
-      <div className="absolute bottom-0 flex">
+      <div className="-bottom-1 absolute flex">
         {Array.from({ length: Math.ceil(width / 1740) }).map((_, i) => (
           <BottomBorder key={i} />
         ))}
