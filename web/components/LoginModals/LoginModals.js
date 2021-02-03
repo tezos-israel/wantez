@@ -19,6 +19,7 @@ export function LoginModals({ isLoginModalOpen, closeLoginModal }) {
     closeOnboardingModal,
   ] = useBoolean();
   const [name, setName] = useState('');
+  const [userId, setUserId] = useState('');
 
   return (
     <>
@@ -29,6 +30,7 @@ export function LoginModals({ isLoginModalOpen, closeLoginModal }) {
         onDismiss={closeWelcomeModal}
       />
       <OnboardingModal
+        userId={userId}
         isOpen={isOnboardingModalOpen}
         onDismiss={handleFinishOnboarding}
       />
@@ -42,13 +44,13 @@ export function LoginModals({ isLoginModalOpen, closeLoginModal }) {
       openWelcomeModal();
       return;
     }
-
+    setUserId(user.id);
     openOnboardingModal();
   }
 
-  function handleFinishOnboarding({ name }) {
+  function handleFinishOnboarding({ firstName }) {
     closeOnboardingModal();
-    setName(name);
+    setName(firstName);
     openWelcomeModal();
   }
 }

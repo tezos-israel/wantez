@@ -59,7 +59,7 @@ export default async function login(req, res) {
 async function createUserIfNeeded({ email }) {
   const mutation = `
     mutation createUserIfNeeded($email: String!) {
-      insert_user_one(
+      insertUser(
         object: { email: $email, username: $email }
         on_conflict: { constraint: user_email_key, update_columns: lastSeenAt }
       ) {
@@ -81,5 +81,5 @@ async function createUserIfNeeded({ email }) {
     throw new Error(data.errors[0].message);
   }
 
-  return data.data.insert_user_one;
+  return data.data.insertUser;
 }

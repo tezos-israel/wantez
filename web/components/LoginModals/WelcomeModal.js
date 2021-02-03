@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import Dialog from '@reach/dialog';
 
-export default function WelcomeModal({ isOpen, onDismiss, name }) {
+export default function WelcomeModal({ isOpen, onDismiss, firstName }) {
   return (
     <Dialog
       isOpen={isOpen}
@@ -10,7 +10,7 @@ export default function WelcomeModal({ isOpen, onDismiss, name }) {
       aria-label="Welcome Dialog"
       className="w-content"
     >
-      Welcome {name}
+      Welcome {firstName}
     </Dialog>
   );
 }
@@ -18,5 +18,5 @@ export default function WelcomeModal({ isOpen, onDismiss, name }) {
 WelcomeModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
-  name: PropTypes.func.isRequired,
+  firstName: PropTypes.string.isRequired,
 };

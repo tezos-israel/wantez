@@ -440,6 +440,17 @@
 - table:
     schema: public
     name: user
+  configuration:
+    custom_root_fields:
+      insert: insertUsers
+      insert_one: insertUser
+      select_by_pk: user
+      select: users
+      delete: deleteUsers
+      update: updateUsers
+      delete_by_pk: deleteUser
+      update_by_pk: updateUser
+    custom_column_names: {}
   array_relationships:
   - name: applications
     using:
@@ -455,6 +466,13 @@
         table:
           schema: public
           name: bounty
+  - name: details
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          schema: public
+          name: user_details
   - name: socialAccounts
     using:
       manual_configuration:
@@ -474,3 +492,50 @@
       columns:
       - username
       filter: {}
+- table:
+    schema: public
+    name: user_details
+  configuration:
+    custom_root_fields:
+      insert_one: insertUserDetails
+      select_by_pk: userDetails
+      delete_by_pk: deleteUserDetails
+      update_by_pk: updateUserDetails
+    custom_column_names: {}
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - first_name
+      - last_name
+      - user_id
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns: []
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - first_name
+      - last_name
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - first_name
+      - last_name
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

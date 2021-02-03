@@ -1,22 +1,31 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { useMutation } from '@apollo/client';
 import { useFormik } from 'formik';
 import { string, object } from 'yup';
+
+import Dialog from '@reach/dialog';
 
 import { Button } from 'components/shared/Button';
 import { FormField } from 'components/shared/FormField';
 
-import Dialog from '@reach/dialog';
+import { ONBOARDING_MUTATION } from 'queries/users';
 
 const validationSchema = object().shape({
-  name: string().required('Name is required'),
+  firstName: string().required('Name is required'),
 });
 
-export default function OnboardingModal({ isOpen, onDismiss }) {
+export default function OnboardingModal({ isOpen, onDismiss, userId }) {
   const formik = useFormik({
     onSubmit,
     validationSchema,
-    initialValues: { email: '' },
+    initialValues: { firstName: '' },
+  });
+
+  const [onboardUser] = useMutation(ONBOARDING_MUTATION, {
+    onCompleted({ firstName }) {
+      onDismiss({ firstName });
+    },
   });
 
   return (
@@ -28,18 +37,19 @@ export default function OnboardingModal({ isOpen, onDismiss }) {
     >
       <form className="flex flex-col" onSubmit={formik.handleSubmit}>
         <FormField
-          title="Name"
-          fieldId="name-input"
-          error={formik.errors.email}
+          title="First name"
+          fieldId="firstName-input"
+          error={formik.errors.firstName}
         >
           <input
             className={classnames('w-64 mt-1', {
-              'border-red-500': formik.touched.name && formik.errors.name,
+              'border-red-500':
+                formik.touched.firstName && formik.errors.firstName,
             })}
             type="text"
-            name="name"
-            id="name-input"
-            value={formik.values.name}
+            name="firstName"
+            id="firstName-input"
+            value={formik.values.firstName}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
@@ -57,13 +67,12 @@ export default function OnboardingModal({ isOpen, onDismiss }) {
     </Dialog>
   );
 
-  async function onSubmit({ name }) {
-    if (!name) {
+  async function onSubmit({ firstName }) {
+    if (!firstName) {
       return;
     }
     try {
-      // await onboardUser({ name });
-      onDismiss({ name });
+      await onboardUser({ variables: { userId, firstName } });
     } catch (e) {
       console.error(e);
     }
@@ -73,4 +82,5 @@ export default function OnboardingModal({ isOpen, onDismiss }) {
 OnboardingModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 };
