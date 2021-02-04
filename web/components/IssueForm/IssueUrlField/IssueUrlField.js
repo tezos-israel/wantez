@@ -41,9 +41,10 @@ export function IssueUrlField({
           type="text"
           name="issueUrl"
           id="url-input"
-          className={classnames('border border-gray-500 rounded-none w-full', {
-            'border-red-500': error,
-          })}
+          className={classnames(
+            'border rounded-none w-full',
+            error ? 'border-red-500' : 'border-gray-500'
+          )}
           onChange={handleChange}
           onBlur={onBlur}
           value={value}
