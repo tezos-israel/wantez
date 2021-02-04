@@ -80,6 +80,7 @@ export function IssueForm({
               touched={formik.touched.issueUrl}
               onBlur={formik.handleBlur}
               onChange={handleUrlChange}
+              error={formik.errors.issueUrl}
               value={formik.values.issueUrl}
             />
             <FieldGroup title="Gig info">
