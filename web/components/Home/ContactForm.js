@@ -29,11 +29,11 @@ export default function ContactForm() {
             handleBlur,
           }) => (
             <form
-              className="xl:w-1/4 xl:px-0 lg:w-1/2 px-10 py-10 mx-auto"
+              className="lg:w-3/4 px-10 py-10 mx-auto"
               onSubmit={handleSubmit}
             >
-              <h2 className="font-museo w-content flex mx-auto text-5xl font-bold text-blue-500">
-                <Logo className="mr-10" />
+              <h2 className="font-museo w-content sm:text-5xl flex items-center mx-auto text-4xl font-bold text-blue-500">
+                <Logo className="mr-5" />
                 Join us now
               </h2>
 

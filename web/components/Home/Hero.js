@@ -21,11 +21,11 @@ export default function Hero({ title, about }) {
             </a>
           </Link>
         </div>
-        <div className="xl:w-1/2 xl:px-0 px-10 mx-auto">
+        <div className="xl:w-3/4 px-0 mx-auto">
           <div className="lg:flex-row-reverse lg:space-y-0 flex flex-col items-center justify-center mx-auto space-y-10">
-            <PrimaryImage className="lg:w-1/2 w-11/12" />
+            <PrimaryImage className="lg:w-3/4 w-11/12" />
             <div>
-              <div className="sm:text-6xl font-museo text-4xl">{title}</div>
+              <div className="sm:text-6xl font-museo text-5xl">{title}</div>
               {showNavigationButtons && (
                 <div className="sm:space-x-5 sm:flex sm:space-y-0 mt-10 space-y-5 text-xl">
                   <LinkButton href="/fund">Fund</LinkButton>
@@ -34,7 +34,7 @@ export default function Hero({ title, about }) {
               )}
             </div>
           </div>
-          <div className="sm:text-center 2xl:w-1/2 flex items-center justify-center mx-auto mt-10 text-lg">
+          <div className="xl:w-3/4 sm:text-center sm:mt-20 flex items-center justify-center mx-auto mt-10 text-lg">
             {about}
           </div>
         </div>
