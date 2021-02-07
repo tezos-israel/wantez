@@ -6,6 +6,8 @@ import { string, object } from 'yup';
 
 import { Logo } from 'images';
 
+import SendButtonIcon from './send-button.svg';
+
 const validationSchema = object().shape({
   email: string().email().required(),
 });
@@ -37,22 +39,23 @@ export default function ContactForm() {
                 Join us now
               </h2>
 
-              <div className="flex flex-col items-center justify-center mt-10 space-y-10">
+              <div className="sm:w-3/4 flex items-center justify-center mx-auto mt-10">
                 <input
                   type="text"
                   className={classnames(
-                    'hover:bg-blue-100 w-full border-0 border-b border-solid',
+                    'border-2 border-solid hover:bg-blue-100 p-4 w-full placeholder-gray-500 font-medium',
                     touched.email && errors.email
                       ? 'border-red-500'
                       : 'border-blue-500'
                   )}
                   name="email"
                   value={values.email}
+                  placeholder="Leave us your Email to join our community"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <button className="px-5 py-2 text-white bg-yellow-500 rounded-sm">
-                  Join the mailing list
+                <button className="px-5 py-2 bg-blue-500">
+                  <SendButtonIcon />
                 </button>
                 {status === 'sending' && (
                   <div style={{ color: 'blue' }}>sending...</div>
@@ -63,6 +66,10 @@ export default function ContactForm() {
                 {status === 'success' && (
                   <div style={{ color: 'green' }}>Subscribed!</div>
                 )}
+              </div>
+              <div className="w-content mx-auto mt-5 text-xs text-gray-400">
+                By leaving you agree you confirm to get only cool and
+                interesting stuff, not junk :)
               </div>
             </form>
           )}
