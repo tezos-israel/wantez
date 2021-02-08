@@ -41,47 +41,16 @@ export default function ContactForm() {
                 Join us now
               </h2>
 
-              {!status || status !== 'success' ? (
-                <>
-                  <div className="sm:w-3/4 relative flex items-center justify-center mx-auto mt-10">
-                    <input
-                      type="text"
-                      className={classnames(
-                        'border-2 border-solid hover:bg-blue-100 h-14 w-full placeholder-gray-500 font-medium',
-                        touched.email && errors.email
-                          ? 'border-red-500'
-                          : 'border-blue-500'
-                      )}
-                      name="email"
-                      value={values.email}
-                      placeholder="Leave us your Email to join our community"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    <Button
-                      validationError={touched.email && errors.email}
-                      sendingStatus={status}
-                      errorMessage={message}
-                    />
-                  </div>
-                  {(status === 'error' || (touched.email && errors.email)) && (
-                    <div
-                      className="w-content mx-auto mt-5 text-xs text-center text-red-400"
-                      dangerouslySetInnerHTML={{
-                        __html: message || (touched.email && errors.email),
-                      }}
-                    />
-                  )}
-                  <div className="w-content mx-auto mt-5 text-xs text-center text-gray-400">
-                    By joining you agree you confirm to get only cool and
-                    interesting stuff, not junk :)
-                  </div>
-                </>
-              ) : (
-                <div className="w-content mx-auto mt-5">
-                  Thanks for joining us!
-                </div>
-              )}
+              <FormContent
+                onBlur={handleBlur}
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+                values={values}
+                errors={errors}
+                touched={touched}
+                mailChimpMessage={message}
+                mailChimpStatus={status}
+              />
             </form>
           )}
         </Formik>
@@ -89,6 +58,75 @@ export default function ContactForm() {
     />
   );
 }
+
+function FormContent({
+  touched,
+  values,
+  errors,
+  onChange,
+  onBlur,
+  mailChimpStatus,
+  mailChimpMessage,
+}) {
+  const validationError = touched.email && errors.email;
+
+  if (mailChimpStatus && mailChimpStatus === 'success') {
+    return <div className="w-content mx-auto mt-5">Thanks for joining us!</div>;
+  }
+
+  return (
+    <>
+      <div className="sm:w-3/4 relative flex items-center justify-center mx-auto mt-10">
+        <input
+          type="text"
+          className={classnames(
+            'border-2 border-solid hover:bg-blue-100 h-14 w-full placeholder-gray-500 font-medium',
+            validationError ? 'border-red-500' : 'border-blue-500'
+          )}
+          name="email"
+          value={values.email}
+          placeholder="Leave us your Email to join our community"
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+        <Button
+          validationError={validationError}
+          sendingStatus={mailChimpStatus}
+          errorMessage={mailChimpMessage}
+        />
+      </div>
+      {(mailChimpStatus === 'error' || validationError) && (
+        <div
+          className="w-content mx-auto mt-5 text-xs text-center text-red-400"
+          dangerouslySetInnerHTML={{
+            __html: mailChimpMessage || validationError,
+          }}
+        />
+      )}
+      <div className="w-content mx-auto mt-5 text-xs text-center text-gray-400">
+        By joining you agree you confirm to get only cool and interesting stuff,
+        not junk :)
+      </div>
+    </>
+  );
+}
+
+FormContent.propTypes = {
+  errors: PropTypes.shape({
+    email: PropTypes.string,
+  }),
+  mailChimpMessage: PropTypes.string,
+  mailChimpStatus: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onSubmit: PropTypes.func,
+  touched: PropTypes.shape({
+    email: PropTypes.bool,
+  }),
+  values: PropTypes.shape({
+    email: PropTypes.string,
+  }),
+};
 
 function Button({ validationError, sendingStatus, errorMessage }) {
   return (
