@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
+import Spinner from 'react-loader-spinner';
 
 import { Formik } from 'formik';
 import { string, object } from 'yup';
@@ -9,7 +11,7 @@ import { Logo } from 'images';
 import SendButtonIcon from './send-button.svg';
 
 const validationSchema = object().shape({
-  email: string().email().required(),
+  email: string().email('Email is invalid').required('Email is required'),
 });
 
 export default function ContactForm() {
@@ -39,38 +41,47 @@ export default function ContactForm() {
                 Join us now
               </h2>
 
-              <div className="sm:w-3/4 flex items-center justify-center mx-auto mt-10">
-                <input
-                  type="text"
-                  className={classnames(
-                    'border-2 border-solid hover:bg-blue-100 p-4 w-full placeholder-gray-500 font-medium',
-                    touched.email && errors.email
-                      ? 'border-red-500'
-                      : 'border-blue-500'
+              {!status || status !== 'success' ? (
+                <>
+                  <div className="sm:w-3/4 relative flex items-center justify-center mx-auto mt-10">
+                    <input
+                      type="text"
+                      className={classnames(
+                        'border-2 border-solid hover:bg-blue-100 h-14 w-full placeholder-gray-500 font-medium',
+                        touched.email && errors.email
+                          ? 'border-red-500'
+                          : 'border-blue-500'
+                      )}
+                      name="email"
+                      value={values.email}
+                      placeholder="Leave us your Email to join our community"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <Button
+                      validationError={touched.email && errors.email}
+                      sendingStatus={status}
+                      errorMessage={message}
+                    />
+                  </div>
+                  {(status === 'error' || (touched.email && errors.email)) && (
+                    <div
+                      className="w-content mx-auto mt-5 text-xs text-red-400"
+                      dangerouslySetInnerHTML={{
+                        __html: message || (touched.email && errors.email),
+                      }}
+                    />
                   )}
-                  name="email"
-                  value={values.email}
-                  placeholder="Leave us your Email to join our community"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <button className="px-5 py-2 bg-blue-500">
-                  <SendButtonIcon />
-                </button>
-                {status === 'sending' && (
-                  <div style={{ color: 'blue' }}>sending...</div>
-                )}
-                {status === 'error' && (
-                  <div style={{ color: 'red' }}>{message}</div>
-                )}
-                {status === 'success' && (
-                  <div style={{ color: 'green' }}>Subscribed!</div>
-                )}
-              </div>
-              <div className="w-content mx-auto mt-5 text-xs text-gray-400">
-                By leaving you agree you confirm to get only cool and
-                interesting stuff, not junk :)
-              </div>
+                  <div className="w-content mx-auto mt-5 text-xs text-gray-400">
+                    By leaving you agree you confirm to get only cool and
+                    interesting stuff, not junk :)
+                  </div>
+                </>
+              ) : (
+                <div className="w-content mx-auto mt-5">
+                  Thanks for joining us!
+                </div>
+              )}
             </form>
           )}
         </Formik>
@@ -78,3 +89,36 @@ export default function ContactForm() {
     />
   );
 }
+
+function Button({ validationError, sendingStatus, errorMessage }) {
+  return (
+    <button
+      type="submit"
+      title={errorMessage}
+      className={classnames(
+        'px-5 h-14 disabled:cursor-not-allowed absolute right-0',
+        {
+          'bg-blue-500':
+            !validationError && (!sendingStatus || sendingStatus === 'sending'),
+          'bg-red-500':
+            validationError || (sendingStatus && sendingStatus === 'error'),
+        }
+      )}
+      disabled={sendingStatus && sendingStatus !== 'error'}
+    >
+      {!sendingStatus ? (
+        <SendButtonIcon className="py-1.5" />
+      ) : sendingStatus === 'sending' ? (
+        <Spinner type="TailSpin" color="#cacaca" height={50} width={50} />
+      ) : (
+        sendingStatus === 'error' && <div>X</div>
+      )}
+    </button>
+  );
+}
+
+Button.propTypes = {
+  errorMessage: PropTypes.string,
+  sendingStatus: PropTypes.string,
+  validationError: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+};
