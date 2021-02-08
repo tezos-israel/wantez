@@ -29,7 +29,7 @@ export default function GigPage() {
         <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
       ) : error ? (
         <div className="alert" severity="error">
-          <div className="alert-title">Failed loading bounties</div>
+          <div className="alert-title">Failed loading gig info</div>
           {error.message || error}
         </div>
       ) : (

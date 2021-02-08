@@ -7,7 +7,7 @@ function GigFunder({ funder }) {
   return (
     <div className="lg:p-10 p-5">
       <div className="applications-section">
-        <h3 className="font-bold uppercase">founder</h3>
+        <h3 className="font-bold uppercase">Funder</h3>
         <div className="funder-card lg:flex-row flex flex-col items-center mt-5 bg-gray-100">
           <div className="funder-img lg:mr-10 lg:border-r-2 lg:border-gray-500 lg:border-dashed px-10 py-5">
             <AvatarImage
@@ -30,7 +30,9 @@ function GigFunder({ funder }) {
   );
 }
 GigFunder.propTypes = {
-  funder: PropTypes.object,
+  funder: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+  }),
 };
 
 export default GigFunder;

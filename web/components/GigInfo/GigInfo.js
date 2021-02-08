@@ -14,8 +14,6 @@ import styles from './gigInfo.module.css';
 export function GigInfo({ bounty }) {
   const priceFiat = usePrice(bounty.fee, 'ils');
 
-  console.log(bounty);
-
   return (
     <form className="relative">
       <div
@@ -39,11 +37,7 @@ export function GigInfo({ bounty }) {
           <div className="gig-header lg:flex-row flex flex-col items-start justify-between mb-6">
             <div className="gig-title flex items-center justify-start">
               <img
-                src={
-                  bounty.imageUrl
-                    ? bounty.imageUrl
-                    : 'https://via.placeholder.com/100'
-                }
+                src={bounty.imageUrl}
                 className="gig-image mr-5"
                 width="100"
                 height="100"
@@ -72,15 +66,14 @@ export function GigInfo({ bounty }) {
                       {formatDistance(
                         subDays(new Date(bounty.createdAt), 3),
                         new Date()
-                      )}{' '}
-                      ago
+                      )}
+                      <span className="ml-1">ago</span>
                     </li>
                     <li className="md:pr-3 md:mr-3 lg:border-r lg:border-black lg:my-0 pr-5 my-2 mr-5">
                       <label className="mr-1 text-gray-800">Gig Type:</label>
-                      {bounty.categories &&
-                        bounty.categories.map((item, index) => {
-                          return <span key={index}>{item.category}</span>;
-                        })}
+                      {bounty.categories.map((item, index) => {
+                        return <span key={index}>{item.category}</span>;
+                      })}
                     </li>
                     {/* <li className="mr-5">
                       <label className="mr-1 text-gray-800">
@@ -117,14 +110,14 @@ export function GigInfo({ bounty }) {
                 </div>
               </div>
             </div>
-            <div className="gig-actions md:text-sm flex">
+            {/* <div className="gig-actions md:text-sm flex">
               <button className="md:px-8 lg:px-10 px-5 py-2 mr-4 font-bold text-white bg-blue-600 rounded-md">
                 Express intrest
               </button>
               <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
                 Share
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
