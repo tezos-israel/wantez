@@ -14,6 +14,8 @@ import styles from './gigInfo.module.css';
 export function GigInfo({ bounty }) {
   const priceFiat = usePrice(bounty.fee, 'ils');
 
+  console.log(bounty);
+
   return (
     <form className="relative">
       <div
@@ -144,17 +146,15 @@ export function GigInfo({ bounty }) {
 
 GigInfo.propTypes = {
   bounty: PropTypes.shape({
-    applications: PropTypes.any,
-    categories: PropTypes.shape({
-      map: PropTypes.func,
-    }),
-    createdAt: PropTypes.any,
-    description: PropTypes.any,
-    experienceLevel: PropTypes.any,
-    fee: PropTypes.any,
-    funder: PropTypes.any,
-    imageUrl: PropTypes.any,
+    applications: PropTypes.array,
+    categories: PropTypes.array,
+    createdAt: PropTypes.string,
+    description: PropTypes.string,
+    experienceLevel: PropTypes.string,
+    fee: PropTypes.number,
+    funder: PropTypes.object,
+    imageUrl: PropTypes.string,
     status: PropTypes.string,
-    title: PropTypes.any,
+    title: PropTypes.string,
   }),
 };

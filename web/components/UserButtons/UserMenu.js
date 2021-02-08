@@ -24,7 +24,10 @@ export function UserMenu({ user }) {
     <>
       <div className=" flex items-center">
         <span className="text-xs text-white">{user.email}</span>
-        <AvatarImage email={user.email} />
+        <AvatarImage
+          email={user.email}
+          className="lg:h-16 lg:w-16 height:20 ring-2 ring-white inline-block w-20 bg-gray-400 rounded-full"
+        />
       </div>
     </>
   );

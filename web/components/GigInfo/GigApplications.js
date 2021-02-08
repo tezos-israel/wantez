@@ -10,6 +10,8 @@ import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import { AvatarImage } from '../shared/AvatarImage';
+
 function GigApplications({ applications }) {
   return (
     <div className="lg:p-10 p-5">
@@ -32,9 +34,9 @@ function GigApplications({ applications }) {
                 <AccordionButton className={`w-full focus:outline-none`}>
                   <div className="lg:flex-row lg:items-center flex flex-col justify-between">
                     <div className="lg:w-1/3 flex items-center w-full">
-                      <img
+                      <AvatarImage
+                        email={item.applicant ? item.applicant.username : ''}
                         className="item-image mr-6 rounded-full"
-                        src={item.image}
                       />
                       <div className="font-bold">
                         {item.applicant ? item.applicant.username : ''}
@@ -57,7 +59,7 @@ function GigApplications({ applications }) {
                       {formatDistance(
                         subDays(new Date(item.createdAt), 3),
                         new Date()
-                      )}
+                      )}{' '}
                       ago
                     </div>
                   </div>
@@ -92,8 +94,8 @@ GigApplications.propTypes = {
       title: PropTypes.string,
       image: PropTypes.string,
       status: PropTypes.string,
-      desc: PropTypes.string,
-      date: PropTypes.string,
+      details: PropTypes.string,
+      createdAt: PropTypes.string,
     })
   ).isRequired,
 };
