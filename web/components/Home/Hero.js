@@ -1,5 +1,5 @@
+import Particles from 'react-particles-js';
 import PropTypes from 'prop-types';
-// import Particles from 'react-particles-js';
 import Link from 'next/link';
 
 import { SiteLogo } from 'images';
@@ -12,7 +12,11 @@ export default function Hero({ title, about }) {
     process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'false';
 
   return (
-    <Section>
+    <Section
+      renderBackground={({ backgroundClass }) => (
+        <Particles className={backgroundClass} />
+      )}
+    >
       <div className="pt-30 sm:px-0 px-10 pb-40">
         <div className="top-5 left-5 absolute">
           <Link href="/">
@@ -38,8 +42,6 @@ export default function Hero({ title, about }) {
             {about}
           </div>
         </div>
-
-        {/* <Particles className="absolute inset-0" /> */}
       </div>
     </Section>
   );
