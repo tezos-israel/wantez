@@ -32,6 +32,14 @@ export const BOUNTY_QUERY = gql`
       title
       fee
       status
+      imageUrl
+      createdAt
+      timeCommitment
+      description
+      experienceLevel
+      categories {
+        category
+      }
       funder {
         username
       }
@@ -40,6 +48,7 @@ export const BOUNTY_QUERY = gql`
         createdAt
         status
         paymentAddress
+        details
         applicant {
           username
         }

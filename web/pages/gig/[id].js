@@ -1,12 +1,20 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useQuery } from '@apollo/client';
+import Loader from 'react-loader-spinner';
 
+import { BOUNTY_QUERY } from 'queries/bounties';
 import Layout from 'components/Layout';
 import { GigInfo } from 'components/GigInfo';
-import GIG_DATA from '../../dummyData/gig.json';
 
 export default function GigPage() {
   const router = useRouter();
+
+  const { data, loading, error } = useQuery(BOUNTY_QUERY, {
+    variables: { id: router.query.id },
+  });
+
+  const bounty = data && data.bounty_by_pk;
 
   if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
     if (typeof window !== 'undefined') {
@@ -17,14 +25,23 @@ export default function GigPage() {
 
   return (
     <Layout>
-      <div
-        style={{ backgroundColor: '#1d2129' }}
-        className="flex-auto w-full pb-20"
-      >
-        <div className="w-10/12 mx-auto mt-10">
-          <GigInfo gigData={GIG_DATA} />
+      {loading ? (
+        <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
+      ) : error ? (
+        <div className="alert" severity="error">
+          <div className="alert-title">Failed loading bounties</div>
+          {error.message || error}
         </div>
-      </div>
+      ) : (
+        <div
+          style={{ backgroundColor: '#1d2129' }}
+          className="flex-auto w-full pb-20"
+        >
+          <div className="w-10/12 mx-auto mt-10">
+            <GigInfo bounty={bounty} />
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }

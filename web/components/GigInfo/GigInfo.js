@@ -3,7 +3,7 @@ import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import GigApplications from './GigApplications';
-import GigFounder from './GigFounder';
+import GigFunder from './GigFunder';
 import GigDescription from './GigDescription';
 import Divider from '../shared/Divider';
 import classnames from 'classnames';
@@ -11,8 +11,9 @@ import { usePrice } from '../../hooks/usePrice';
 
 import styles from './gigInfo.module.css';
 
-export function GigInfo({ gigData }) {
-  const priceFiat = usePrice(gigData.tezCost, 'ils');
+export function GigInfo({ bounty }) {
+  const priceFiat = usePrice(bounty.fee, 'ils');
+
   return (
     <form className="relative">
       <div
@@ -36,14 +37,19 @@ export function GigInfo({ gigData }) {
           <div className="gig-header lg:flex-row flex flex-col items-start justify-between mb-6">
             <div className="gig-title flex items-center justify-start">
               <img
-                src={gigData.image}
-                className="gig-image mr-5 rounded-full"
+                src={
+                  bounty.imageUrl
+                    ? bounty.imageUrl
+                    : 'https://via.placeholder.com/100'
+                }
+                className="gig-image mr-5"
                 width="100"
+                height="100"
               />
-              <h1 className="lg:text-xl text-gray-700">{gigData.title}</h1>
+              <h1 className="lg:text-xl text-gray-700">{bounty.title}</h1>
             </div>
-            <div className="gig-label lg:text-xl h-auto px-8 py-1 mt-5 text-blue-600 border-2 border-blue-600 border-dashed">
-              Beginner
+            <div className="gig-label lg:text-xl h-auto px-8 py-1 mt-5 text-blue-600 capitalize border-2 border-blue-600 border-dashed">
+              {bounty.experienceLevel}
             </div>
           </div>
           <div className="lg:pl-30">
@@ -51,7 +57,7 @@ export function GigInfo({ gigData }) {
               <div className="left-section">
                 <div className="gig-costs md:text-md flex justify-start mb-5 text-lg">
                   <div className="cost tez-cost mr-4 font-bold text-blue-600">
-                    {gigData.tezCost} <span className="currency">XTZ</span>
+                    {bounty.fee} <span className="currency">XTZ</span>
                   </div>
                   <div className="cost text-gray-500">
                     {priceFiat} <span className="currency">ILS ₪</span>
@@ -62,41 +68,50 @@ export function GigInfo({ gigData }) {
                     <li className="md:pr-3 md:mr-3 lg:border-r lg:border-black pr-5 mr-5">
                       <label className="mr-1 text-gray-800">Opened:</label>
                       {formatDistance(
-                        subDays(new Date(gigData.createdDate), 3),
+                        subDays(new Date(bounty.createdAt), 3),
                         new Date()
-                      )}
+                      )}{' '}
                       ago
                     </li>
                     <li className="md:pr-3 md:mr-3 lg:border-r lg:border-black lg:my-0 pr-5 my-2 mr-5">
                       <label className="mr-1 text-gray-800">Gig Type:</label>
-                      {gigData.type}
+                      {bounty.categories &&
+                        bounty.categories.map((item, index) => {
+                          return <span key={index}>{item.category}</span>;
+                        })}
                     </li>
-                    <li className="mr-5">
+                    {/* <li className="mr-5">
                       <label className="mr-1 text-gray-800">
                         Time Commitment:
                       </label>
-                      {gigData.time_commitment}
-                    </li>
+                      {bounty.timeCommitment}
+                    </li> */}
                   </ul>
                 </div>
               </div>
               <div className="right-section text-center">
                 <div
                   className={classnames(`status w-5 h-5 mx-auto rounded-full`, {
-                    'bg-green-800': gigData.status === 'open',
-                    'bg-gray-800': gigData.status !== 'open',
+                    'bg-green-800': bounty.status === 'work',
+                    'bg-gray-500': bounty.status === 'finished',
+                    'bg-red-700': bounty.status === 'canceled',
+                    'bg-yellow-500': bounty.status === 'pending',
+                    'bg-blue-500': bounty.status === 'pendingPayment',
                   })}
                 ></div>
                 <div
                   className={classnames(
                     `status-label mt-2 font-bold capitalize `,
                     {
-                      'text-green-800': gigData.status === 'open',
-                      'text-gray-800': gigData.status !== 'open',
+                      'text-green-800': bounty.status === 'work',
+                      'text-gray-500': bounty.status === 'finished',
+                      'text-red-700': bounty.status === 'canceled',
+                      'text-yellow-500': bounty.status === 'pending',
+                      'text-blue-500': bounty.status === 'pendingPayment',
                     }
                   )}
                 >
-                  {gigData.status}
+                  {bounty.status}
                 </div>
               </div>
             </div>
@@ -113,19 +128,33 @@ export function GigInfo({ gigData }) {
 
         <Divider className="border-blue-600 border-dashed" />
 
-        <GigDescription description={gigData.description} />
+        <GigDescription description={bounty.description} />
 
         <Divider className="border-blue-600 border-dashed" />
 
-        <GigApplications applications={gigData.applications} />
+        <GigApplications applications={bounty.applications} />
 
         <Divider className="border-gray-400 border-dashed" />
 
-        <GigFounder founder={gigData.founder} />
+        <GigFunder funder={bounty.funder} />
       </div>
     </form>
   );
 }
+
 GigInfo.propTypes = {
-  gigData: PropTypes.object,
+  bounty: PropTypes.shape({
+    applications: PropTypes.any,
+    categories: PropTypes.shape({
+      map: PropTypes.func,
+    }),
+    createdAt: PropTypes.any,
+    description: PropTypes.any,
+    experienceLevel: PropTypes.any,
+    fee: PropTypes.any,
+    funder: PropTypes.any,
+    imageUrl: PropTypes.any,
+    status: PropTypes.string,
+    title: PropTypes.any,
+  }),
 };

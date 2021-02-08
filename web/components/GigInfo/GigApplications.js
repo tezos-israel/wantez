@@ -36,7 +36,9 @@ function GigApplications({ applications }) {
                         className="item-image mr-6 rounded-full"
                         src={item.image}
                       />
-                      <div className="font-bold">{item.title}</div>
+                      <div className="font-bold">
+                        {item.applicant ? item.applicant.username : ''}
+                      </div>
                     </div>
                     <div className="lg:justify-center lg:w-1/3 lg:my-0 flex items-center w-full my-3">
                       <span
@@ -45,6 +47,7 @@ function GigApplications({ applications }) {
                           {
                             'bg-yellow-500': item.status === 'pending',
                             'bg-green-500': item.status === 'approved',
+                            'bg-red-700': item.status === 'dismissed',
                           }
                         )}
                       ></span>
@@ -52,7 +55,7 @@ function GigApplications({ applications }) {
                     </div>
                     <div className="lg:w-1/3 lg:text-right w-full text-left">
                       {formatDistance(
-                        subDays(new Date(item.date), 3),
+                        subDays(new Date(item.createdAt), 3),
                         new Date()
                       )}
                       ago
@@ -62,7 +65,7 @@ function GigApplications({ applications }) {
                 <AccordionPanel>
                   <div className="md:text-sm lg:flex-row lg:py-10 lg:pl-20 flex flex-col items-end w-full px-5 py-5 mt-10 bg-gray-200">
                     <div className="lg:w-2/3 lg:text-md w-full text-sm text-gray-600">
-                      {item.desc}
+                      {item.details}
                     </div>
                     <div className="md:px-10 lg:w-1/3 lg:px-20 lg:mt-0 flex flex-col w-full px-5 mt-5">
                       <button className="px-5 py-1 mb-3 font-bold text-white bg-blue-600 rounded-md">
