@@ -66,14 +66,14 @@ export default function ContactForm() {
                   </div>
                   {(status === 'error' || (touched.email && errors.email)) && (
                     <div
-                      className="w-content mx-auto mt-5 text-xs text-red-400"
+                      className="w-content mx-auto mt-5 text-xs text-center text-red-400"
                       dangerouslySetInnerHTML={{
                         __html: message || (touched.email && errors.email),
                       }}
                     />
                   )}
-                  <div className="w-content mx-auto mt-5 text-xs text-gray-400">
-                    By leaving you agree you confirm to get only cool and
+                  <div className="w-content mx-auto mt-5 text-xs text-center text-gray-400">
+                    By joining you agree you confirm to get only cool and
                     interesting stuff, not junk :)
                   </div>
                 </>
@@ -96,7 +96,7 @@ function Button({ validationError, sendingStatus, errorMessage }) {
       type="submit"
       title={errorMessage}
       className={classnames(
-        'px-5 h-14 disabled:cursor-not-allowed absolute right-0',
+        'w-16 flex justify-center items-center h-14 disabled:cursor-not-allowed absolute right-0',
         {
           'bg-blue-500':
             !validationError && (!sendingStatus || sendingStatus === 'sending'),
