@@ -1,12 +1,11 @@
-const withTM = require('next-transpile-modules')([
+const withPlugins = require('next-compose-plugins');
+const transpileModulesPluginFactory = require('next-transpile-modules');
+const imagesPlugin = require('next-images');
+
+const transpileModulesPlugins = transpileModulesPluginFactory([
   '@tezos-il/tezos-react-hooks',
 ]);
 
-module.exports = withTM({
-  env: {
-    // Reference a variable that was defined in the .env file and make it available at Build Time
-    GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
-  },
-  jsconfigPaths: true,
-  trailingSlash: true,
+module.exports = withPlugins([[transpileModulesPlugins], [imagesPlugin]], {
+  // webpack/next config here
 });
