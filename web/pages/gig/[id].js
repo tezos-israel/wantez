@@ -23,25 +23,35 @@ export default function GigPage() {
     return null;
   }
 
-  return (
-    <Layout>
-      {loading ? (
+  if (loading) {
+    return (
+      <Layout>
         <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
-      ) : error ? (
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
         <div className="alert" severity="error">
           <div className="alert-title">Failed loading gig info</div>
           {error.message || error}
         </div>
-      ) : (
-        <div
-          style={{ backgroundColor: '#1d2129' }}
-          className="flex-auto w-full pb-20"
-        >
-          <div className="w-10/12 mx-auto mt-10">
-            <GigInfo bounty={bounty} />
-          </div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout>
+      <div
+        style={{ backgroundColor: '#1d2129' }}
+        className="flex-auto w-full pb-20"
+      >
+        <div className="w-10/12 mx-auto mt-10">
+          <GigInfo bounty={bounty} />
         </div>
-      )}
+      </div>
     </Layout>
   );
 }
