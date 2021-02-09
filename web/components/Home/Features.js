@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 export default function Features({ features }) {
   return (
-    <div className="lg:w-1/2 lg:mx-auto lg:px-0 lg:mt-0 px-10 mt-20">
-      <div className="space-y-30 sm:space-y-10">
+    <div className="lg:w-3/4 lg:mx-auto lg:px-0 lg:mt-0 pt-30 px-10">
+      <div className="space-y-30 sm:space-y-30">
         {features.map((section, index) => (
           <div
             className={classnames(
@@ -14,7 +14,7 @@ export default function Features({ features }) {
             )}
             key={index}
           >
-            <div className="sm:w-80 sm:h-80 w-40 h-40 mx-10">
+            <div className="sm:w-80 sm:h-80 sm:mx-10 w-52 h-52 hover:rotate-45 transition-transform duration-700 transform">
               <Image
                 src={section.imageUrl}
                 alt={section.title}
@@ -25,10 +25,12 @@ export default function Features({ features }) {
               />
             </div>
             <div className="sm:p-10 sm:flex-1">
-              <h2 className="font-museo mb-8 text-5xl font-bold text-blue-500">
+              <h2 className="font-museo mb-8 text-4xl font-bold text-blue-500">
                 {section.title}
               </h2>
-              <div className="text-lg font-light">{section.description}</div>
+              <div className="text-lg font-light text-gray-400">
+                {section.description}
+              </div>
             </div>
           </div>
         ))}
