@@ -100,9 +100,6 @@
   - name: bountyStatusType
     using:
       foreign_key_constraint_on: status
-  - name: experienceLevelByExperiencelevel
-    using:
-      foreign_key_constraint_on: experienceLevel
   - name: funder
     using:
       foreign_key_constraint_on: funderId
