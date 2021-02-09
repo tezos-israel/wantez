@@ -13,7 +13,6 @@ export default function GigPage() {
   const { data, loading, error } = useQuery(BOUNTY_QUERY, {
     variables: { id: router.query.id },
   });
-
   const bounty = data && data.bounty_by_pk;
 
   if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
