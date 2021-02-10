@@ -2,6 +2,7 @@ import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { usePrice } from '../../hooks/usePrice';
+import { useExperienceLevel } from '../../hooks/useExperienceLevel';
 
 import GigApplications from './GigApplications';
 import GigFunder from './GigFunder';
@@ -47,10 +48,16 @@ export function GigInfo({ bounty }) {
             </div>
             <div
               className={classnames(
-                `gig-label lg:text-xl h-auto px-8 py-1 mt-5 text-blue-600 capitalize relative`,
+                `gig-label lg:text-xl w-50 h-10 px-8 py-1 mt-5 border-2 border-blue-600 border-dashed text-blue-600 capitalize relative`,
                 styles.gigLabel
               )}
             >
+              <div
+                className={classnames(
+                  `w-full h-full absolute -z-1 -top-2 -right-2`,
+                  useExperienceLevel(bounty.experienceLevel)
+                )}
+              ></div>
               {bounty.experienceLevel}
             </div>
           </div>
