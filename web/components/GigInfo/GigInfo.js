@@ -44,7 +44,12 @@ export function GigInfo({ bounty }) {
               />
               <h1 className="lg:text-xl text-gray-700">{bounty.title}</h1>
             </div>
-            <div className="gig-label lg:text-xl h-auto px-8 py-1 mt-5 text-blue-600 capitalize border-2 border-blue-600 border-dashed">
+            <div
+              className={classnames(
+                `gig-label lg:text-xl h-auto px-8 py-1 mt-5 text-blue-600 capitalize relative`,
+                styles.gigLabel
+              )}
+            >
               {bounty.experienceLevel}
             </div>
           </div>
