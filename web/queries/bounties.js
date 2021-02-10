@@ -53,6 +53,9 @@ export const BOUNTY_QUERY = gql`
           username
         }
       }
+      bounty_tags {
+        tag_id
+      }
     }
   }
 `;

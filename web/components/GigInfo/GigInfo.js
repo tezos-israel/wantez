@@ -1,13 +1,14 @@
-import { HalfCirclePaper } from '../../components/shared/HalfCirclePaper';
 import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { usePrice } from '../../hooks/usePrice';
 
 import GigApplications from './GigApplications';
 import GigFunder from './GigFunder';
 import GigDescription from './GigDescription';
+import GigTags from './GigTags';
 import Divider from '../shared/Divider';
-import classnames from 'classnames';
-import { usePrice } from '../../hooks/usePrice';
+import { HalfCirclePaper } from '../../components/shared/HalfCirclePaper';
 
 import styles from './gigInfo.module.css';
 
@@ -130,6 +131,8 @@ export function GigInfo({ bounty }) {
 
         <GigDescription description={bounty.description} />
 
+        <GigTags tags={bounty.bounty_tags} />
+
         <Divider className="border-blue-600 border-dashed" />
 
         <GigApplications applications={bounty.applications} />
@@ -154,5 +157,6 @@ GigInfo.propTypes = {
     imageUrl: PropTypes.string,
     status: PropTypes.string,
     title: PropTypes.string,
+    bounty_tags: PropTypes.array,
   }),
 };
