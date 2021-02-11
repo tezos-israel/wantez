@@ -2,7 +2,7 @@ import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { usePrice } from '../../hooks/usePrice';
-import { useExperienceLevel } from '../../hooks/useExperienceLevel';
+import { getExperienceLevel } from '../../lib/experienceLevel';
 
 import GigApplications from './GigApplications';
 import GigFunder from './GigFunder';
@@ -54,8 +54,8 @@ export function GigInfo({ bounty }) {
             >
               <div
                 className={classnames(
-                  `w-full h-full absolute -z-1 -top-2 -right-2`,
-                  useExperienceLevel(bounty.experienceLevel)
+                  `w-full h-full absolute -z-1 -top-2 -right-2 py-3`,
+                  getExperienceLevel(bounty.experienceLevel)
                 )}
               ></div>
               {bounty.experienceLevel}

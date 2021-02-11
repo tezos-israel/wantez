@@ -1,4 +1,4 @@
-export function useExperienceLevel(experienceLevel) {
+export function getExperienceLevel(experienceLevel) {
   switch (experienceLevel) {
     case 'beginner':
       return 'bg-green-500';

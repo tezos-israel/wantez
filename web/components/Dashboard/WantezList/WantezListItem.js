@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useExperienceLevel } from '../../../hooks/useExperienceLevel';
+import { getExperienceLevel } from '../../../lib/experienceLevel';
 
 import styles from './WantezListItem.module.css';
 
@@ -19,7 +19,7 @@ export function WantezListItem({
   id,
   tags,
 }) {
-  const levelClass = useExperienceLevel(experienceLevel);
+  const levelClass = getExperienceLevel(experienceLevel);
   const feeInILS = fee * 2;
   return (
     <Link href={`/gig/${id}`}>
