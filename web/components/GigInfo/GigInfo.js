@@ -1,8 +1,13 @@
 import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { usePrice } from '../../hooks/usePrice';
-import { getLevelClassName } from '../../lib/experienceLevel';
+
+import { usePrice } from 'hooks/usePrice';
+import { useAuthContext } from 'hooks/AuthContext';
+import { getLevelClassName } from 'lib/experienceLevel';
+
+import Divider from '@shared/Divider';
+import { HalfCirclePaper } from '@shared/HalfCirclePaper';
 
 import Card from '../shared/Card';
 
@@ -10,13 +15,15 @@ import GigApplications from './GigApplications';
 import GigFunder from './GigFunder';
 import GigDescription from './GigDescription';
 import GigTags from './GigTags';
-import Divider from '../shared/Divider';
-import { HalfCirclePaper } from '../../components/shared/HalfCirclePaper';
+import ApplyButton from './ApplyButton';
 
 import styles from './gigInfo.module.css';
 
 export function GigInfo({ bounty }) {
   const priceFiat = usePrice(bounty.fee, 'ils');
+  const { user } = useAuthContext();
+
+  const isApplyButtonVisible = !!user && bounty.funder.username !== user.email;
 
   return (
     <div className="relative">
@@ -123,14 +130,12 @@ export function GigInfo({ bounty }) {
                   </div>
                 </div>
               </div>
-              {/* <div className="gig-actions md:text-sm flex">
-              <button className="md:px-8 lg:px-10 px-5 py-2 mr-4 font-bold text-white bg-blue-600 rounded-md">
-                Express intrest
-              </button>
-              <button className="md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
+            </div>
+            <div className="gig-actions md:text-sm flex">
+              {isApplyButtonVisible && <ApplyButton />}
+              {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
                 Share
-              </button>
-            </div> */}
+              </button> */}
             </div>
           </div>
 
