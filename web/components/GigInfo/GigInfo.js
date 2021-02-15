@@ -4,6 +4,7 @@ import classnames from 'classnames';
 
 import { usePrice } from 'hooks/usePrice';
 import { useAuthContext } from 'hooks/AuthContext';
+import { useWalletContext } from 'hooks/WalletContext';
 import { getLevelClassName } from 'lib/experienceLevel';
 
 import Divider from '@shared/Divider';
@@ -22,6 +23,7 @@ import styles from './gigInfo.module.css';
 export function GigInfo({ bounty }) {
   const priceFiat = usePrice(bounty.fee, 'ils');
   const { user } = useAuthContext();
+  const { address } = useWalletContext();
 
   const isApplyButtonVisible = !!user && bounty.funder.username !== user.email;
 
@@ -29,7 +31,7 @@ export function GigInfo({ bounty }) {
     <div className="relative">
       <div
         className={classnames(
-          'absolute w-full overflow-hidden px-4 bg-white',
+          'absolute w-full overflow-hidden bg-white',
           styles.bgHalfCirclePaper
         )}
       >
@@ -132,7 +134,9 @@ export function GigInfo({ bounty }) {
               </div>
             </div>
             <div className="gig-actions md:text-sm flex">
-              {isApplyButtonVisible && <ApplyButton />}
+              {isApplyButtonVisible && (
+                <ApplyButton gigId={bounty.id} address={address} />
+              )}
               {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
                 Share
               </button> */}
@@ -160,6 +164,7 @@ export function GigInfo({ bounty }) {
 
 GigInfo.propTypes = {
   bounty: PropTypes.shape({
+    id: PropTypes.string,
     applications: PropTypes.array,
     categories: PropTypes.array,
     createdAt: PropTypes.string,

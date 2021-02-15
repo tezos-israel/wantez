@@ -12,7 +12,7 @@ export default function Button({
     <button
       {...props}
       className={classnames(
-        'disabled:cursor-not-allowed disabled:opacity-50 px-4 h-10 text-white uppercase rounded-md',
+        'disabled:cursor-not-allowed disabled:opacity-50 px-4 h-10 text-white rounded-md',
         className,
         {
           'bg-blue-500 hover:bg-blue-300': color === 'primary',
