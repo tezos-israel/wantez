@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getLevelClassName } from 'lib/experienceLevel';
 
 import styles from './WantezListItem.module.css';
 
@@ -18,7 +19,7 @@ export function WantezListItem({
   id,
   tags,
 }) {
-  const levelClass = getLevelClass(experienceLevel);
+  const levelClass = getLevelClassName(experienceLevel);
   const feeInILS = fee * 2;
   return (
     <Link href={`/gig/${id}`}>
@@ -103,14 +104,3 @@ WantezListItem.propTypes = {
   applicationsCount: PropTypes.number.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
-
-function getLevelClass(experienceLevel) {
-  switch (experienceLevel) {
-    case 'beginner':
-      return 'bg-green-500';
-    case 'medium':
-      return 'bg-yellow-500';
-    case 'pro':
-      return 'bg-purple-600';
-  }
-}

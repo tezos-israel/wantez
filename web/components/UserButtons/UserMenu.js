@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import md5 from 'md5';
 
 import { useBoolean } from 'hooks/useBoolean';
 import { LoginModal } from 'components/LoginModal';
 import { Button } from 'components/shared/Button';
-
+import { AvatarImage } from '../shared/AvatarImage';
 export function UserMenu({ user }) {
   const [isModalOpen, openModal, closeModal] = useBoolean();
 
@@ -21,16 +20,13 @@ export function UserMenu({ user }) {
     );
   }
 
-  const email = user.email;
-  const hash = md5(email.trim().toLowerCase());
-
   return (
     <>
       <div className=" flex items-center">
         <span className="text-xs text-white">{user.email}</span>
-        <img
-          src={`https://www.gravatar.com/avatar/${hash}?s=40`}
-          className="ml-4 rounded-full"
+        <AvatarImage
+          email={user.email}
+          className="lg:h-16 lg:w-16 height:20 ring-2 ring-white inline-block w-20 bg-gray-400 rounded-full"
         />
       </div>
     </>
