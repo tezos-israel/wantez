@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { string, object } from 'yup';
 import classnames from 'classnames';
 
-import { Button } from 'components/shared/Button';
+import Button from '@shared/Button';
 import Loader from 'react-loader-spinner';
 import { FormField } from 'components/shared/FormField';
 
@@ -52,7 +52,7 @@ export function LoginModalContent({
       </FormField>
 
       <Button
-        className="mt-10"
+        className="w-full mt-10"
         type="submit"
         value="Log in"
         disabled={!formik.isValid || disableLogin}

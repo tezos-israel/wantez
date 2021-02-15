@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { useBoolean } from 'hooks/useBoolean';
 import { LoginModal } from 'components/LoginModal';
-import { Button } from 'components/shared/Button';
 import { AvatarImage } from '../shared/AvatarImage';
 export function UserMenu({ user }) {
   const [isModalOpen, openModal, closeModal] = useBoolean();
@@ -11,9 +10,13 @@ export function UserMenu({ user }) {
   if (!user) {
     return (
       <>
-        <Button color="primary" onClick={openModal}>
+        <button
+          color="primary"
+          onClick={openModal}
+          className="disabled:opacity-50 disabled:cursor-not-allowed p-2 bg-blue-500 rounded-sm"
+        >
           Log in / Sign up
-        </Button>
+        </button>
 
         <LoginModal isOpen={isModalOpen} onDismiss={closeModal} />
       </>

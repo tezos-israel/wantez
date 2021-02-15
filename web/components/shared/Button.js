@@ -1,13 +1,23 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-export function Button({ children, className = '', ...props }) {
+export default function Button({
+  children,
+  className = '',
+  color = 'default',
+  // size = 'medium',
+  ...props
+}) {
   return (
     <button
       {...props}
       className={classnames(
-        'p-2 bg-blue-500 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed',
-        className
+        'disabled:cursor-not-allowed disabled:opacity-50 px-4 h-10 text-white uppercase rounded-md',
+        className,
+        {
+          'bg-blue-500 hover:bg-blue-300': color === 'primary',
+          'bg-gray-400 hover:bg-gray-300': color === 'default',
+        }
       )}
     >
       {children}
@@ -21,4 +31,6 @@ color: primary, secondary,
 
 Button.propTypes = {
   className: PropTypes.string,
+  color: PropTypes.oneOf(['default', 'primary', 'secondary', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
 };
