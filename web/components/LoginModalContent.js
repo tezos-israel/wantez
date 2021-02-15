@@ -55,6 +55,7 @@ export function LoginModalContent({
         className="w-full mt-10"
         type="submit"
         value="Log in"
+        color="primary"
         disabled={!formik.isValid || disableLogin}
       >
         Log in
