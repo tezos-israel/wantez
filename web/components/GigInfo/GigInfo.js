@@ -25,9 +25,11 @@ export function GigInfo({ bounty }) {
   const { user } = useAuthContext();
   const { address } = useWalletContext();
 
-  const hasApplied = bounty.applications.find(
-    (application) => application.applicant.username === user.email
-  );
+  const hasApplied =
+    user &&
+    bounty.applications.find(
+      (application) => application.applicant.username === user.email
+    );
 
   const isApplyButtonVisible =
     !!user && bounty.funder.username !== user.email && !hasApplied;
