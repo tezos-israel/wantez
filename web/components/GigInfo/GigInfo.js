@@ -125,7 +125,7 @@ export function GigInfo({ bounty }) {
                   ></div>
                   <div
                     className={classnames(
-                      'status-label mt-2 font-bold capitalize ',
+                      'status-label mt-2 font-bold capitalize',
                       {
                         'text-green-800': bounty.status === 'work',
                         'text-gray-500': bounty.status === 'finished',
@@ -158,7 +158,10 @@ export function GigInfo({ bounty }) {
 
           <Divider className="border-blue-600 border-dashed" />
 
-          <GigApplications applications={bounty.applications} />
+          <GigApplications
+            applications={bounty.applications}
+            currentUsername={user && user.email}
+          />
 
           <Divider className="border-gray-400 border-dashed" />
 

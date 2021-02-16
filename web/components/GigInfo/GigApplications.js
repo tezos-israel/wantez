@@ -1,11 +1,12 @@
 import React from 'react';
-import { Accordion } from '@reach/accordion';
-import '@reach/accordion/styles.css';
 import PropTypes from 'prop-types';
+import { Accordion } from '@reach/accordion';
+
+import '@reach/accordion/styles.css';
 
 import GigApplicationsItem from './GigApplicationsItem';
 
-function GigApplications({ applications }) {
+function GigApplications({ applications, currentUsername }) {
   return (
     <div className="lg:p-10 p-5">
       <h3 className="font-bold uppercase">Applications</h3>
@@ -22,6 +23,7 @@ function GigApplications({ applications }) {
               application={item}
               key={item.id}
               isLast={index === applications.length - 1}
+              currentUsername={currentUsername}
             />
           ))}
         </Accordion>
@@ -31,15 +33,8 @@ function GigApplications({ applications }) {
 }
 
 GigApplications.propTypes = {
-  applications: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      image: PropTypes.string,
-      status: PropTypes.string,
-      details: PropTypes.string,
-      createdAt: PropTypes.string,
-    })
-  ).isRequired,
+  applications: PropTypes.array.isRequired,
+  currentUsername: PropTypes.string,
 };
 
 export default GigApplications;
