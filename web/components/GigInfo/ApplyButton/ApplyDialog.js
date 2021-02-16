@@ -1,6 +1,6 @@
 import Dialog from '@reach/dialog';
 import Spinner from 'react-loader-spinner';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Formik } from 'formik';
 import { string, object } from 'yup';
 
@@ -8,29 +8,14 @@ import Button from '@shared/Button';
 import { FormField } from '@shared/FormField';
 import useLoadingState from 'hooks/useLoadingState';
 
+import { CREATE_APPLICATION } from 'queries/applications';
+
 const validationSchema = object().shape({
   details: string().required('Details are required'),
 });
 
 export default function ApplyDialog({ onDismiss, gigId, address }) {
-  const [applyToGig] = useMutation(gql`
-    mutation applyToGig($details: String!, $gigId: uuid!, $address: String!) {
-      insert_application_one(
-        object: {
-          details: $details
-          bountyId: $gigId
-          paymentAddress: $address
-        }
-      ) {
-        id
-        createdAt
-        bountyId
-        details
-        applicantId
-        paymentAddress
-      }
-    }
-  `);
+  const [applyToGig] = useMutation(CREATE_APPLICATION);
   const {
     isLoading,
     error,

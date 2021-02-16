@@ -1,6 +1,17 @@
 - table:
     schema: public
     name: application
+  configuration:
+    custom_root_fields:
+      insert: insertApplications
+      insert_one: insertApplication
+      select_by_pk: application
+      select: applications
+      delete: deleteApplications
+      update: updateApplications
+      delete_by_pk: deleteApplication
+      update_by_pk: updateApplication
+    custom_column_names: {}
   object_relationships:
   - name: applicant
     using:
