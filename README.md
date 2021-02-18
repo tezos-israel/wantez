@@ -9,7 +9,7 @@ Install dependencies with yarn:
 ```sh
 yarn
 vercel env pull ./web/.env.local
-yarn db:create
+yarn db:migrate
 ```
 
 Then build and run the project:

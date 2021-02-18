@@ -11,9 +11,9 @@
     "posttest": "npm run format",
     "lint": "eslint . --cache --fix",
     "pretest": "npm run lint",
-    "predb:create": "yarn docker",
-    "db:create": "yarn hasura migrate --project ./hasura --admin-secret password apply && yarn hasura metadata --project ./hasura --admin-secret password apply",
-    "db:console": "yarn hasura console --project ./hasura --admin-secret password"
+    "predb:migrate": "yarn docker",
+    "db:migrate": "hasura migrate --project ./hasura --admin-secret password apply && hasura metadata --project ./hasura --admin-secret password apply",
+    "db:console": "hasura console --project ./hasura --admin-secret password"
   },
   "dependencies": {
     "@apollo/client": "^3.3.7",
