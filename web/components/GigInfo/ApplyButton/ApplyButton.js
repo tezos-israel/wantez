@@ -1,4 +1,4 @@
-// import {useState} from 'react'
+import PropTypes from 'prop-types';
 
 import { useBoolean } from 'hooks/useBoolean';
 
@@ -25,3 +25,8 @@ export default function ApplyButton({ gigId, address }) {
     </>
   );
 }
+
+ApplyButton.propTypes = {
+  gigId: PropTypes.string.isRequired,
+  address: PropTypes.string,
+};

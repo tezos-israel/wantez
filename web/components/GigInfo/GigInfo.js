@@ -31,6 +31,8 @@ export function GigInfo({ bounty }) {
       (application) => application.applicant.username === user.email
     );
 
+  const isFunder = !!user && bounty.funder.username === user.email;
+
   const isApplyButtonVisible =
     !!user && bounty.funder.username !== user.email && !hasApplied;
 
@@ -161,6 +163,7 @@ export function GigInfo({ bounty }) {
           <GigApplications
             applications={bounty.applications}
             currentUsername={user && user.email}
+            isFunder={isFunder}
           />
 
           <Divider className="border-gray-400 border-dashed" />

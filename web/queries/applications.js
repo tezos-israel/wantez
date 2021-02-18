@@ -7,10 +7,22 @@ export const CREATE_APPLICATION = gql`
     ) {
       id
       createdAt
-      bountyId
+      status
       details
-      applicantId
       paymentAddress
+      applicant {
+        username
+      }
+      bountyId
+    }
+  }
+`;
+
+export const DELETE_APPLICATION = gql`
+  mutation deleteApplication($appId: uuid!) {
+    deleteApplication(id: $appId) {
+      bountyId
+      id
     }
   }
 `;

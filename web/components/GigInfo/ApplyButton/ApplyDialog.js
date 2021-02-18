@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Dialog from '@reach/dialog';
 import Spinner from 'react-loader-spinner';
-import { useMutation } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import { Formik } from 'formik';
 import { string, object } from 'yup';
 
@@ -16,7 +16,9 @@ const validationSchema = object().shape({
 });
 
 export default function ApplyDialog({ onDismiss, gigId, address }) {
-  const [applyToGig] = useMutation(CREATE_APPLICATION);
+  const [applyToGig] = useMutation(CREATE_APPLICATION, {
+    update: updateCacheAfterCreate,
+  });
   const {
     isLoading,
     error,
@@ -99,3 +101,66 @@ ApplyDialog.propTypes = {
   gigId: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
 };
+
+function updateCacheAfterCreate(cache, { data }) {
+  const { bountyId, appId } = data.insertApplication;
+
+  updateBountyAppsCache(cache, bountyId, appId);
+  updateBountyAppsCountCache(cache, bountyId);
+}
+
+function updateBountyAppsCache(cache, bountyId, appId) {
+  const fragmentQuery = {
+    id: `bounty:${bountyId}`,
+    fragment: gql`
+      fragment bountyAApplications on bounty {
+        applications {
+          id
+        }
+      }
+    `,
+  };
+
+  const bounty = cache.readFragment(fragmentQuery);
+
+  cache.writeFragment({
+    ...fragmentQuery,
+    data: {
+      applications: [
+        ...bounty.applications,
+        { __typename: 'application', id: appId },
+      ],
+    },
+  });
+}
+
+function updateBountyAppsCountCache(cache, bountyId) {
+  const fragmentQuery = {
+    id: `bounty:${bountyId}`,
+    fragment: gql`
+      fragment bountyAApplicationsCount on bounty {
+        applications_aggregate {
+          aggregate {
+            count
+          }
+        }
+      }
+    `,
+  };
+
+  const bounty = cache.readFragment(fragmentQuery);
+  if (!bounty) {
+    return;
+  }
+
+  cache.writeFragment({
+    ...fragmentQuery,
+    data: {
+      applications_aggregate: {
+        aggregate: {
+          count: (bounty.applications_aggregate?.aggregate?.count || 0) + 1,
+        },
+      },
+    },
+  });
+}
