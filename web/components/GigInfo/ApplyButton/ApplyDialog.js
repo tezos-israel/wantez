@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Dialog from '@reach/dialog';
 import Spinner from 'react-loader-spinner';
 import { useMutation } from '@apollo/client';
@@ -27,7 +28,7 @@ export default function ApplyDialog({ onDismiss, gigId, address }) {
   return (
     <Dialog
       onDismiss={onDismiss}
-      aria-label="Login Dialog"
+      aria-label="Create gig application Dialog"
       className="w-content"
     >
       <Formik
@@ -92,3 +93,9 @@ export default function ApplyDialog({ onDismiss, gigId, address }) {
     }
   }
 }
+
+ApplyDialog.propTypes = {
+  onDismiss: PropTypes.func.isRequired,
+  gigId: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+};
