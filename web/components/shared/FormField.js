@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function FormField({ title, fieldId, error = '', children }) {
+export function FormField({ title, fieldId, error = '', children, ...props }) {
   return (
-    <div>
+    <div {...props}>
       {title && (
         <label
           htmlFor={fieldId}

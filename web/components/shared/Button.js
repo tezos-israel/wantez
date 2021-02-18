@@ -5,18 +5,20 @@ export default function Button({
   children,
   className = '',
   color = 'default',
-  // size = 'medium',
+  size = 'medium',
   ...props
 }) {
   return (
     <button
       {...props}
       className={classnames(
-        'disabled:cursor-not-allowed disabled:opacity-50 px-4 h-10 text-white rounded-md',
+        'disabled:cursor-not-allowed disabled:opacity-50 px-4 text-white rounded-md',
         className,
         {
           'bg-blue-500 hover:bg-blue-300': color === 'primary',
           'bg-gray-400 hover:bg-gray-300': color === 'default',
+          'h-10': size === 'medium',
+          'text-sm': size === 'small',
         }
       )}
     >

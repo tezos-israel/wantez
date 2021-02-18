@@ -7,7 +7,8 @@ import Button from '@shared/Button';
 import ApplyDialog from './ApplyDialog';
 
 export default function ApplyButton({ gigId, address }) {
-  const [isOpen, openDialog, closeDialog] = useBoolean(false);
+  const [isOpen, openDialog, closeDialog] = useBoolean();
+
   return (
     <>
       <Button
