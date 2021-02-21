@@ -18,7 +18,7 @@ export default function Button({
           'bg-blue-500 hover:bg-blue-300': color === 'primary',
           'bg-gray-400 hover:bg-gray-300': color === 'default',
           'h-10': size === 'medium',
-          'text-sm': size === 'small',
+          'text-sm h-7': size === 'small',
         }
       )}
     >

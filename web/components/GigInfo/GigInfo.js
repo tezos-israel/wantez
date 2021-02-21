@@ -141,14 +141,14 @@ export function GigInfo({ bounty }) {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="gig-actions md:text-sm flex">
-              {isApplyButtonVisible && (
-                <ApplyButton gigId={bounty.id} address={address} />
-              )}
-              {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
-                Share
-              </button> */}
+              <div className="gig-actions md:text-sm flex">
+                {isApplyButtonVisible && (
+                  <ApplyButton gigId={bounty.id} address={address} />
+                )}
+                {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
+                  Share
+                </button> */}
+              </div>
             </div>
           </div>
 
