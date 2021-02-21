@@ -33,8 +33,7 @@ export function GigInfo({ bounty }) {
 
   const isFunder = !!user && bounty.funder.username === user.email;
 
-  const isApplyButtonVisible =
-    !!user && bounty.funder.username !== user.email && !hasApplied;
+  const isApplyButtonVisible = !isFunder && !hasApplied;
 
   return (
     <div className="relative">
@@ -143,7 +142,11 @@ export function GigInfo({ bounty }) {
               </div>
               <div className="gig-actions md:text-sm flex">
                 {isApplyButtonVisible && (
-                  <ApplyButton gigId={bounty.id} address={address} />
+                  <ApplyButton
+                    gigId={bounty.id}
+                    address={address}
+                    isLoggedIn={!!user}
+                  />
                 )}
                 {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
                   Share
