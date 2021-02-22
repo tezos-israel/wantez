@@ -2,13 +2,23 @@ import PropTypes from 'prop-types';
 import Dialog from '@reach/dialog';
 import { useRef } from 'react';
 
+import { useBoolean } from 'hooks/useBoolean';
+
 import Card from '@shared/Card';
 
 import ApplyDialogForm from './ApplyDialogForm';
 import NotLoggedIn from './NotLoggedIn';
+import ApplyDialogSuccess from './ApplyDialogSuccess';
 
-export default function ApplyDialog({ onDismiss, gigId, address, isLoggedIn }) {
+export default function ApplyDialog({
+  onDismiss,
+  gigId,
+  address,
+  isLoggedIn,
+  gigTitle,
+}) {
   const initialFocusRef = useRef();
+  const [isSuccess, onSuccess] = useBoolean();
 
   return (
     <Dialog
@@ -18,17 +28,20 @@ export default function ApplyDialog({ onDismiss, gigId, address, isLoggedIn }) {
       className="w-content px-0 pt-0"
     >
       <Card>
-        {address && isLoggedIn ? (
+        <Content
+          isLoggedIn={address && isLoggedIn}
+          isSuccess={isSuccess}
+          onDismiss={onDismiss}
+          gigTitle={gigTitle}
+        >
           <ApplyDialogForm
             initialFocusRef={initialFocusRef}
             onDismiss={onDismiss}
-            onSuccess={onDismiss}
+            onSuccess={onSuccess}
             gigId={gigId}
             address={address}
           />
-        ) : (
-          <NotLoggedIn onDismiss={onDismiss} />
-        )}
+        </Content>
       </Card>
     </Dialog>
   );
@@ -37,6 +50,19 @@ export default function ApplyDialog({ onDismiss, gigId, address, isLoggedIn }) {
 ApplyDialog.propTypes = {
   address: PropTypes.string,
   gigId: PropTypes.string.isRequired,
+  gigTitle: PropTypes.string.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
 };
+
+function Content({ children, isLoggedIn, isSuccess, onDismiss, gigTitle }) {
+  if (isSuccess) {
+    return <ApplyDialogSuccess onDismiss={onDismiss} gigTitle={gigTitle} />;
+  }
+
+  if (!isLoggedIn) {
+    return <NotLoggedIn onDismiss={onDismiss} />;
+  }
+
+  return children;
+}

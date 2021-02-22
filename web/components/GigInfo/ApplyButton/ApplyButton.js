@@ -6,18 +6,27 @@ import Button from '@shared/Button';
 
 import ApplyDialog from './ApplyDialog';
 
-export default function ApplyButton({ gigId, address, isLoggedIn }) {
+export default function ApplyButton({
+  gigTitle,
+  gigId,
+  address,
+  isLoggedIn,
+  isVisible,
+}) {
   const [isOpen, openDialog, closeDialog] = useBoolean();
 
   return (
     <>
-      <Button type="button" onClick={openDialog} color="primary">
-        Express Interest
-      </Button>
+      {isVisible && (
+        <Button type="button" onClick={openDialog} color="primary">
+          Express Interest
+        </Button>
+      )}
 
       {isOpen && (
         <ApplyDialog
           gigId={gigId}
+          gigTitle={gigTitle}
           address={address}
           onDismiss={closeDialog}
           isLoggedIn={isLoggedIn}
@@ -30,5 +39,7 @@ export default function ApplyButton({ gigId, address, isLoggedIn }) {
 ApplyButton.propTypes = {
   address: PropTypes.string,
   gigId: PropTypes.string.isRequired,
+  gigTitle: PropTypes.string.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  isVisible: PropTypes.bool.isRequired,
 };
