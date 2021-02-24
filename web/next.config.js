@@ -7,5 +7,8 @@ const transpileModulesPlugins = transpileModulesPluginFactory([
 ]);
 
 module.exports = withPlugins([[transpileModulesPlugins], [imagesPlugin]], {
-  // webpack/next config here
+  i18n: {
+    locales: ['en-US'],
+    defaultLocale: 'en-US',
+  },
 });
