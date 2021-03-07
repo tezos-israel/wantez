@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
-import ConfirmButton from 'components/ConfirmButton';
+import { ConfirmButton } from '@shared/Dialogs/ConfirmDialog';
+
 export default function CancelButton({ onCancel }) {
   return (
     <>

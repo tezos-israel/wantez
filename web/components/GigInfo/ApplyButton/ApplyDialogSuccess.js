@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import BasicDialog from '@shared/BasicDialogLayout';
+import BasicDialog from '@shared/Dialogs/BasicDialogLayout';
 import Button from '@shared/Button';
 
 import SuccessImg from './success.svg';

@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import Dialog from '@shared/CardDialog';
-import BasicDialogLayout from '@shared/BasicDialogLayout';
 import Button from '@shared/Button';
+
+import BasicDialogLayout from '../BasicDialogLayout';
 
 export default function ConfirmDialog({ message, onSubmit }) {
   return (
