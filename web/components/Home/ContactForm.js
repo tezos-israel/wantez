@@ -36,10 +36,10 @@ export default function ContactForm() {
               className="lg:w-3/4 pb-30 px-10 pt-24 mx-auto"
               onSubmit={handleSubmit}
             >
-              <h2 className="font-museo w-content sm:text-5xl flex items-center mx-auto text-4xl font-bold text-blue-500">
+              <h3 className="font-museo w-content sm:text-5xl flex items-center mx-auto text-4xl font-bold text-blue-500">
                 <Logo className="mr-5" />
                 Join us now
-              </h2>
+              </h3>
 
               <FormContent
                 onBlur={handleBlur}
