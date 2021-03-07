@@ -4,6 +4,7 @@ import Spinner from 'react-loader-spinner';
 import { Dialog } from '@reach/dialog';
 
 import SuccessDialog from '@shared/Dialogs/SuccessDialog';
+
 export default function CancelPopup({ isLoading, error, onDismiss }) {
   if (!isLoading && !error) {
     return (
@@ -15,7 +16,6 @@ export default function CancelPopup({ isLoading, error, onDismiss }) {
       </SuccessDialog>
     );
   }
-
 
   return (
     <Dialog
