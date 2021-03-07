@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import BasicDialog from './BasicDialog';
+
+import BasicDialog from '@shared/BasicDialogLayout';
 import Button from '@shared/Button';
 
 import SuccessImg from './success.svg';
@@ -7,7 +8,7 @@ import SuccessImg from './success.svg';
 export default function ApplyDialogSuccess({ gigTitle, onDismiss }) {
   return (
     <BasicDialog
-      header={() => <SuccessImg />}
+      header={<SuccessImg />}
       buttonsLine={() => (
         <Button
           size="small"

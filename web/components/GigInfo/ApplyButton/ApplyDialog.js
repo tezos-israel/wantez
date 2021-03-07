@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-import Dialog from '@reach/dialog';
 import { useRef } from 'react';
 
 import { useBoolean } from 'hooks/useBoolean';
 
-import Card from '@shared/Card';
+import Dialog from '@shared/CardDialog';
 
 import ApplyDialogForm from './ApplyDialogForm';
 import NotLoggedIn from './NotLoggedIn';
@@ -25,24 +24,21 @@ export default function ApplyDialog({
       onDismiss={onDismiss}
       initialFocusRef={initialFocusRef}
       aria-label="Create gig application Dialog"
-      className="w-content px-0 pt-0"
     >
-      <Card>
-        <Content
-          isLoggedIn={address && isLoggedIn}
-          isSuccess={isSuccess}
+      <Content
+        isLoggedIn={address && isLoggedIn}
+        isSuccess={isSuccess}
+        onDismiss={onDismiss}
+        gigTitle={gigTitle}
+      >
+        <ApplyDialogForm
+          initialFocusRef={initialFocusRef}
           onDismiss={onDismiss}
-          gigTitle={gigTitle}
-        >
-          <ApplyDialogForm
-            initialFocusRef={initialFocusRef}
-            onDismiss={onDismiss}
-            onSuccess={onSuccess}
-            gigId={gigId}
-            address={address}
-          />
-        </Content>
-      </Card>
+          onSuccess={onSuccess}
+          gigId={gigId}
+          address={address}
+        />
+      </Content>
     </Dialog>
   );
 }

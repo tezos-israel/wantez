@@ -6,10 +6,12 @@ export default function Button({
   className = '',
   color = 'default',
   size = 'medium',
+  type = 'button',
   ...props
 }) {
   return (
     <button
+      type={type}
       {...props}
       className={classnames(
         'disabled:cursor-not-allowed disabled:opacity-50 px-4 text-white rounded-md',
@@ -32,7 +34,9 @@ color: primary, secondary,
 */
 
 Button.propTypes = {
+  children: PropTypes.any,
   className: PropTypes.string,
-  color: PropTypes.oneOf(['default', 'primary', 'secondary', 'inherit']),
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-};
+  color: PropTypes.oneOf(["default", "primary", "secondary", "inherit"]),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
+  type: PropTypes.string
+}
