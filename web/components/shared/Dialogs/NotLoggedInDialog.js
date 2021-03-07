@@ -1,9 +1,23 @@
 import PropTypes from 'prop-types';
+
+import Dialog from '@shared/CardDialog';
 import Button from '@shared/Button';
 
 import OhNoLogo from './oh-no.svg';
 
-export default function NotLoggedIn({ onDismiss }) {
+export default function NotLoggedInDialog({ onDismiss }) {
+  return (
+    <Dialog onDismiss={onDismiss} aria-label="Not logged-in Dialog">
+      <Content onDismiss={onDismiss} />
+    </Dialog>
+  );
+}
+
+NotLoggedInDialog.propTypes = {
+  onDismiss: PropTypes.func.isRequired,
+};
+
+function Content({ onDismiss }) {
   return (
     <div className="font-museo flex flex-col items-center">
       <div className="font-museo space-y-5 text-center text-gray-500">
@@ -23,6 +37,7 @@ export default function NotLoggedIn({ onDismiss }) {
     </div>
   );
 }
-NotLoggedIn.propTypes = {
+
+Content.propTypes = {
   onDismiss: PropTypes.func.isRequired,
 };

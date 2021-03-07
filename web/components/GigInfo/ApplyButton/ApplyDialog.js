@@ -5,9 +5,9 @@ import { useBoolean } from 'hooks/useBoolean';
 
 import Dialog from '@shared/CardDialog';
 import SuccessDialog from '@shared/Dialogs/SuccessDialog';
+import NotLoggedInDialog from '@shared/Dialogs/NotLoggedInDialog';
 
 import ApplyDialogForm from './ApplyDialogForm';
-import NotLoggedIn from './NotLoggedIn';
 
 export default function ApplyDialog({
   onDismiss,
@@ -23,26 +23,23 @@ export default function ApplyDialog({
     return <ApplyDialogSuccess onDismiss={onDismiss} gigTitle={gigTitle} />;
   }
 
+  if (!isLoggedIn || !address) {
+    return <NotLoggedInDialog onDismiss={onDismiss} />;
+  }
+
   return (
     <Dialog
       onDismiss={onDismiss}
       initialFocusRef={initialFocusRef}
       aria-label="Create gig application Dialog"
     >
-      <Content
-        isLoggedIn={address && isLoggedIn}
-        isSuccess={isSuccess}
+      <ApplyDialogForm
+        initialFocusRef={initialFocusRef}
         onDismiss={onDismiss}
-        gigTitle={gigTitle}
-      >
-        <ApplyDialogForm
-          initialFocusRef={initialFocusRef}
-          onDismiss={onDismiss}
-          onSuccess={onSuccess}
-          gigId={gigId}
-          address={address}
-        />
-      </Content>
+        onSuccess={onSuccess}
+        gigId={gigId}
+        address={address}
+      />
     </Dialog>
   );
 }
@@ -54,14 +51,6 @@ ApplyDialog.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
 };
-
-function Content({ children, isLoggedIn, onDismiss }) {
-  if (!isLoggedIn) {
-    return <NotLoggedIn onDismiss={onDismiss} />;
-  }
-
-  return children;
-}
 
 
 export function ApplyDialogSuccess({ onDismiss, gigTitle }) {
