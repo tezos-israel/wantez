@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
-import ReactDialog from '@reach/dialog';
+import Dialog from '@reach/dialog';
 import classnames from 'classnames';
 
 import Card from '@shared/Card';
 
 export default function CardDialog({ className, children, ...props }) {
   return (
-    <ReactDialog
+    <Dialog
       className={classnames('w-content px-0 pt-0', className)}
       {...props}
     >
       <Card>{children}</Card>
-    </ReactDialog>
+    </Dialog>
   );
 }
 

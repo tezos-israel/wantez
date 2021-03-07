@@ -4,10 +4,10 @@ import { useRef } from 'react';
 import { useBoolean } from 'hooks/useBoolean';
 
 import Dialog from '@shared/CardDialog';
+import SuccessDialog from '@shared/Dialogs/SuccessDialog';
 
 import ApplyDialogForm from './ApplyDialogForm';
 import NotLoggedIn from './NotLoggedIn';
-import ApplyDialogSuccess from './ApplyDialogSuccess';
 
 export default function ApplyDialog({
   onDismiss,
@@ -18,6 +18,10 @@ export default function ApplyDialog({
 }) {
   const initialFocusRef = useRef();
   const [isSuccess, onSuccess] = useBoolean();
+
+  if (isSuccess) {
+    return <ApplyDialogSuccess onDismiss={onDismiss} gigTitle={gigTitle} />;
+  }
 
   return (
     <Dialog
@@ -51,14 +55,27 @@ ApplyDialog.propTypes = {
   onDismiss: PropTypes.func.isRequired,
 };
 
-function Content({ children, isLoggedIn, isSuccess, onDismiss, gigTitle }) {
-  if (isSuccess) {
-    return <ApplyDialogSuccess onDismiss={onDismiss} gigTitle={gigTitle} />;
-  }
-
+function Content({ children, isLoggedIn, onDismiss }) {
   if (!isLoggedIn) {
     return <NotLoggedIn onDismiss={onDismiss} />;
   }
 
   return children;
 }
+
+
+export function ApplyDialogSuccess({ onDismiss, gigTitle }) {
+  return (
+    <SuccessDialog onDismiss={onDismiss} aria-label="Application success">
+      <p>
+        You just applied to work on <br />
+        <span className="font-bold text-blue-500">{`"${gigTitle}"`}</span>
+      </p>
+    </SuccessDialog>
+  );
+}
+
+ApplyDialogSuccess.propTypes = {
+  gigTitle: PropTypes.string.isRequired,
+  onDismiss: PropTypes.func.isRequired,
+};

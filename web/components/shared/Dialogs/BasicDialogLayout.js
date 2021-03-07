@@ -18,7 +18,19 @@ export default function BasicDialogLayout({
 }
 
 BasicDialogLayout.propTypes = {
-  buttonsLine: PropTypes.node.isRequired,
-  children: PropTypes.node,
-  header: PropTypes.node.isRequired,
+  buttonsLine: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.node,
+    PropTypes.func,
+  ]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.node,
+    PropTypes.func,
+  ]),
+  header: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.node,
+    PropTypes.func,
+  ]).isRequired,
 };

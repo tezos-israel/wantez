@@ -8,7 +8,7 @@ import BasicDialogLayout from '../BasicDialogLayout';
 
 export default function ConfirmDialog({ message, onSubmit }) {
   return (
-    <Dialog onDismiss={close} ariaLabel="Confirmation Dialog">
+    <Dialog onDismiss={close} aria-label="Confirmation Dialog">
       <BasicDialogLayout
         header={message}
         buttonsLine={() => (
@@ -16,11 +16,12 @@ export default function ConfirmDialog({ message, onSubmit }) {
             <Button
               type="button"
               color="primary"
+              size="small"
               onClick={() => onSubmit(true)}
             >
               Confirm
             </Button>
-            <Button type="button" onClick={close}>
+            <Button type="button" onClick={close} size="small">
               Cancel
             </Button>
           </div>
