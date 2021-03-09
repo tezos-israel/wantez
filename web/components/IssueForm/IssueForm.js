@@ -3,10 +3,10 @@ import ReactMarkdown from 'react-markdown';
 import classnames from 'classnames';
 import { useFormik } from 'formik';
 
+import Card from 'components/shared/Card';
 import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
-import { HalfCirclePaper } from 'components/shared/HalfCirclePaper';
 
 import { usePrice } from '../../hooks/usePrice';
 
@@ -72,8 +72,7 @@ export function IssueForm({
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="bg-white">
-        <HalfCirclePaper />
+      <Card>
         <div className="p-10">
           <div className="space-y-5">
             <IssueUrlField
@@ -118,7 +117,8 @@ export function IssueForm({
             </div>
           </FieldGroup>
         </div>
-      </div>
+      </Card>
+
       <div className="p-10 mt-2 space-y-6 bg-white">
         <FieldGroup title="Details">
           <div className="grid grid-cols-3 gap-3">
