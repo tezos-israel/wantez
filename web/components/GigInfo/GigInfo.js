@@ -30,7 +30,7 @@ export function GigInfo({ bounty }) {
       </div>
 
       <Card className={styles.gigContent}>
-        <div className="md:px-10 lg:px-20 ">
+        <div className="md:px-10 lg:px-20">
           <div className="lg:p-10 p-5">
             <div className="space-y-5"></div>
             <div className="gig-header lg:flex-row flex flex-col items-start justify-between mb-6">
@@ -123,17 +123,17 @@ export function GigInfo({ bounty }) {
                   </div>
                 </div>
               </div>
-                {/* <div className="gig-actions md:text-sm flex">
+              {/* <div className="gig-actions md:text-sm flex">
               <button className="md:px-8 lg:px-10 px-5 py-2 mr-4 font-bold text-white bg-blue-600 rounded-md">
                 Express intrest
               </button>
-              <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
+              <button className="md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
                 Share
               </button>
             </div> */}
             </div>
           </div>
-          
+
           <Divider className="border-blue-600 border-dashed" />
 
           <GigDescription description={bounty.description} />
@@ -145,7 +145,7 @@ export function GigInfo({ bounty }) {
           <GigApplications applications={bounty.applications} />
 
           <Divider className="border-gray-400 border-dashed" />
-          
+
           <GigFunder funder={bounty.funder} />
         </div>
       </Card>
