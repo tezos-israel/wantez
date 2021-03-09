@@ -13,13 +13,13 @@ export default function GigApplicationsItem({ application, isLast }) {
   return (
     <AccordionItem
       className={classnames(
-        `application-item py-10 w-full focus:outline-none`,
+        'application-item py-10 w-full focus:outline-none',
         {
-          'border-b-2 border-gray-500 border-dashed ': !isLast,
+          'border-b-2 border-gray-500 border-dashed': !isLast,
         }
       )}
     >
-      <AccordionButton className={`w-full focus:outline-none`}>
+      <AccordionButton className="focus:outline-none w-full">
         <div className="lg:flex-row lg:items-center flex flex-col justify-between">
           <div className="lg:w-1/3 flex items-center w-full">
             <AvatarImage
@@ -30,7 +30,7 @@ export default function GigApplicationsItem({ application, isLast }) {
           </div>
           <div className="lg:justify-center lg:w-1/3 lg:my-0 flex items-center w-full my-3">
             <span
-              className={classnames(`item-status mr-4 w-3 h-3 rounded-full`, {
+              className={classnames('item-status mr-4 w-3 h-3 rounded-full', {
                 'bg-yellow-500': application.status === 'pending',
                 'bg-green-500': application.status === 'approved',
                 'bg-red-700': application.status === 'dismissed',
