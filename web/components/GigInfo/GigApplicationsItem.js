@@ -23,7 +23,7 @@ export default function GigApplicationsItem({
       className={classnames(
         'application-item py-10 w-full focus:outline-none',
         {
-          'border-b-2 border-gray-500 border-dashed ': !isLast,
+          'border-b-2 border-gray-500 border-dashed': !isLast,
         }
       )}
     >

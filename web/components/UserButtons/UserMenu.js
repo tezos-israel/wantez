@@ -11,7 +11,6 @@ export function UserMenu({ user }) {
     return (
       <>
         <button
-          color="primary"
           onClick={openModal}
           className="disabled:opacity-50 disabled:cursor-not-allowed p-2 bg-blue-500 rounded-sm"
         >
