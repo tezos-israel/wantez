@@ -34,7 +34,10 @@
   "env": { "browser": true, "node": true, "shared-node-browser": true },
   "rules": {
     "react/prop-types": [2, { "ignore": ["children"] }],
-    "react/react-in-jsx-scope": [0]
+    "react/react-in-jsx-scope": [0],
+    "react/jsx-no-useless-fragment": "error",
+    "no-useless-concat": "error",
+    "quotes": ["error", "single"]
   },
   "settings": {
     "react": {

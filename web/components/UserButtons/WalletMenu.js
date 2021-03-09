@@ -7,8 +7,7 @@ export function WalletMenu({ address = '', onClick }) {
   const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
 
   return (
-    <>
-      <div
+    <div
         className={`flex items-center space-x-3 ${
           address ? 'logged-in' : 'logged-out'
         }`}
@@ -22,7 +21,6 @@ export function WalletMenu({ address = '', onClick }) {
           <WalletIcon />
         </button>
       </div>
-    </>
   );
 }
 

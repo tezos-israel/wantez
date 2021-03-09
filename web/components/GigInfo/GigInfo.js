@@ -22,7 +22,7 @@ export function GigInfo({ bounty }) {
     <div className="relative">
       <div
         className={classnames(
-          `absolute w-full overflow-hidden px-4 bg-white`,
+          'absolute w-full overflow-hidden px-4 bg-white',
           styles.bgHalfCirclePaper
         )}
       >
@@ -51,7 +51,7 @@ export function GigInfo({ bounty }) {
               >
                 <div
                   className={classnames(
-                    `w-full h-full absolute -z-1 -top-2 -right-2 py-3`,
+                    'w-full h-full absolute -z-1 -top-2 -right-2 py-3',
                     getLevelClassName(bounty.experienceLevel)
                   )}
                 ></div>
@@ -97,7 +97,7 @@ export function GigInfo({ bounty }) {
                 <div className="right-section text-center">
                   <div
                     className={classnames(
-                      `status w-5 h-5 mx-auto rounded-full`,
+                      'status w-5 h-5 mx-auto rounded-full',
                       {
                         'bg-green-800': bounty.status === 'work',
                         'bg-gray-500': bounty.status === 'finished',
@@ -109,7 +109,7 @@ export function GigInfo({ bounty }) {
                   ></div>
                   <div
                     className={classnames(
-                      `status-label mt-2 font-bold capitalize `,
+                      'status-label mt-2 font-bold capitalize ',
                       {
                         'text-green-800': bounty.status === 'work',
                         'text-gray-500': bounty.status === 'finished',
