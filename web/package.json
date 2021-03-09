@@ -24,6 +24,7 @@
     "@reach/accordion": "^0.13.0",
     "@reach/dialog": "^0.13.0",
     "@reach/listbox": "^0.13.0",
+    "@reach/rect": "^0.13.2",
     "@tailwindcss/forms": "^0.2.1",
     "@taquito/beacon-wallet": "^8.0.0-beta.4",
     "@taquito/taquito": "^8.0.0-beta.4",
