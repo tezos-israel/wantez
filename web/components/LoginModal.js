@@ -71,7 +71,7 @@ export function LoginModal({ isOpen, onDismiss }) {
       setDisableLogin(false);
 
       /* Handle error (which can occur if the user clicks `Cancel` on the modal after submitting their email) */
-      console.error(`Error logging in with Magic`, err);
+      console.error('Error logging in with Magic', err);
     }
   }
 }

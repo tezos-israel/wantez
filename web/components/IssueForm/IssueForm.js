@@ -173,7 +173,7 @@ export function IssueForm({
                 id="amount-input"
                 name="price"
                 className={classnames(
-                  `w-full border border-gray-500 rounded-none`,
+                  'w-full border border-gray-500 rounded-none',
                   {
                     'border-red-500':
                       formik.touched.price &&
@@ -201,7 +201,7 @@ export function IssueForm({
               <input
                 type="number"
                 className={classnames(
-                  `w-full border border-gray-500 rounded-none`,
+                  'w-full border border-gray-500 rounded-none',
                   {
                     'border-red-500':
                       formik.touched.estHours && formik.errors.estHours,
