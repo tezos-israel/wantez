@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 export default function GTMNoScript() {
   return (
     <noscript
@@ -8,7 +7,3 @@ export default function GTMNoScript() {
     />
   );
 }
-
-GTMNoScript.propTypes = {
-  gtmId: PropTypes.string.isRequired,
-};
