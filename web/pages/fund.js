@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from 'components/Layout';
 import GigForm from 'components/GigForm';
 
-import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from 'queries/bounties';
+import { SAVE_GIG, GET_GIGS, DELETE_GIG } from 'queries/bounties';
 import { useGigsContractContext } from 'hooks/GigsContractContext';
 import { useWalletContext } from 'hooks/WalletContext';
 import { useAuthContext } from 'hooks/AuthContext';
@@ -59,10 +59,10 @@ function useCreateBounty() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
 
-  const [deleteBounty] = useMutation(DELETE_BOUNTY, {
+  const [deleteBounty] = useMutation(DELETE_GIG, {
     update: updateCacheAfterDelete,
   });
-  const [createBounty] = useMutation(SAVE_BOUNTY, {
+  const [createBounty] = useMutation(SAVE_GIG, {
     update: updateCache,
     onCompleted,
   });
@@ -85,7 +85,7 @@ function useCreateBounty() {
 
   function updateCache(cache, { data }) {
     const existingBountiesQuery = cache.readQuery({
-      query: GET_BOUNTIES,
+      query: GET_GIGS,
     });
 
     if (!existingBountiesQuery) {
@@ -95,14 +95,13 @@ function useCreateBounty() {
     const newBounty = data.insert_bounty_one;
 
     cache.writeQuery({
-      query: GET_BOUNTIES,
-      data: { bounty: [newBounty, ...existingBountiesQuery.bounty] },
+      query: GET_GIGS,
     });
   }
 
   function updateCacheAfterDelete(cache, { data }) {
     const existingBountiesQuery = cache.readQuery({
-      query: GET_BOUNTIES,
+      query: GET_GIGS,
     });
 
     if (!existingBountiesQuery) {
@@ -112,7 +111,7 @@ function useCreateBounty() {
     const bountyId = data.delete_bounty_by_pk.id;
 
     cache.writeQuery({
-      query: GET_BOUNTIES,
+      query: GET_GIGS,
       data: {
         bounty: existingBountiesQuery.bounty.filter((b) => b.id !== bountyId),
       },
