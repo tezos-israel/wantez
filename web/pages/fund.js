@@ -17,7 +17,7 @@ export default function FundIssuePage() {
   const { user } = useAuthContext();
 
   const { address, balance } = useWalletContext();
-  const { createBounty, isLoading } = useCreateBounty();
+  const { createGig, isLoading } = useCreateGig();
 
   if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
     if (typeof window !== 'undefined') {
@@ -42,7 +42,7 @@ export default function FundIssuePage() {
           </div>
 
           <GigForm
-            onSubmit={createBounty}
+            onSubmit={createGig}
             isLoggedIn={!!user}
             isConnected={!!address}
             balance={balance}
@@ -54,27 +54,27 @@ export default function FundIssuePage() {
   );
 }
 
-function useCreateBounty() {
+function useCreateGig() {
   const { fundGig } = useGigsContractContext();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
 
-  const [deleteBounty] = useMutation(DELETE_GIG, {
+  const [deleteGig] = useMutation(DELETE_GIG, {
     update: updateCacheAfterDelete,
   });
-  const [createBounty] = useMutation(SAVE_GIG, {
+  const [createGig] = useMutation(SAVE_GIG, {
     update: updateCache,
     onCompleted,
   });
 
   return {
-    async createBounty(variables) {
+    async createGig(variables) {
       if (isLoading) {
         return;
       }
       setLoading(true);
       try {
-        await createBounty({ variables });
+        await createGig({ variables });
       } catch (e) {
         setLoading(false);
         console.error(e);
@@ -92,10 +92,11 @@ function useCreateBounty() {
       return;
     }
 
-    const newBounty = data.insert_bounty_one;
+    const newGig = data.insert_bounty_one;
 
     cache.writeQuery({
       query: GET_GIGS,
+      data: { bounty: [newGig, ...existingBountiesQuery.bounty] },
     });
   }
 
@@ -108,27 +109,27 @@ function useCreateBounty() {
       return;
     }
 
-    const bountyId = data.delete_bounty_by_pk.id;
+    const gigId = data.delete_bounty_by_pk.id;
 
     cache.writeQuery({
       query: GET_GIGS,
       data: {
-        bounty: existingBountiesQuery.bounty.filter((b) => b.id !== bountyId),
+        bounty: existingBountiesQuery.bounty.filter((b) => b.id !== gigId),
       },
     });
   }
 
-  async function onCompleted({ insert_bounty_one: bounty }) {
+  async function onCompleted({ insert_bounty_one: gig }) {
     try {
       await fundGig({
-        ...bounty,
-        deadline: Number(new Date(bounty.deadline)),
+        ...gig,
+        deadline: Number(new Date(gig.deadline)),
       });
       router.push('/explore');
     } catch (error) {
       console.error(error);
       try {
-        await deleteBounty({ variables: { id: bounty.id } });
+        await deleteGig({ variables: { id: gig.id } });
       } catch (deleteError) {
         console.error(deleteError);
       }
