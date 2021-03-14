@@ -5,7 +5,7 @@
     {
       "title": "Fund your gig",
       "imageUrl": "/feat-fund-gig.svg",
-      "description": "As an open-source software maintainer, you post a bounty proposal on the platform of a bug you want solved with details of the job required, the expected timeline, and the amount of the bounty or payment. As the funder, you approve which contributor you want to complete the assignment. Once their fix is approved, they gets paid in tez. This simple process allows you to continue developing and make rapid progress on your open source projects."
+      "description": "As an open-source software maintainer, you post a gig proposal on the platform of a bug you want solved with details of the job required, the expected timeline, and the amount of payment. As the funder, you approve which contributor you want to complete the assignment. Once their fix is approved, they gets paid in tez. This simple process allows you to continue developing and make rapid progress on your open source projects."
     },
     {
       "title": "Explore gigs",
