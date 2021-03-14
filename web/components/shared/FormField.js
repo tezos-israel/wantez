@@ -13,7 +13,7 @@ export function FormField({ title, fieldId, error = '', children, ...props }) {
         </label>
       )}
       {children}
-      {error && <div className="text-sm text-red-500">{error}</div>}
+      {error && <div className="mt-1 text-sm text-red-500">{error}</div>}
     </div>
   );
 }

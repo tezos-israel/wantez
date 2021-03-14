@@ -1,31 +1,21 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-
-import Dialog from '@reach/dialog';
 
 import { useAuthContext } from 'hooks/AuthContext';
 
 import { LoginModalContent } from './LoginModalContent';
 
-export function LoginModal({ isOpen, onDismiss }) {
+export function LoginModal() {
   const { user, setUser, magic, isLoading } = useAuthContext();
 
   const [disableLogin, setDisableLogin] = useState(false);
 
   return (
-    <Dialog
-      isOpen={isOpen}
-      onDismiss={onDismiss}
-      aria-label="Login Dialog"
-      className="w-content"
-    >
-      <LoginModalContent
-        onSubmit={onSubmit}
-        disableLogin={disableLogin}
-        isLoading={isLoading}
-        isUserLoggedIn={!!user}
-      />
-    </Dialog>
+    <LoginModalContent
+      onSubmit={onSubmit}
+      disableLogin={disableLogin}
+      isLoading={isLoading}
+      isUserLoggedIn={!!user}
+    />
   );
 
   function onSubmit({ email }) {
@@ -64,7 +54,6 @@ export function LoginModal({ isOpen, onDismiss }) {
 
       if (user) {
         setUser(user);
-        onDismiss();
       }
     } catch (err) {
       /* If the user clicked "cancel", allow them to click the login again */
@@ -75,8 +64,3 @@ export function LoginModal({ isOpen, onDismiss }) {
     }
   }
 }
-
-LoginModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onDismiss: PropTypes.func.isRequired,
-};
