@@ -9,6 +9,7 @@ import useLoadingState from 'hooks/useLoadingState';
 import { CREATE_APPLICATION } from 'queries/applications';
 
 import Button from '@shared/Button';
+import CloseIcon from '@shared/Dialogs/CloseButtonIcon';
 import { FormField } from '@shared/FormField';
 
 const validationSchema = object().shape({
@@ -49,7 +50,7 @@ export default function ApplyDialogForm({
       }) => (
         <form className="sm:w-96 flex flex-col px-5" onSubmit={handleSubmit}>
           <button onClick={onDismiss} className="mx-auto text-gray-500">
-            X
+            <CloseIcon />
           </button>
 
           <h1 className="font-museo mt-5 font-bold text-center text-gray-500">
