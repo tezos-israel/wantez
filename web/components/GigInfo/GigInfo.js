@@ -20,18 +20,18 @@ import ApplyButton from './ApplyButton';
 
 import styles from './gigInfo.module.css';
 
-export function GigInfo({ bounty }) {
-  const priceFiat = usePrice(bounty.fee, 'ils');
+export function GigInfo({ gig }) {
+  const priceFiat = usePrice(gig.fee, 'ils');
   const { user } = useAuthContext();
   const { address } = useWalletContext();
 
   const hasApplied =
     user &&
-    bounty.applications.find(
+    gig.applications.find(
       (application) => application.applicant.username === user.email
     );
 
-  const isFunder = !!user && bounty.funder.username === user.email;
+  const isFunder = !!user && gig.funder.username === user.email;
 
   const isApplyButtonVisible = !isFunder && !hasApplied;
 
@@ -53,12 +53,12 @@ export function GigInfo({ bounty }) {
             <div className="gig-header lg:flex-row flex flex-col items-start justify-between mb-6">
               <div className="gig-title flex items-center justify-start">
                 <img
-                  src={bounty.imageUrl}
+                  src={gig.imageUrl}
                   className="gig-image mr-5"
                   width="100"
                   height="100"
                 />
-                <h1 className="lg:text-xl text-gray-700">{bounty.title}</h1>
+                <h1 className="lg:text-xl text-gray-700">{gig.title}</h1>
               </div>
               <div
                 className={classnames(
@@ -69,10 +69,10 @@ export function GigInfo({ bounty }) {
                 <div
                   className={classnames(
                     'w-full h-full absolute -z-1 -top-2 -right-2 py-3',
-                    getLevelClassName(bounty.experienceLevel)
+                    getLevelClassName(gig.experienceLevel)
                   )}
                 ></div>
-                {bounty.experienceLevel}
+                {gig.experienceLevel}
               </div>
             </div>
             <div className="lg:pl-30">
@@ -80,7 +80,7 @@ export function GigInfo({ bounty }) {
                 <div className="left-section">
                   <div className="gig-costs md:text-md flex justify-start mb-5 text-lg">
                     <div className="cost tez-cost mr-4 font-bold text-blue-600">
-                      {bounty.fee} <span className="currency">XTZ</span>
+                      {gig.fee} <span className="currency">XTZ</span>
                     </div>
                     <div className="cost text-gray-500">
                       {priceFiat} <span className="currency">ILS ₪</span>
@@ -91,14 +91,14 @@ export function GigInfo({ bounty }) {
                       <li className="md:pr-3 md:mr-3 lg:border-r lg:border-black pr-5 mr-5">
                         <label className="mr-1 text-gray-800">Opened:</label>
                         {formatDistance(
-                          subDays(new Date(bounty.createdAt), 3),
+                          subDays(new Date(gig.createdAt), 3),
                           new Date()
                         )}
                         <span className="ml-1">ago</span>
                       </li>
                       <li className="md:pr-3 md:mr-3 lg:border-r lg:border-black lg:my-0 pr-5 my-2 mr-5">
                         <label className="mr-1 text-gray-800">Gig Type:</label>
-                        {bounty.categories.map((item, index) => {
+                        {gig.categories.map((item, index) => {
                           return <span key={index}>{item.category}</span>;
                         })}
                       </li>
@@ -106,7 +106,7 @@ export function GigInfo({ bounty }) {
                       <label className="mr-1 text-gray-800">
                         Time Commitment:
                       </label>
-                      {bounty.timeCommitment}
+                      {gig.timeCommitment}
                     </li> */}
                     </ul>
                   </div>
@@ -116,11 +116,11 @@ export function GigInfo({ bounty }) {
                     className={classnames(
                       'status w-5 h-5 mx-auto rounded-full',
                       {
-                        'bg-green-800': bounty.status === 'work',
-                        'bg-gray-500': bounty.status === 'finished',
-                        'bg-red-700': bounty.status === 'canceled',
-                        'bg-yellow-500': bounty.status === 'pending',
-                        'bg-blue-500': bounty.status === 'pendingPayment',
+                        'bg-green-800': gig.status === 'work',
+                        'bg-gray-500': gig.status === 'finished',
+                        'bg-red-700': gig.status === 'canceled',
+                        'bg-yellow-500': gig.status === 'pending',
+                        'bg-blue-500': gig.status === 'pendingPayment',
                       }
                     )}
                   ></div>
@@ -128,26 +128,26 @@ export function GigInfo({ bounty }) {
                     className={classnames(
                       'status-label mt-2 font-bold capitalize',
                       {
-                        'text-green-800': bounty.status === 'work',
-                        'text-gray-500': bounty.status === 'finished',
-                        'text-red-700': bounty.status === 'canceled',
-                        'text-yellow-500': bounty.status === 'pending',
-                        'text-blue-500': bounty.status === 'pendingPayment',
+                        'text-green-800': gig.status === 'work',
+                        'text-gray-500': gig.status === 'finished',
+                        'text-red-700': gig.status === 'canceled',
+                        'text-yellow-500': gig.status === 'pending',
+                        'text-blue-500': gig.status === 'pendingPayment',
                       }
                     )}
                   >
-                    {bounty.status}
+                    {gig.status}
                   </div>
                 </div>
               </div>
               <div className="gig-actions md:text-sm flex">
                 {
                   <ApplyButton
-                    gigId={bounty.id}
+                    gigId={gig.id}
                     address={address}
                     isLoggedIn={!!user}
                     isVisible={isApplyButtonVisible}
-                    gigTitle={bounty.title}
+                    gigTitle={gig.title}
                   />
                 }
                 {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
@@ -159,20 +159,20 @@ export function GigInfo({ bounty }) {
 
           <Divider className="border-blue-600 border-dashed" />
 
-          <GigDescription description={bounty.description} />
+          <GigDescription description={gig.description} />
 
-          <GigTags tags={bounty.bounty_tags} />
+          <GigTags tags={gig.bounty_tags} />
 
           <Divider className="border-blue-600 border-dashed" />
 
           <GigApplications
-            applications={bounty.applications}
+            applications={gig.applications}
             currentUsername={user && user.email}
           />
 
           <Divider className="border-gray-400 border-dashed" />
 
-          <GigFunder funder={bounty.funder} />
+          <GigFunder funder={gig.funder} />
         </div>
       </Card>
     </div>
@@ -180,7 +180,7 @@ export function GigInfo({ bounty }) {
 }
 
 GigInfo.propTypes = {
-  bounty: PropTypes.shape({
+  gig: PropTypes.shape({
     id: PropTypes.string,
     applications: PropTypes.arrayOf(
       PropTypes.shape({
