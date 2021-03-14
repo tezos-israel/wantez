@@ -13,11 +13,11 @@ function Layout({ children, title }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <NavBar />
-
       <main className="flex flex-col items-center justify-center flex-auto mt-20">
         {children}
       </main>
+
+      <NavBar />
       <Footer />
     </div>
   );
