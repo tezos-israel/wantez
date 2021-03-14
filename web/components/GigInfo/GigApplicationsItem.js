@@ -14,7 +14,6 @@ import { AvatarImage } from '@shared/AvatarImage';
 export default function GigApplicationsItem({
   application,
   isLast,
-  // isFunder,
   currentUsername,
   onCancel,
 }) {
@@ -92,7 +91,6 @@ GigApplicationsItem.propTypes = {
     applicant: PropTypes.shape({ username: PropTypes.string }),
   }).isRequired,
   isLast: PropTypes.bool,
-  isFunder: PropTypes.bool.isRequired,
   currentUsername: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
 };

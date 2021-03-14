@@ -168,7 +168,6 @@ export function GigInfo({ bounty }) {
           <GigApplications
             applications={bounty.applications}
             currentUsername={user && user.email}
-            isFunder={isFunder}
           />
 
           <Divider className="border-gray-400 border-dashed" />
