@@ -3,17 +3,17 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 
-import { BOUNTY_QUERY } from 'queries/bounties';
+import { GIG_QUERY } from 'queries/bounties';
 import Layout from 'components/Layout';
 import { GigInfo } from 'components/GigInfo';
 
 export default function GigPage() {
   const router = useRouter();
 
-  const { data, loading, error } = useQuery(BOUNTY_QUERY, {
+  const { data, loading, error } = useQuery(GIG_QUERY, {
     variables: { id: router.query.id },
   });
-  const bounty = data && data.bounty_by_pk;
+  const gig = data && data.bounty_by_pk;
 
   if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
     if (typeof window !== 'undefined') {
@@ -48,7 +48,7 @@ export default function GigPage() {
         className="flex-auto w-full pb-20"
       >
         <div className="w-10/12 mx-auto mt-10">
-          <GigInfo bounty={bounty} />
+          <GigInfo gig={gig} />
         </div>
       </div>
     </Layout>
