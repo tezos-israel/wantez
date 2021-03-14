@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import Layout from 'components/Layout';
-import { IssueForm } from 'components/IssueForm';
+import GigForm from 'components/IssueForm';
 
 import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from 'queries/bounties';
 import { useGigsContractContext } from 'hooks/GigsContractContext';
@@ -43,7 +43,7 @@ export default function FundIssuePage() {
             </div>
           </div>
 
-          <IssueForm
+          <GigForm
             onSubmit={handleSubmit}
             isLoggedIn={!!user}
             isConnected={!!address}

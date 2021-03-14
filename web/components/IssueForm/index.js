@@ -1,1 +1,1 @@
-export { IssueForm } from './IssueForm';
+export { default } from './GigForm';
