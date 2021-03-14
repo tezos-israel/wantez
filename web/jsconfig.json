@@ -2,7 +2,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2020",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["components/shared/*"]
+    }
   },
+
   "exclude": ["node_modules"]
 }

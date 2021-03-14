@@ -7,9 +7,16 @@ import {
 } from '@reach/accordion';
 import { formatDistance, subDays } from 'date-fns';
 
-import { AvatarImage } from '../shared/AvatarImage';
+import CancelButton from './CancelButton';
 
-export default function GigApplicationsItem({ application, isLast }) {
+import { AvatarImage } from '@shared/AvatarImage';
+
+export default function GigApplicationsItem({
+  application,
+  isLast,
+  currentUsername,
+  onCancel,
+}) {
   return (
     <AccordionItem
       className={classnames(
@@ -52,14 +59,21 @@ export default function GigApplicationsItem({ application, isLast }) {
           <div className="lg:w-2/3 lg:text-md w-full text-sm text-gray-600">
             {application.details}
           </div>
-          {/* <div className="md:px-10 lg:w-1/3 lg:px-20 lg:mt-0 flex flex-col w-full px-5 mt-5">
-          <button className="px-5 py-1 mb-3 font-bold text-white bg-blue-600 rounded-md">
-            Approve
-          </button>
-          <button className=" px-5 py-1 font-bold text-blue-600 transform border-2 border-blue-600 rounded-md">
-            Dismiss
-          </button>
-        </div> */}
+          <div className="md:px-10 lg:w-1/3 2xl:px-30 lg:mt-0 flex flex-col w-full px-5 mt-5">
+            {/* {isFunder && (
+              <>
+                <button className="px-5 py-1 mb-3 font-bold text-white bg-blue-600 rounded-md">
+                  Approve
+                </button>
+                <button className=" px-5 py-1 font-bold text-blue-600 transform border-2 border-blue-600 rounded-md">
+                  Dismiss
+                </button>
+              </>
+            )} */}
+            {currentUsername === application.applicant.username && (
+              <CancelButton onCancel={onCancel} />
+            )}
+          </div>
         </div>
       </AccordionPanel>
     </AccordionItem>
@@ -77,4 +91,6 @@ GigApplicationsItem.propTypes = {
     applicant: PropTypes.shape({ username: PropTypes.string }),
   }).isRequired,
   isLast: PropTypes.bool,
+  currentUsername: PropTypes.string,
+  onCancel: PropTypes.func.isRequired,
 };

@@ -1,8 +1,14 @@
 import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { usePrice } from '../../hooks/usePrice';
-import { getLevelClassName } from '../../lib/experienceLevel';
+
+import { usePrice } from 'hooks/usePrice';
+import { useAuthContext } from 'hooks/AuthContext';
+import { useWalletContext } from 'hooks/WalletContext';
+import { getLevelClassName } from 'lib/experienceLevel';
+
+import Divider from '@shared/Divider';
+import { HalfCirclePaper } from '@shared/HalfCirclePaper';
 
 import Card from '../shared/Card';
 
@@ -10,19 +16,30 @@ import GigApplications from './GigApplications';
 import GigFunder from './GigFunder';
 import GigDescription from './GigDescription';
 import GigTags from './GigTags';
-import Divider from '../shared/Divider';
-import { HalfCirclePaper } from '../../components/shared/HalfCirclePaper';
+import ApplyButton from './ApplyButton';
 
 import styles from './gigInfo.module.css';
 
 export function GigInfo({ bounty }) {
   const priceFiat = usePrice(bounty.fee, 'ils');
+  const { user } = useAuthContext();
+  const { address } = useWalletContext();
+
+  const hasApplied =
+    user &&
+    bounty.applications.find(
+      (application) => application.applicant.username === user.email
+    );
+
+  const isFunder = !!user && bounty.funder.username === user.email;
+
+  const isApplyButtonVisible = !isFunder && !hasApplied;
 
   return (
     <div className="relative">
       <div
         className={classnames(
-          'absolute w-full overflow-hidden px-4 bg-white',
+          'absolute w-full overflow-hidden bg-white',
           styles.bgHalfCirclePaper
         )}
       >
@@ -109,7 +126,7 @@ export function GigInfo({ bounty }) {
                   ></div>
                   <div
                     className={classnames(
-                      'status-label mt-2 font-bold capitalize ',
+                      'status-label mt-2 font-bold capitalize',
                       {
                         'text-green-800': bounty.status === 'work',
                         'text-gray-500': bounty.status === 'finished',
@@ -123,14 +140,20 @@ export function GigInfo({ bounty }) {
                   </div>
                 </div>
               </div>
-              {/* <div className="gig-actions md:text-sm flex">
-              <button className="md:px-8 lg:px-10 px-5 py-2 mr-4 font-bold text-white bg-blue-600 rounded-md">
-                Express intrest
-              </button>
-              <button className="md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
-                Share
-              </button>
-            </div> */}
+              <div className="gig-actions md:text-sm flex">
+                {
+                  <ApplyButton
+                    gigId={bounty.id}
+                    address={address}
+                    isLoggedIn={!!user}
+                    isVisible={isApplyButtonVisible}
+                    gigTitle={bounty.title}
+                  />
+                }
+                {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
+                  Share
+                </button> */}
+              </div>
             </div>
           </div>
 
@@ -142,7 +165,10 @@ export function GigInfo({ bounty }) {
 
           <Divider className="border-blue-600 border-dashed" />
 
-          <GigApplications applications={bounty.applications} />
+          <GigApplications
+            applications={bounty.applications}
+            currentUsername={user && user.email}
+          />
 
           <Divider className="border-gray-400 border-dashed" />
 
@@ -155,6 +181,7 @@ export function GigInfo({ bounty }) {
 
 GigInfo.propTypes = {
   bounty: PropTypes.shape({
+    id: PropTypes.string,
     applications: PropTypes.array,
     categories: PropTypes.array,
     createdAt: PropTypes.string,
