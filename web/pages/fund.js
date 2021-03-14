@@ -15,11 +15,9 @@ import Logo from './create-icon.svg';
 export default function FundIssuePage() {
   const router = useRouter();
   const { user } = useAuthContext();
-  const [loading, setLoading] = useState(false);
 
   const { address, balance } = useWalletContext();
-  const { fundIssue } = useGigsContractContext();
-  const createBounty = useCreateBounty(fundIssue, router, setLoading);
+  const { createBounty, isLoading } = useCreateBounty();
 
   if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
     if (typeof window !== 'undefined') {
@@ -44,32 +42,23 @@ export default function FundIssuePage() {
           </div>
 
           <GigForm
-            onSubmit={handleSubmit}
+            onSubmit={createBounty}
             isLoggedIn={!!user}
             isConnected={!!address}
             balance={balance}
-            loading={loading}
+            loading={isLoading}
           />
         </div>
       </div>
     </Layout>
   );
-
-  async function handleSubmit(variables) {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    try {
-      await createBounty({ variables });
-    } catch (e) {
-      setLoading(false);
-      console.error(e);
-    }
-  }
 }
 
-function useCreateBounty(fundIssue, router, setLoading) {
+function useCreateBounty() {
+  const { fundIssue } = useGigsContractContext();
+  const router = useRouter();
+  const [isLoading, setLoading] = useState(false);
+
   const [deleteBounty] = useMutation(DELETE_BOUNTY, {
     update: updateCacheAfterDelete,
   });
@@ -78,7 +67,21 @@ function useCreateBounty(fundIssue, router, setLoading) {
     onCompleted,
   });
 
-  return createBounty;
+  return {
+    async createBounty(variables) {
+      if (isLoading) {
+        return;
+      }
+      setLoading(true);
+      try {
+        await createBounty({ variables });
+      } catch (e) {
+        setLoading(false);
+        console.error(e);
+      }
+    },
+    isLoading,
+  };
 
   function updateCache(cache, { data }) {
     const existingBountiesQuery = cache.readQuery({
