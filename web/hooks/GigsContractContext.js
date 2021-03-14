@@ -4,7 +4,7 @@ import { useContract } from '@tezos-il/tezos-react-hooks';
 
 import { useOnRouteChange } from './useOnRouteChange';
 
-const CONTRACT_ADDRESS = 'KT1Dr671HNAjRkctThNeX96qz2J7eRY2Ggef';
+const CONTRACT_ADDRESS = 'KT1K2JLNvTwDNKctaQThjcHrxcmaLoHXH6um';
 
 export const GigsContractContext = createContext({
   connected: false,
@@ -78,7 +78,7 @@ export function GigContractProvider({ children }) {
     return callMethod(
       async (methods) =>
         await methods
-          .issueBounty(wantez.id, wantez.deadline)
+          .fund(wantez.id, wantez.deadline)
           .send({ amount: wantez.fee })
     );
   }
