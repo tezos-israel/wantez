@@ -14,7 +14,7 @@ import { useRepoInfo } from './use-repo-info';
 
 import { IssueUrlField } from './IssueUrlField';
 import { CategoriesField } from './CategoriesField';
-import { IssueTags } from './IssueTags';
+import { GigTags } from './GigTags';
 
 import { schema } from './form-validation';
 
@@ -97,7 +97,7 @@ export default function GigForm({
               contributors
             </p>
             <div className="flex mt-3 space-x-4">
-              <IssueTags
+              <GigTags
                 value={formik.values.tags}
                 onChange={formik.setFieldValue}
               />

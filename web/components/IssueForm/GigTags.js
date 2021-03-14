@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export function IssueTags({ value: tags, onChange }) {
+export function GigTags({ value: tags, onChange }) {
   const [value, setValue] = useState('');
   return (
     <div
@@ -55,7 +55,8 @@ export function IssueTags({ value: tags, onChange }) {
     onChange('tags', [...tags.slice(0, index - 1), ...tags.slice(index + 1)]);
   }
 }
-IssueTags.propTypes = {
+
+GigTags.propTypes = {
   value: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
 };
