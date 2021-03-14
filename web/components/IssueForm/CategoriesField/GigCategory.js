@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './IssueCategory.module.css';
-export function IssueCategory({
+import styles from './GigCategory.module.css';
+
+export function GigCategory({
   title,
   icon: Icon,
   id,
@@ -36,7 +37,7 @@ export function IssueCategory({
   );
 }
 
-IssueCategory.propTypes = {
+GigCategory.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.func,
   id: PropTypes.string.isRequired,
