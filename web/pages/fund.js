@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import Layout from 'components/Layout';
-import GigForm from 'components/IssueForm';
+import GigForm from 'components/GigForm';
 
 import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from 'queries/bounties';
 import { useGigsContractContext } from 'hooks/GigsContractContext';
