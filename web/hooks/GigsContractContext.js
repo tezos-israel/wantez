@@ -12,8 +12,8 @@ export const GigsContractContext = createContext({
   error: null,
   connect() {},
 
-  fundIssue() {},
-  refundWantez() {},
+  fundGig() {},
+  refundGig() {},
   approveApplication() {},
 });
 
@@ -48,8 +48,8 @@ export function GigContractProvider({ children }) {
         error,
         loading: loading || operationLoading,
         clearErrors,
-        fundIssue,
-        refundWantez,
+        fundGig,
+        refundGig,
         approveApplication,
       }}
     >
@@ -74,7 +74,7 @@ export function GigContractProvider({ children }) {
     clearError();
   }
 
-  function fundIssue(wantez) {
+  function fundGig(wantez) {
     return callMethod(
       async (methods) =>
         await methods
@@ -83,7 +83,7 @@ export function GigContractProvider({ children }) {
     );
   }
 
-  function refundWantez({ id }) {
+  function refundGig({ id }) {
     return callMethod(async (methods) => await methods.refundBounty(id).send());
   }
 

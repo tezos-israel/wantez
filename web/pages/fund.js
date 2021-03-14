@@ -55,7 +55,7 @@ export default function FundIssuePage() {
 }
 
 function useCreateBounty() {
-  const { fundIssue } = useGigsContractContext();
+  const { fundGig } = useGigsContractContext();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
 
@@ -121,7 +121,7 @@ function useCreateBounty() {
 
   async function onCompleted({ insert_bounty_one: bounty }) {
     try {
-      await fundIssue({
+      await fundGig({
         ...bounty,
         deadline: Number(new Date(bounty.deadline)),
       });
