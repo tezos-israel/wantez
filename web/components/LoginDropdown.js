@@ -12,7 +12,7 @@ const validationSchema = object().shape({
   email: string().email().required(),
 });
 
-export function LoginModalContent({
+export function LoginDropdown({
   isLoading,
   onSubmit,
   disableLogin,
@@ -34,14 +34,14 @@ export function LoginModalContent({
 
   return (
     <form
-      className="top-14 absolute right-0 flex flex-col p-3 bg-white border rounded-md shadow-md"
+      className="top-14 absolute right-0 flex flex-col p-4 bg-white border rounded-md shadow-md"
       onSubmit={formik.handleSubmit}
     >
       <FormField fieldId="email-input" error={formik.errors.email}>
         <div className="flex">
           <input
             className={classnames(
-              'w-64 h-7 rounded-l-md text-sm focus:outline-none border-2',
+              'w-64 h-7 rounded-l-md text-sm focus:border-none border-2 focus:ring-0',
               {
                 'border-red-500': formik.touched.email && formik.errors.email,
                 'border-blue-500': !formik.errors.email,
@@ -59,7 +59,6 @@ export function LoginModalContent({
             className="rounded-l-none"
             size="small"
             type="submit"
-            value="Log in"
             color="primary"
             disabled={!formik.isValid || disableLogin}
           >
@@ -70,7 +69,7 @@ export function LoginModalContent({
     </form>
   );
 }
-LoginModalContent.propTypes = {
+LoginDropdown.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   disableLogin: PropTypes.bool.isRequired,

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useAuthContext } from 'hooks/AuthContext';
 
-import { LoginModalContent } from './LoginModalContent';
+import { LoginDropdown } from './LoginDropdown';
 
 export function LoginModal() {
   const { user, setUser, magic, isLoading } = useAuthContext();
@@ -10,7 +10,7 @@ export function LoginModal() {
   const [disableLogin, setDisableLogin] = useState(false);
 
   return (
-    <LoginModalContent
+    <LoginDropdown
       onSubmit={onSubmit}
       disableLogin={disableLogin}
       isLoading={isLoading}

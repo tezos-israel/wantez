@@ -6,18 +6,18 @@ import { AvatarImage } from '../shared/AvatarImage';
 import UserAvatar from './user-avatar.svg';
 import classnames from 'classnames';
 export function UserMenu({ user }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   if (!user) {
     return (
       <div className="relative">
         <button
-          onClick={toggleLoginModal}
+          onClick={toggleLoginDropdown}
           className={classnames(
             'disabled:opacity-50 disabled:cursor-not-allowed font-Montserrat flex items-center justify-center px-2 text-sm font-bold focus:outline-none',
             {
-              'text-green-400': !isModalOpen,
-              'text-white': isModalOpen,
+              'text-green-400': !isDropdownOpen,
+              'text-white': isDropdownOpen,
             }
           )}
         >
@@ -26,7 +26,7 @@ export function UserMenu({ user }) {
             <UserAvatar />
           </div>
         </button>
-        {isModalOpen && <LoginModal />}
+        {isDropdownOpen && <LoginModal />}
       </div>
     );
   }
@@ -41,12 +41,11 @@ export function UserMenu({ user }) {
     </div>
   );
 
-  function toggleLoginModal() {
-    setIsModalOpen(!isModalOpen);
+  function toggleLoginDropdown() {
+    setIsDropdownOpen(!isDropdownOpen);
   }
 }
 
 UserMenu.propTypes = {
   user: PropTypes.object,
-  onLogout: PropTypes.func.isRequired,
 };
