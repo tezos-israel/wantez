@@ -23,10 +23,9 @@ export function UserButtons() {
         address={address}
         balance={balance}
         onClick={!address ? connect : () => {}}
-        onLogout={handleLogout}
       />
       <div className="h-8 border-r border-teal-500"></div>
-      <UserMenu user={user} loading={loading} />
+      <UserMenu user={user} loading={loading} onLogout={handleLogout} />
     </div>
   );
 

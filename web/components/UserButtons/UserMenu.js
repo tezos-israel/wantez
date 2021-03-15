@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { LoginModal } from 'components/LoginModal';
+import { LoginDropdown } from 'components/LoginDropdown';
+import { ActionsMenu } from './ActionsMenu.js';
 import { AvatarImage } from '../shared/AvatarImage';
 import UserAvatar from './user-avatar.svg';
 import classnames from 'classnames';
-export function UserMenu({ user }) {
+export function UserMenu({ user, onLogout }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
 
   if (!user) {
     return (
@@ -26,26 +28,35 @@ export function UserMenu({ user }) {
             <UserAvatar />
           </div>
         </button>
-        {isDropdownOpen && <LoginModal />}
+
+        {isDropdownOpen && <LoginDropdown />}
       </div>
     );
   }
 
   return (
-    <div className=" flex items-center">
-      <span className="text-xs text-white">{user.email}</span>
-      <AvatarImage
-        email={user.email}
-        className="lg:h-11 lg:w-11 height:20 ring-2 ring-white inline-block w-20 ml-3 bg-gray-400 rounded-full"
-      />
+    <div className=" relative flex items-center">
+      <button className="focus:outline-none" onClick={toggleActionsMenu}>
+        <span className="text-xs text-white">{user.email}</span>
+        <AvatarImage
+          email={user.email}
+          className="lg:h-11 lg:w-11 height:20 ring-2 ring-white inline-block w-20 ml-3 bg-gray-400 rounded-full"
+        />
+      </button>
+
+      {isActionsMenuOpen && <ActionsMenu onLogout={onLogout} />}
     </div>
   );
 
   function toggleLoginDropdown() {
     setIsDropdownOpen(!isDropdownOpen);
   }
+  function toggleActionsMenu() {
+    setIsActionsMenuOpen(!isActionsMenuOpen);
+  }
 }
 
 UserMenu.propTypes = {
   user: PropTypes.object,
+  onLogout: PropTypes.func,
 };

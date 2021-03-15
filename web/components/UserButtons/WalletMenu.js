@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import WalletIcon from './wallet-icon.svg';
 import ArrowDown from './arrow-down.svg';
-import { ActionsMenu } from './ActionsMenu.js';
 // import Caret from './caret.svg';
 
-export function WalletMenu({ address = '', onClick, onLogout }) {
+export function WalletMenu({ address = '', onClick }) {
   const shortAddress = `${address.substr(0, 5)}...${address.substr(-5)}`;
-  const [showActionsMenu, setShowActionsMenu] = useState(false);
 
   return (
     <div
@@ -18,16 +16,15 @@ export function WalletMenu({ address = '', onClick, onLogout }) {
       {/* <Caret /> */}
       {address && (
         <div className="relative">
-          <button className="focus:outline-none" onClick={toggleActionsMenu}>
+          <button className="focus:outline-none">
             <ArrowDown />
           </button>
           <span className="inline-block mx-3 text-xs text-white">
             {shortAddress}
           </span>
-          {showActionsMenu && <ActionsMenu onLogout={onLogout} />}
         </div>
       )}
-      <button className="relative flex" onClick={onClick}>
+      <button className="focus:outline-none relative flex" onClick={onClick}>
         {!address && (
           <div className="mr-3 text-sm font-bold text-green-400">
             Connect wallet
@@ -37,15 +34,10 @@ export function WalletMenu({ address = '', onClick, onLogout }) {
       </button>
     </div>
   );
-
-  function toggleActionsMenu() {
-    setShowActionsMenu(!showActionsMenu);
-  }
 }
 
 WalletMenu.propTypes = {
   address: PropTypes.string,
   balance: PropTypes.number,
   onClick: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
 };

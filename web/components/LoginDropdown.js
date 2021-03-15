@@ -1,23 +1,22 @@
-import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { string, object } from 'yup';
 import classnames from 'classnames';
+import { useLogin } from '../hooks/useLogin';
 
 import Button from '@shared/Button';
 import Loader from 'react-loader-spinner';
 import { FormField } from 'components/shared/FormField';
 import ArrowRight from './arrow-right.svg';
+import { useState } from 'react';
 
 const validationSchema = object().shape({
   email: string().email().required(),
 });
 
-export function LoginDropdown({
-  isLoading,
-  onSubmit,
-  disableLogin,
-  isUserLoggedIn,
-}) {
+export function LoginDropdown() {
+  const { isLoading, onSubmit, disableLogin, user } = useLogin();
+  const [isUserLoggedIn] = useState(!!user);
+
   const formik = useFormik({
     onSubmit,
     validationSchema,
@@ -69,9 +68,9 @@ export function LoginDropdown({
     </form>
   );
 }
-LoginDropdown.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  disableLogin: PropTypes.bool.isRequired,
-  isUserLoggedIn: PropTypes.bool.isRequired,
-};
+// LoginDropdown.propTypes = {
+//   isLoading: PropTypes.bool.isRequired,
+//   onSubmit: PropTypes.func.isRequired,
+//   disableLogin: PropTypes.bool.isRequired,
+//   isUserLoggedIn: PropTypes.bool.isRequired,
+// };

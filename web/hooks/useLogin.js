@@ -1,22 +1,12 @@
-import React, { useState } from 'react';
-
+import { useState } from 'react';
 import { useAuthContext } from 'hooks/AuthContext';
 
-import { LoginDropdown } from './LoginDropdown';
-
-export function LoginModal() {
+export function useLogin() {
   const { user, setUser, magic, isLoading } = useAuthContext();
 
   const [disableLogin, setDisableLogin] = useState(false);
 
-  return (
-    <LoginDropdown
-      onSubmit={onSubmit}
-      disableLogin={disableLogin}
-      isLoading={isLoading}
-      isUserLoggedIn={!!user}
-    />
-  );
+  return { onSubmit, disableLogin, isLoading, user };
 
   function onSubmit({ email }) {
     if (!email) {
