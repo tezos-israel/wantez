@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 
 import NavBar from './Nav';
 import Footer from './Footer';
-
+import GTMScript from 'components/GTMScript';
 function Layout({ children, title }) {
   return (
     <div className="flex flex-col h-screen">
       <Head>
+        <GTMScript />
         <title>{title ? `${title} - ` : ''}Wantez </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
