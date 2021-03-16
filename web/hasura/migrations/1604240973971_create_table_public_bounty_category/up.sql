@@ -1,1 +1,0 @@
-CREATE TABLE "public"."bounty_category"("bounty_id" uuid NOT NULL, "category" text NOT NULL, PRIMARY KEY ("bounty_id","category") , FOREIGN KEY ("bounty_id") REFERENCES "public"."bounty"("id") ON UPDATE restrict ON DELETE restrict, FOREIGN KEY ("category") REFERENCES "public"."category"("category") ON UPDATE restrict ON DELETE restrict);
