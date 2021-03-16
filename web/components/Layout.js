@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import NavBar from './Nav';
 import Footer from './Footer';
 import GTMScript from 'components/GTMScript';
+import GTMNoScript from 'components/GTMNoScript';
+
 function Layout({ children, title }) {
   return (
     <div className="flex flex-col h-screen">
@@ -21,7 +23,7 @@ function Layout({ children, title }) {
           content="bugs, freelancers, github, gitlab, issue, gig, wantez, issues, fix, freelancer"
         />
       </Head>
-
+      <GTMNoScript />
       <main className="flex flex-col items-center justify-center flex-auto mt-20">
         {children}
       </main>
