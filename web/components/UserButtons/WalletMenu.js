@@ -20,13 +20,16 @@ export function WalletMenu({ address = '', onClick }) {
           </span>
         </div>
       )}
-      <button className="focus:outline-none relative flex" onClick={onClick}>
+      <button
+        className="focus:outline-none relative flex items-center"
+        onClick={onClick}
+      >
         {!address && (
           <div className="mr-3 text-sm font-bold text-green-400">
             Connect wallet
           </div>
         )}
-        <WalletIcon />
+        <WalletIcon width="32" height="32" />
       </button>
     </div>
   );
