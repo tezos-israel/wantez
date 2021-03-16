@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 
-import { GIG_QUERY } from 'queries/bounties';
+import { GIG_QUERY } from 'queries/gigs';
+
 import Layout from 'components/Layout';
 import { GigInfo } from 'components/GigInfo';
 

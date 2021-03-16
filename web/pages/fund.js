@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from 'components/Layout';
 import GigForm from 'components/GigForm';
 
-import { SAVE_GIG, GET_GIGS, DELETE_GIG } from 'queries/bounties';
+import { SAVE_GIG, GET_GIGS, DELETE_GIG } from 'queries/gigs';
 import { useGigsContractContext } from 'hooks/GigsContractContext';
 import { useWalletContext } from 'hooks/WalletContext';
 import { useAuthContext } from 'hooks/AuthContext';

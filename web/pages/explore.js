@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 
-import { GET_GIGS } from 'queries/bounties';
+import { GET_GIGS } from 'queries/gigs';
 import Layout from 'components/Layout';
 import { WantezList, Filter, TagsList } from 'components/Dashboard';
 
