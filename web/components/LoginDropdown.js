@@ -72,5 +72,5 @@ export function LoginDropdown({ dropdownRef }) {
 }
 
 LoginDropdown.propTypes = {
-  dropdownRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  dropdownRef: PropTypes.func,
 };
