@@ -6,6 +6,7 @@ import { ActionsMenu } from './ActionsMenu.js';
 import { AvatarImage } from '../shared/AvatarImage';
 import UserAvatar from './user-avatar.svg';
 import classnames from 'classnames';
+
 export function UserMenu({ user, onLogout }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
@@ -35,7 +36,7 @@ export function UserMenu({ user, onLogout }) {
   }
 
   return (
-    <div className=" relative flex items-center">
+    <div className="relative flex items-center">
       <button className="focus:outline-none" onClick={toggleActionsMenu}>
         <span className="text-xs text-white">{user.email}</span>
         <AvatarImage

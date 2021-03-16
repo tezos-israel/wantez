@@ -68,9 +68,3 @@ export function LoginDropdown() {
     </form>
   );
 }
-// LoginDropdown.propTypes = {
-//   isLoading: PropTypes.bool.isRequired,
-//   onSubmit: PropTypes.func.isRequired,
-//   disableLogin: PropTypes.bool.isRequired,
-//   isUserLoggedIn: PropTypes.bool.isRequired,
-// };

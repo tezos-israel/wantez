@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import WalletIcon from './wallet-icon.svg';
-import ArrowDown from './arrow-down.svg';
 // import Caret from './caret.svg';
 
 export function WalletMenu({ address = '', onClick }) {
@@ -16,9 +15,6 @@ export function WalletMenu({ address = '', onClick }) {
       {/* <Caret /> */}
       {address && (
         <div className="relative">
-          <button className="focus:outline-none">
-            <ArrowDown />
-          </button>
           <span className="inline-block mx-3 text-xs text-white">
             {shortAddress}
           </span>
