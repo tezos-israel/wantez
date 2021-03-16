@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import NavBar from './Nav';
 import Footer from './Footer';
 import GTMScript from 'components/GTMScript';
+import GTMNoScript from 'components/GTMNoScript';
+
 function Layout({ children, title }) {
   return (
     <div className="flex flex-col h-screen">

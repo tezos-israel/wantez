@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Home from 'components/Home';
 import GTMScript from 'components/GTMScript';
+import GTMNoScript from 'components/GTMNoScript';
 
 export default function IndexPage() {
   return (
@@ -19,6 +20,7 @@ export default function IndexPage() {
         />
       </Head>
 
+      <GTMNoScript />
       <Home />
     </>
   );
