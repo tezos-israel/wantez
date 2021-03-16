@@ -1,19 +1,20 @@
+import { useState } from 'react';
 import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
 import { string, object } from 'yup';
 import classnames from 'classnames';
-import { useLogin } from '../hooks/useLogin';
 
+import { useLogin } from '../hooks/useLogin';
 import Button from '@shared/Button';
 import Loader from 'react-loader-spinner';
 import { FormField } from 'components/shared/FormField';
 import ArrowRight from './arrow-right.svg';
-import { useState } from 'react';
 
 const validationSchema = object().shape({
   email: string().email().required(),
 });
 
-export function LoginDropdown() {
+export function LoginDropdown({ dropdownRef }) {
   const { isLoading, onSubmit, disableLogin, user } = useLogin();
   const [isUserLoggedIn] = useState(!!user);
 
@@ -35,6 +36,7 @@ export function LoginDropdown() {
     <form
       className="top-14 absolute right-0 flex flex-col p-4 bg-white border rounded-md shadow-md"
       onSubmit={formik.handleSubmit}
+      ref={dropdownRef}
     >
       <FormField fieldId="email-input" error={formik.errors.email}>
         <div className="flex">
@@ -68,3 +70,7 @@ export function LoginDropdown() {
     </form>
   );
 }
+
+LoginDropdown.propTypes = {
+  dropdownRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+};

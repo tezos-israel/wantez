@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { useOutsideClick } from '../../hooks/useOutsideClick.js';
 import { LoginDropdown } from 'components/LoginDropdown';
 import { ActionsMenu } from './ActionsMenu.js';
 import { AvatarImage } from '../shared/AvatarImage';
@@ -10,6 +11,16 @@ import classnames from 'classnames';
 export function UserMenu({ user, onLogout }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
+  const dropdownRef = useRef();
+  const actionsMenuRef = useRef();
+
+  useOutsideClick(dropdownRef, () => {
+    if (isDropdownOpen) setIsDropdownOpen(false);
+  });
+
+  useOutsideClick(actionsMenuRef, () => {
+    if (isActionsMenuOpen) setIsActionsMenuOpen(false);
+  });
 
   if (!user) {
     return (
@@ -30,7 +41,7 @@ export function UserMenu({ user, onLogout }) {
           </div>
         </button>
 
-        {isDropdownOpen && <LoginDropdown />}
+        {isDropdownOpen && <LoginDropdown dropdownRef={dropdownRef} />}
       </div>
     );
   }
@@ -45,7 +56,9 @@ export function UserMenu({ user, onLogout }) {
         />
       </button>
 
-      {isActionsMenuOpen && <ActionsMenu onLogout={onLogout} />}
+      {isActionsMenuOpen && (
+        <ActionsMenu onLogout={onLogout} actionsMenuRef={actionsMenuRef} />
+      )}
     </div>
   );
 
