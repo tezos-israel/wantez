@@ -29,7 +29,7 @@ export function WalletMenu({ address = '', onClick }) {
             Connect wallet
           </div>
         )}
-        <WalletIcon width="32" height="32" />
+        <WalletIcon />
       </button>
     </div>
   );
