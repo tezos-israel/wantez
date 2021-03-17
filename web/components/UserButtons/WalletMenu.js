@@ -8,19 +8,30 @@ export function WalletMenu({ address = '', onClick }) {
 
   return (
     <div
-        className={`flex items-center space-x-3 ${
-          address ? 'logged-in' : 'logged-out'
-        }`}
+      className={`flex items-center space-x-3${
+        address ? 'logged-in' : 'logged-out'
+      }`}
+    >
+      {/* <Caret /> */}
+      {address && (
+        <div className="relative">
+          <span className="inline-block mx-3 text-xs text-white">
+            {shortAddress}
+          </span>
+        </div>
+      )}
+      <button
+        className="focus:outline-none relative flex items-center"
+        onClick={onClick}
       >
-        {/* <Caret /> */}
-        {address && <span className="text-xs text-white">{shortAddress}</span>}
-        <button className="relative" onClick={onClick}>
-          {!address && (
-            <div className="absolute bottom-0 left-0 w-2 h-2 bg-red-500 rounded-full"></div>
-          )}
-          <WalletIcon />
-        </button>
-      </div>
+        {!address && (
+          <div className="mr-3 text-sm font-bold text-green-400">
+            Connect wallet
+          </div>
+        )}
+        <WalletIcon />
+      </button>
+    </div>
   );
 }
 
