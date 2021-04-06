@@ -4,10 +4,6 @@ DROP TABLE "public"."tags";
 
 DROP TABLE "public"."gig_category";
 
-DROP TABLE "public"."timeCommitmentTypes";
-
-DROP TABLE "public"."experienceLevel";
-
 DROP TABLE "public"."category";
 
 DROP TABLE "public"."socialAccount";
@@ -25,6 +21,10 @@ DROP TABLE "public"."applicationStatusType";
 
 DROP TABLE "public"."gig";
 
-DROP TABLE "public"."gigStatusTypes";
+DROP TABLE "public"."timeCommitmentTypes";
+
+DROP TABLE "public"."experienceLevel";
+
+DROP TABLE "public"."gigStatusType";
 
 DROP TABLE "public"."user";
