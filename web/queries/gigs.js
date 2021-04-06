@@ -7,10 +7,10 @@ export const GET_GIGS = gql`
       id
       fee
       status
-      experienceLevel
-      imageUrl
-      createdAt
-      timeCommitment
+      experienceLevel: experience_level
+      image_url
+      createdAt: created_at
+      timeCommitment: time_commitment
       gig_tags {
         tag {
           name
@@ -32,11 +32,11 @@ export const GIG_QUERY = gql`
       title
       fee
       status
-      imageUrl
-      createdAt
-      timeCommitment
+      image_url
+      createdAt: created_at
+      timeCommitment: time_commitment
       description
-      experienceLevel
+      experienceLevel: experience_level
       categories {
         category
       }
@@ -45,9 +45,9 @@ export const GIG_QUERY = gql`
       }
       applications {
         id
-        createdAt
+        createdAt: created_at
         status
-        paymentAddress
+        paymentAddress: payment_address
         details
         applicant {
           username
@@ -66,25 +66,25 @@ export const GIG_QUERY = gql`
 export const SAVE_GIG = gql`
   mutation(
     $fee: numeric
-    $experienceLevel: experienceLevel_enum
+    $experienceLevel: experience_level_enum
     $categories: [gig_category_insert_input!]!
-    $timeCommitment: timeCommitmentTypes_enum
+    $timeCommitment: time_commitment_types_enum
     $issueUrl: String!
     $deadline: timestamptz!
     $tags: [gig_tags_insert_input!]!
-    $imageUrl: String!
+    $image_url: String!
     $title: String!
     $description: String!
   ) {
     insert_gig_one(
       object: {
         fee: $fee
-        experienceLevel: $experienceLevel
-        timeCommitment: $timeCommitment
-        issueUrl: $issueUrl
+        experience_level: $experienceLevel
+        time_commitment: $timeCommitment
+        issue_url: $issueUrl
         title: $title
         description: $description
-        imageUrl: $imageUrl
+        image_url: $image_url
         deadline: $deadline
         categories: { data: $categories }
         gig_tags: { data: $tags }
@@ -134,8 +134,8 @@ export const APPROVE_APPLICATION = gql`
     update_application(
       where: {
         _and: {
-          gigId: { _eq: $gigId }
-          _not: { applicantId: { _eq: $applicationId } }
+          gig_id: { _eq: $gigId }
+          _not: { applicant_id: { _eq: $applicationId } }
         }
       }
       _set: { status: "dismissed" }

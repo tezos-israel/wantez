@@ -15,78 +15,78 @@
   object_relationships:
   - name: applicant
     using:
-      foreign_key_constraint_on: applicantId
-  - name: applicationStatusType
+      foreign_key_constraint_on: applicant_id
+  - name: application_status_type
     using:
       foreign_key_constraint_on: status
   - name: gig
     using:
-      foreign_key_constraint_on: gigId
+      foreign_key_constraint_on: gig_id
   insert_permissions:
   - role: user
     permission:
       check:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
       set:
         status: pending
-        applicantId: x-hasura-User-Id
+        applicant_id: x-hasura-User-Id
       columns:
-      - gigId
+      - gig_id
       - details
-      - paymentAddress
+      - payment_address
       backend_only: false
   select_permissions:
   - role: public
     permission:
       columns:
-      - applicantId
-      - gigId
-      - createdAt
+      - applicant_id
+      - gig_id
+      - created_at
       - details
       - id
-      - paymentAddress
+      - payment_address
       - status
-      - updatedAt
+      - updated_at
       filter: {}
       allow_aggregations: true
   - role: user
     permission:
       columns:
-      - applicantId
-      - gigId
-      - createdAt
+      - applicant_id
+      - gig_id
+      - created_at
       - details
       - id
-      - paymentAddress
+      - payment_address
       - status
-      - updatedAt
+      - updated_at
       filter: {}
       allow_aggregations: true
   update_permissions:
   - role: user
     permission:
       columns:
-      - gigId
+      - gig_id
       - details
       - status
       filter:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
       check:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
       set:
-        applicantId: x-hasura-User-Id
+        applicant_id: x-hasura-User-Id
   delete_permissions:
   - role: user
     permission:
       filter:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
 - table:
     schema: public
-    name: applicationStatusType
+    name: application_status_type
   is_enum: true
   array_relationships:
   - name: applications
@@ -107,13 +107,13 @@
           schema: public
           name: application
         column_mapping:
-          id: gigId
-  - name: gigStatusType
+          id: gig_id
+  - name: gig_status_type
     using:
       foreign_key_constraint_on: status
   - name: funder
     using:
-      foreign_key_constraint_on: funderId
+      foreign_key_constraint_on: funder_id
   array_relationships:
   - name: applications
     using:
@@ -122,7 +122,7 @@
           schema: public
           name: application
         column_mapping:
-          id: gigId
+          id: gig_id
   - name: gig_tags
     using:
       foreign_key_constraint_on:
@@ -141,56 +141,56 @@
   - role: user
     permission:
       check:
-        funderId:
+        funder_id:
           _eq: X-Hasura-User-Id
       set:
-        funderId: x-hasura-User-Id
+        funder_id: x-hasura-User-Id
       columns:
       - deadline
       - description
-      - experienceLevel
+      - experience_level
       - fee
-      - imageUrl
-      - issueUrl
+      - image_url
+      - issue_url
       - status
-      - timeCommitment
+      - time_commitment
       - title
       backend_only: false
   select_permissions:
   - role: public
     permission:
       columns:
-      - createdAt
+      - created_at
       - deadline
       - description
-      - experienceLevel
+      - experience_level
       - fee
-      - funderId
+      - funder_id
       - id
-      - imageUrl
-      - issueUrl
+      - image_url
+      - issue_url
       - status
-      - timeCommitment
+      - time_commitment
       - title
-      - updatedAt
+      - updated_at
       filter: {}
       allow_aggregations: true
   - role: user
     permission:
       columns:
-      - createdAt
+      - created_at
       - deadline
       - description
-      - experienceLevel
+      - experience_level
       - fee
-      - funderId
+      - funder_id
       - id
-      - imageUrl
-      - issueUrl
+      - image_url
+      - issue_url
       - status
-      - timeCommitment
+      - time_commitment
       - title
-      - updatedAt
+      - updated_at
       filter: {}
       allow_aggregations: true
   update_permissions:
@@ -199,27 +199,27 @@
       columns:
       - deadline
       - description
-      - experienceLevel
-      - imageUrl
-      - issueUrl
+      - experience_level
+      - image_url
+      - issue_url
       - status
-      - timeCommitment
+      - time_commitment
       - title
       filter:
-        funderId:
+        funder_id:
           _eq: X-Hasura-User-Id
       check:
-        funderId:
+        funder_id:
           _eq: X-Hasura-User-Id
   delete_permissions:
   - role: user
     permission:
       filter:
-        funderId:
+        funder_id:
           _eq: X-Hasura-User-Id
 - table:
     schema: public
-    name: gigStatusTypes
+    name: gig_status_type
   is_enum: true
   array_relationships:
   - name: gigs
@@ -241,7 +241,7 @@
     permission:
       check:
         gig:
-          funderId:
+          funder_id:
             _eq: X-Hasura-User-Id
       columns:
       - gig_id
@@ -268,18 +268,18 @@
       - gig_id
       filter:
         gig:
-          funderId:
+          funder_id:
             _eq: X-Hasura-User-Id
       check:
         gig:
-          funderId:
+          funder_id:
             _eq: X-Hasura-User-Id
   delete_permissions:
   - role: user
     permission:
       filter:
         gig:
-          funderId:
+          funder_id:
             _eq: X-Hasura-User-Id
 - table:
     schema: public
@@ -357,33 +357,33 @@
       filter: {}
 - table:
     schema: public
-    name: experienceLevel
+    name: experience_level
   is_enum: true
   select_permissions:
   - role: public
     permission:
       columns:
-      - experienceLevel
+      - experience_level
       filter: {}
   - role: user
     permission:
       columns:
-      - experienceLevel
+      - experience_level
       filter: {}
 - table:
     schema: public
     name: site
   array_relationships:
-  - name: socialAccounts
+  - name: social_accounts
     using:
       foreign_key_constraint_on:
         column: site
         table:
           schema: public
-          name: socialAccount
+          name: social_account
 - table:
     schema: public
-    name: socialAccount
+    name: social_account
   object_relationships:
   - name: siteBySite
     using:
@@ -435,7 +435,7 @@
       check: null
 - table:
     schema: public
-    name: timeCommitmentTypes
+    name: time_commitment_type
   is_enum: true
 - table:
     schema: public
@@ -444,25 +444,25 @@
   - name: applications
     using:
       foreign_key_constraint_on:
-        column: applicantId
+        column: applicant_id
         table:
           schema: public
           name: application
   - name: gigs
     using:
       foreign_key_constraint_on:
-        column: funderId
+        column: funder_id
         table:
           schema: public
           name: gig
-  - name: socialAccounts
+  - name: social_accounts
     using:
       manual_configuration:
         remote_table:
           schema: public
-          name: socialAccount
+          name: social_account
         column_mapping:
-          id: userId
+          id: user_id
   select_permissions:
   - role: public
     permission:

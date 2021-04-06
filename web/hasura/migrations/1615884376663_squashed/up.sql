@@ -2,22 +2,22 @@ CREATE TABLE "public"."user"(
   "id" uuid NOT NULL DEFAULT gen_random_uuid(),
   "username" text NOT NULL,
   "email" text NOT NULL,
-  "createdAt" timestamptz NOT NULL DEFAULT now(),
-  "lastSeenAt" timestamptz DEFAULT now(),
+  "created_at" timestamptz NOT NULL DEFAULT now(),
+  "last_seen_at" timestamptz DEFAULT now(),
   PRIMARY KEY ("id"),
   UNIQUE ("id"),
   UNIQUE ("username"),
   UNIQUE ("email")
 );
 
-CREATE TABLE "public"."gigStatusTypes"(
+CREATE TABLE "public"."gig_status_type"(
   "value" text NOT NULL,
   "description" text NOT NULL,
   PRIMARY KEY ("value")
 );
 
 INSERT INTO
-  "gigStatusTypes" (value, description)
+  "gig_status_type" (value, description)
 VALUES
   ('pending', 'A pending gig'),
   ('work', 'A gig in work'),
@@ -39,22 +39,22 @@ VALUES
   ('docs'),
   ('other');
 
-CREATE TABLE "public"."experienceLevel"(
-  "experienceLevel" text NOT NULL,
-  PRIMARY KEY ("experienceLevel")
+CREATE TABLE "public"."experience_level"(
+  "experience_level" text NOT NULL,
+  PRIMARY KEY ("experience_level")
 );
 
 INSERT INTO
-  "experienceLevel" ("experienceLevel")
+  "experience_level" ("experience_level")
 VALUES
   ('beginner'),
   ('medium'),
   ('pro');
 
-CREATE TABLE "public"."timeCommitmentTypes"("value" text NOT NULL, PRIMARY KEY ("value"));
+CREATE TABLE "public"."time_commitment_type"("value" text NOT NULL, PRIMARY KEY ("value"));
 
 INSERT INTO
-  "timeCommitmentTypes" ("value")
+  "time_commitment_type" ("value")
 VALUES
   ('hours'),
   ('days'),
@@ -68,21 +68,21 @@ CREATE TABLE "public"."gig"(
   "title" text NOT NULL,
   "status" text NOT NULL DEFAULT 'pending',
   "deadline" timestamptz NOT NULL DEFAULT now(),
-  "issueUrl" text,
+  "issue_url" text,
   "fee" numeric NOT NULL,
-  "funderId" uuid NOT NULL,
+  "funder_id" uuid NOT NULL,
   "description" text NOT NULL,
-  "createdAt" timestamptz NOT NULL DEFAULT now(),
-  "updatedAt" timestamptz NOT NULL DEFAULT now(),
-  "experienceLevel" text NOT NULL DEFAULT 'beginner',
-  "timeCommitment" text NOT NULL DEFAULT 'hours',
-  "imageUrl" text NULL,
+  "created_at" timestamptz NOT NULL DEFAULT now(),
+  "updated_at" timestamptz NOT NULL DEFAULT now(),
+  "experience_level" text NOT NULL DEFAULT 'beginner',
+  "time_commitment" text NOT NULL DEFAULT 'hours',
+  "image_url" text NULL,
   PRIMARY KEY ("id"),
-  FOREIGN KEY ("status") REFERENCES "public"."gigStatusTypes"("value") ON UPDATE restrict ON DELETE restrict,
-  FOREIGN KEY ("funderId") REFERENCES "public"."user"("id") ON UPDATE restrict ON DELETE restrict,
-  UNIQUE ("issueUrl"),
-  CONSTRAINT "gig_experienceLevel_fkey" FOREIGN KEY ("experienceLevel") REFERENCES "public"."experienceLevel" ("experienceLevel") ON UPDATE restrict ON DELETE restrict,
-  CONSTRAINT "gig_timeCommitment_fkey" FOREIGN KEY ("timeCommitment") REFERENCES "public"."timeCommitmentTypes" ("value") ON UPDATE restrict ON DELETE restrict
+  FOREIGN KEY ("status") REFERENCES "public"."gig_status_type"("value") ON UPDATE restrict ON DELETE restrict,
+  FOREIGN KEY ("funder_id") REFERENCES "public"."user"("id") ON UPDATE restrict ON DELETE restrict,
+  UNIQUE ("issue_url"),
+  CONSTRAINT "gig_experience_level_fkey" FOREIGN KEY ("experience_level") REFERENCES "public"."experience_level" ("experience_level") ON UPDATE restrict ON DELETE restrict,
+  CONSTRAINT "gig_time_commitment_fkey" FOREIGN KEY ("time_commitment") REFERENCES "public"."time_commitment_type" ("value") ON UPDATE restrict ON DELETE restrict
 );
 
 
@@ -94,7 +94,7 @@ CREATE TABLE "public"."gig_category"(
   FOREIGN KEY ("category") REFERENCES "public"."category"("category") ON UPDATE restrict ON DELETE restrict
 );
 
-CREATE TABLE "public"."applicationStatusType"(
+CREATE TABLE "public"."application_status_type"(
   "value" text NOT NULL,
   "description" text NOT NULL,
   PRIMARY KEY ("value"),
@@ -102,7 +102,7 @@ CREATE TABLE "public"."applicationStatusType"(
 );
 
 INSERT INTO
-  "applicationStatusType" (value, description)
+  "application_status_type" (value, description)
 VALUES
   ('pending', 'A pending application'),
   ('approved', 'An approved application'),
@@ -110,38 +110,38 @@ VALUES
 
 CREATE TABLE "public"."application"(
   "id" uuid NOT NULL DEFAULT gen_random_uuid(),
-  "applicantId" uuid NOT NULL,
-  "gigId" uuid NOT NULL,
+  "applicant_id" uuid NOT NULL,
+  "gig_id" uuid NOT NULL,
   "details" text NOT NULL,
   "status" text NOT NULL,
-  "createdAt" timestamptz NOT NULL DEFAULT now(),
-  "updatedAt" timestamptz NOT NULL DEFAULT now(),
-  "paymentAddress" text NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT now(),
+  "updated_at" timestamptz NOT NULL DEFAULT now(),
+  "payment_address" text NOT NULL,
   PRIMARY KEY ("id"),
-  FOREIGN KEY ("applicantId") REFERENCES "public"."user"("id") ON UPDATE restrict ON DELETE restrict,
-  FOREIGN KEY ("gigId") REFERENCES "public"."gig"("id") ON UPDATE restrict ON DELETE restrict,
-  FOREIGN KEY ("status") REFERENCES "public"."applicationStatusType"("value") ON UPDATE restrict ON DELETE restrict,
+  FOREIGN KEY ("applicant_id") REFERENCES "public"."user"("id") ON UPDATE restrict ON DELETE restrict,
+  FOREIGN KEY ("gig_id") REFERENCES "public"."gig"("id") ON UPDATE restrict ON DELETE restrict,
+  FOREIGN KEY ("status") REFERENCES "public"."application_status_type"("value") ON UPDATE restrict ON DELETE restrict,
   UNIQUE ("id"),
-  UNIQUE ("gigId"),
-  constraint "application_applicantId_gigId_key" unique ("applicantId", "gigId")
+  UNIQUE ("gig_id"),
+  constraint "application_applicantId_gig_id_key" unique ("applicant_id", "gig_id")
 );
 
-CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updatedAt"()
+CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"()
 RETURNS TRIGGER AS $$
 DECLARE
   _new record;
 BEGIN
   _new := NEW;
-  _new."updatedAt" = NOW();
+  _new."updated_at" = NOW();
   RETURN _new;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER "set_public_application_updatedAt" BEFORE
+CREATE TRIGGER "set_public_application_updated_at" BEFORE
 UPDATE
-  ON "public"."application" FOR EACH ROW EXECUTE PROCEDURE "public"."set_current_timestamp_updatedAt"();
+  ON "public"."application" FOR EACH ROW EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
 
-COMMENT ON TRIGGER "set_public_application_updatedAt" ON "public"."application" IS 'trigger to set value of column "updatedAt" to current timestamp on row update';
+COMMENT ON TRIGGER "set_public_application_updated_at" ON "public"."application" IS 'trigger to set value of column "updated_at" to current timestamp on row update';
 
 CREATE TABLE "public"."site"("id" text NOT NULL, PRIMARY KEY ("id"));
 
@@ -151,12 +151,12 @@ VALUES
   ('gitlab'),
   ('github');
 
-CREATE TABLE "public"."socialAccount"(
+CREATE TABLE "public"."social_account"(
   "site" text NOT NULL,
-  "userId" uuid NOT NULL,
+  "user_id" uuid NOT NULL,
   "handle" text NOT NULL,
-  "accessToken" text,
-  PRIMARY KEY ("site", "userId"),
+  "access_token" text,
+  PRIMARY KEY ("site", "user_id"),
   FOREIGN KEY ("site") REFERENCES "public"."site"("id") ON UPDATE restrict ON DELETE restrict
 );
 
