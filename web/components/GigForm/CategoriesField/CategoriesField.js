@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FieldGroup } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 
-import { IssueCategory } from './IssueCategory';
+import { GigCategory } from './GigCategory';
 
 import CategoryFrontend from './CategoryFrontend.svg';
 import CategoryBackend from './CategoryBackend.svg';
@@ -32,15 +32,15 @@ export function CategoriesField({
   );
 
   return (
-    <FieldGroup title="Issue Category">
+    <FieldGroup title="Category">
       <p className="text-sm text-gray-500">
-        Pick the most accurate categories for this issue to get the right
+        Pick the most accurate categories for this gig to get the right
         contributors
       </p>
       <FormField error={error}>
         <div className="flex mt-3 space-x-4">
           {categories.map((category) => (
-            <IssueCategory
+            <GigCategory
               {...category}
               key={category.id}
               onChange={onChange}

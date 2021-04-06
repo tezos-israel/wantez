@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 
-import { GET_BOUNTIES } from 'queries/bounties';
+import { GET_GIGS } from 'queries/gigs';
 import Layout from 'components/Layout';
 import { WantezList, Filter, TagsList } from 'components/Dashboard';
 
@@ -12,7 +12,7 @@ export default function ExplorePage() {
   const router = useRouter();
   const [tags, setTags] = useState([]);
 
-  const { data, loading, error } = useQuery(GET_BOUNTIES);
+  const { data, loading, error } = useQuery(GET_GIGS);
 
   const [filterValues, setFilterValues] = useState({
     timeCommitment: [],
@@ -38,7 +38,7 @@ export default function ExplorePage() {
       )
       .filter((gig) =>
         tags.every((tag) =>
-          gig.bounty_tags.some((bountyTag) => bountyTag.tag.name === tag)
+          gig.bounty_tags.some((tagInfo) => tagInfo.tag.name === tag)
         )
       );
 

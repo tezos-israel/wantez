@@ -1,1 +1,0 @@
-export { IssueForm } from './IssueForm';

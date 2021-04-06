@@ -14,24 +14,11 @@ import { useRepoInfo } from './use-repo-info';
 
 import { IssueUrlField } from './IssueUrlField';
 import { CategoriesField } from './CategoriesField';
-import { IssueTags } from './IssueTags';
+import { GigTags } from './GigTags';
 
 import { schema } from './form-validation';
 
 const FEE_PERCENT = 0;
-
-// import { v4 as uuid } from 'uuid';
-// const demoValues = {
-//   issueUrl: 'https://github.com/issues?' + uuid(),
-//   categories: ['frontend'],
-//   experienceLevel: 'beginner',
-//   timeCommitment: 'hours',
-//   price: 1,
-//   estHours: 3,
-//   disclaimerAgree: true,
-//   paymentAgree: true,
-//   tags: ['hello', 'hey'],
-// };
 
 const initialValues = {
   issueUrl: '',
@@ -45,7 +32,7 @@ const initialValues = {
   tags: [],
 };
 
-export function IssueForm({
+export default function GigForm({
   onSubmit,
   isConnected,
   isLoggedIn,
@@ -110,7 +97,7 @@ export function IssueForm({
               contributors
             </p>
             <div className="flex mt-3 space-x-4">
-              <IssueTags
+              <GigTags
                 value={formik.values.tags}
                 onChange={formik.setFieldValue}
               />
@@ -332,7 +319,7 @@ export function IssueForm({
   }
 }
 
-IssueForm.propTypes = {
+GigForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   isConnected: PropTypes.bool.isRequired,

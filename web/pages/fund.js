@@ -3,9 +3,9 @@ import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import Layout from 'components/Layout';
-import { IssueForm } from 'components/IssueForm';
+import GigForm from 'components/GigForm';
 
-import { SAVE_BOUNTY, GET_BOUNTIES, DELETE_BOUNTY } from 'queries/bounties';
+import { SAVE_GIG, GET_GIGS, DELETE_GIG } from 'queries/gigs';
 import { useGigsContractContext } from 'hooks/GigsContractContext';
 import { useWalletContext } from 'hooks/WalletContext';
 import { useAuthContext } from 'hooks/AuthContext';
@@ -15,11 +15,9 @@ import Logo from './create-icon.svg';
 export default function FundIssuePage() {
   const router = useRouter();
   const { user } = useAuthContext();
-  const [loading, setLoading] = useState(false);
 
   const { address, balance } = useWalletContext();
-  const { fundIssue } = useGigsContractContext();
-  const createBounty = useCreateBounty(fundIssue, router, setLoading);
+  const { createGig, isLoading } = useCreateGig();
 
   if (process.env.NEXT_PUBLIC_SHOW_ONLY_LANDING_PAGE === 'true') {
     if (typeof window !== 'undefined') {
@@ -43,90 +41,95 @@ export default function FundIssuePage() {
             </div>
           </div>
 
-          <IssueForm
-            onSubmit={handleSubmit}
+          <GigForm
+            onSubmit={createGig}
             isLoggedIn={!!user}
             isConnected={!!address}
             balance={balance}
-            loading={loading}
+            loading={isLoading}
           />
         </div>
       </div>
     </Layout>
   );
-
-  async function handleSubmit(variables) {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    try {
-      await createBounty({ variables });
-    } catch (e) {
-      setLoading(false);
-      console.error(e);
-    }
-  }
 }
 
-function useCreateBounty(fundIssue, router, setLoading) {
-  const [deleteBounty] = useMutation(DELETE_BOUNTY, {
+function useCreateGig() {
+  const { fundGig } = useGigsContractContext();
+  const router = useRouter();
+  const [isLoading, setLoading] = useState(false);
+
+  const [deleteGig] = useMutation(DELETE_GIG, {
     update: updateCacheAfterDelete,
   });
-  const [createBounty] = useMutation(SAVE_BOUNTY, {
+  const [createGig] = useMutation(SAVE_GIG, {
     update: updateCache,
     onCompleted,
   });
 
-  return createBounty;
+  return {
+    async createGig(variables) {
+      if (isLoading) {
+        return;
+      }
+      setLoading(true);
+      try {
+        await createGig({ variables });
+      } catch (e) {
+        setLoading(false);
+        console.error(e);
+      }
+    },
+    isLoading,
+  };
 
   function updateCache(cache, { data }) {
     const existingBountiesQuery = cache.readQuery({
-      query: GET_BOUNTIES,
+      query: GET_GIGS,
     });
 
     if (!existingBountiesQuery) {
       return;
     }
 
-    const newBounty = data.insert_bounty_one;
+    const newGig = data.insert_bounty_one;
 
     cache.writeQuery({
-      query: GET_BOUNTIES,
-      data: { bounty: [newBounty, ...existingBountiesQuery.bounty] },
+      query: GET_GIGS,
+      data: { bounty: [newGig, ...existingBountiesQuery.bounty] },
     });
   }
 
   function updateCacheAfterDelete(cache, { data }) {
     const existingBountiesQuery = cache.readQuery({
-      query: GET_BOUNTIES,
+      query: GET_GIGS,
     });
 
     if (!existingBountiesQuery) {
       return;
     }
 
-    const bountyId = data.delete_bounty_by_pk.id;
+    const gigId = data.delete_bounty_by_pk.id;
 
     cache.writeQuery({
-      query: GET_BOUNTIES,
+      query: GET_GIGS,
       data: {
-        bounty: existingBountiesQuery.bounty.filter((b) => b.id !== bountyId),
+        bounty: existingBountiesQuery.bounty.filter((b) => b.id !== gigId),
       },
     });
   }
 
-  async function onCompleted({ insert_bounty_one: bounty }) {
+  async function onCompleted({ insert_bounty_one: gig }) {
     try {
-      await fundIssue({
-        ...bounty,
-        deadline: Number(new Date(bounty.deadline)),
+      await fundGig({
+        ...gig,
+        deadline: Number(new Date(gig.deadline)),
       });
       router.push('/explore');
     } catch (error) {
       console.error(error);
       try {
-        await deleteBounty({ variables: { id: bounty.id } });
+        await deleteGig({ variables: { id: gig.id } });
       } catch (deleteError) {
         console.error(deleteError);
       }

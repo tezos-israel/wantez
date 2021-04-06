@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const GET_BOUNTIES = gql`
+export const GET_GIGS = gql`
   {
     bounty {
       title
@@ -25,7 +25,7 @@ export const GET_BOUNTIES = gql`
   }
 `;
 
-export const BOUNTY_QUERY = gql`
+export const GIG_QUERY = gql`
   query($id: uuid!) {
     bounty_by_pk(id: $id) {
       id
@@ -63,7 +63,7 @@ export const BOUNTY_QUERY = gql`
 // $estHours: numeric
 // $title: String!
 // $description: String!
-export const SAVE_BOUNTY = gql`
+export const SAVE_GIG = gql`
   mutation(
     $fee: numeric
     $experienceLevel: experienceLevel_enum
@@ -99,7 +99,7 @@ export const SAVE_BOUNTY = gql`
   }
 `;
 
-export const DELETE_BOUNTY = gql`
+export const DELETE_GIG = gql`
   mutation($id: uuid!) {
     delete_bounty_by_pk(id: $id) {
       id
@@ -107,7 +107,7 @@ export const DELETE_BOUNTY = gql`
   }
 `;
 
-export const REFUND_BOUNTY = gql`
+export const REFUND_GIG = gql`
   mutation($id: uuid!) {
     update_bounty_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
       id

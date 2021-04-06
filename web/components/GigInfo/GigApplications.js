@@ -11,7 +11,7 @@ import { useBoolean } from 'hooks/useBoolean';
 import useLoadingState from 'hooks/useLoadingState';
 
 import { DELETE_APPLICATION } from 'queries/applications';
-import { GET_BOUNTIES, BOUNTY_QUERY } from 'queries/bounties';
+import { GET_GIGS, GIG_QUERY } from 'queries/gigs';
 
 import GigApplicationsItem from './GigApplicationsItem';
 
@@ -90,7 +90,7 @@ function updateBountyCache(cache, { data }) {
   const bountyId = data.deleteApplication.bountyId;
 
   const bountyQuery = cache.readQuery({
-    query: BOUNTY_QUERY,
+    query: GIG_QUERY,
     variables: { id: bountyId },
   });
 
@@ -101,7 +101,7 @@ function updateBountyCache(cache, { data }) {
   const bounty = bountyQuery.bounty_by_pk;
 
   cache.writeQuery({
-    query: BOUNTY_QUERY,
+    query: GIG_QUERY,
     data: {
       bounty_by_pk: {
         ...bounty,
@@ -115,7 +115,7 @@ function updateBountyCache(cache, { data }) {
 
 function updateGetBountiesCache(cache, { data }) {
   const existingBountiesQuery = cache.readQuery({
-    query: GET_BOUNTIES,
+    query: GET_GIGS,
   });
 
   if (!existingBountiesQuery) {
@@ -125,7 +125,7 @@ function updateGetBountiesCache(cache, { data }) {
   const bountyId = data.deleteApplication.bountyId;
 
   cache.writeQuery({
-    query: GET_BOUNTIES,
+    query: GET_GIGS,
     data: {
       bounty: existingBountiesQuery.bounty.map((b) =>
         b.id !== bountyId
