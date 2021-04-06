@@ -10,20 +10,20 @@ CREATE TABLE "public"."user"(
   UNIQUE ("email")
 );
 
-CREATE TABLE "public"."bountyStatusTypes"(
+CREATE TABLE "public"."gigStatusTypes"(
   "value" text NOT NULL,
   "description" text NOT NULL,
   PRIMARY KEY ("value")
 );
 
 INSERT INTO
-  "bountyStatusTypes" (value, description)
+  "gigStatusTypes" (value, description)
 VALUES
-  ('pending', 'A pending bounty'),
-  ('work', 'A bounty in work'),
-  ('finished', 'A finished bounty'),
-  ('canceled', 'A canceled bounty'),
-  ('pendingPaymnet', 'A bounty is awaiting payment');
+  ('pending', 'A pending gig'),
+  ('work', 'A gig in work'),
+  ('finished', 'A finished gig'),
+  ('canceled', 'A canceled gig'),
+  ('pendingPaymnet', 'A gig is awaiting payment');
 
 CREATE TABLE "public"."category"(
   "category" text NOT NULL,
@@ -63,7 +63,7 @@ VALUES
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE TABLE "public"."bounty"(
+CREATE TABLE "public"."gig"(
   "id" uuid NOT NULL DEFAULT gen_random_uuid(),
   "title" text NOT NULL,
   "status" text NOT NULL DEFAULT 'pending',
@@ -78,19 +78,19 @@ CREATE TABLE "public"."bounty"(
   "timeCommitment" text NOT NULL DEFAULT 'hours',
   "imageUrl" text NULL,
   PRIMARY KEY ("id"),
-  FOREIGN KEY ("status") REFERENCES "public"."bountyStatusTypes"("value") ON UPDATE restrict ON DELETE restrict,
+  FOREIGN KEY ("status") REFERENCES "public"."gigStatusTypes"("value") ON UPDATE restrict ON DELETE restrict,
   FOREIGN KEY ("funderId") REFERENCES "public"."user"("id") ON UPDATE restrict ON DELETE restrict,
   UNIQUE ("issueUrl"),
-  CONSTRAINT "bounty_experienceLevel_fkey" FOREIGN KEY ("experienceLevel") REFERENCES "public"."experienceLevel" ("experienceLevel") ON UPDATE restrict ON DELETE restrict,
-  CONSTRAINT "bounty_timeCommitment_fkey" FOREIGN KEY ("timeCommitment") REFERENCES "public"."timeCommitmentTypes" ("value") ON UPDATE restrict ON DELETE restrict
+  CONSTRAINT "gig_experienceLevel_fkey" FOREIGN KEY ("experienceLevel") REFERENCES "public"."experienceLevel" ("experienceLevel") ON UPDATE restrict ON DELETE restrict,
+  CONSTRAINT "gig_timeCommitment_fkey" FOREIGN KEY ("timeCommitment") REFERENCES "public"."timeCommitmentTypes" ("value") ON UPDATE restrict ON DELETE restrict
 );
 
 
-CREATE TABLE "public"."bounty_category"(
-  "bounty_id" uuid NOT NULL,
+CREATE TABLE "public"."gig_category"(
+  "gig_id" uuid NOT NULL,
   "category" text NOT NULL,
-  PRIMARY KEY ("bounty_id", "category"),
-  FOREIGN KEY ("bounty_id") REFERENCES "public"."bounty"("id") ON UPDATE restrict ON DELETE cascade,
+  PRIMARY KEY ("gig_id", "category"),
+  FOREIGN KEY ("gig_id") REFERENCES "public"."gig"("id") ON UPDATE restrict ON DELETE cascade,
   FOREIGN KEY ("category") REFERENCES "public"."category"("category") ON UPDATE restrict ON DELETE restrict
 );
 
@@ -111,7 +111,7 @@ VALUES
 CREATE TABLE "public"."application"(
   "id" uuid NOT NULL DEFAULT gen_random_uuid(),
   "applicantId" uuid NOT NULL,
-  "bountyId" uuid NOT NULL,
+  "gigId" uuid NOT NULL,
   "details" text NOT NULL,
   "status" text NOT NULL,
   "createdAt" timestamptz NOT NULL DEFAULT now(),
@@ -119,11 +119,11 @@ CREATE TABLE "public"."application"(
   "paymentAddress" text NOT NULL,
   PRIMARY KEY ("id"),
   FOREIGN KEY ("applicantId") REFERENCES "public"."user"("id") ON UPDATE restrict ON DELETE restrict,
-  FOREIGN KEY ("bountyId") REFERENCES "public"."bounty"("id") ON UPDATE restrict ON DELETE restrict,
+  FOREIGN KEY ("gigId") REFERENCES "public"."gig"("id") ON UPDATE restrict ON DELETE restrict,
   FOREIGN KEY ("status") REFERENCES "public"."applicationStatusType"("value") ON UPDATE restrict ON DELETE restrict,
   UNIQUE ("id"),
-  UNIQUE ("bountyId"),
-  constraint "application_applicantId_bountyId_key" unique ("applicantId", "bountyId")
+  UNIQUE ("gigId"),
+  constraint "application_applicantId_gigId_key" unique ("applicantId", "gigId")
 );
 
 CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updatedAt"()
@@ -163,10 +163,10 @@ CREATE TABLE "public"."socialAccount"(
 
 CREATE TABLE "public"."tags"("name" text NOT NULL, PRIMARY KEY ("name"));
 
-CREATE TABLE "public"."bounty_tags"(
-  "bounty_id" uuid NOT NULL,
+CREATE TABLE "public"."gig_tags"(
+  "gig_id" uuid NOT NULL,
   "tag_id" text NOT NULL,
-  PRIMARY KEY ("bounty_id", "tag_id"),
+  PRIMARY KEY ("gig_id", "tag_id"),
   FOREIGN KEY ("tag_id") REFERENCES "public"."tags"("name") ON UPDATE cascade ON DELETE cascade,
-  FOREIGN KEY ("bounty_id") REFERENCES "public"."bounty"("id") ON UPDATE cascade ON DELETE cascade
+  FOREIGN KEY ("gig_id") REFERENCES "public"."gig"("id") ON UPDATE cascade ON DELETE cascade
 );

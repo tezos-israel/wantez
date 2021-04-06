@@ -19,9 +19,9 @@
   - name: applicationStatusType
     using:
       foreign_key_constraint_on: status
-  - name: bounty
+  - name: gig
     using:
-      foreign_key_constraint_on: bountyId
+      foreign_key_constraint_on: gigId
   insert_permissions:
   - role: user
     permission:
@@ -32,7 +32,7 @@
         status: pending
         applicantId: x-hasura-User-Id
       columns:
-      - bountyId
+      - gigId
       - details
       - paymentAddress
       backend_only: false
@@ -41,7 +41,7 @@
     permission:
       columns:
       - applicantId
-      - bountyId
+      - gigId
       - createdAt
       - details
       - id
@@ -54,7 +54,7 @@
     permission:
       columns:
       - applicantId
-      - bountyId
+      - gigId
       - createdAt
       - details
       - id
@@ -67,7 +67,7 @@
   - role: user
     permission:
       columns:
-      - bountyId
+      - gigId
       - details
       - status
       filter:
@@ -98,7 +98,7 @@
           name: application
 - table:
     schema: public
-    name: bounty
+    name: gig
   object_relationships:
   - name: application
     using:
@@ -107,8 +107,8 @@
           schema: public
           name: application
         column_mapping:
-          id: bountyId
-  - name: bountyStatusType
+          id: gigId
+  - name: gigStatusType
     using:
       foreign_key_constraint_on: status
   - name: funder
@@ -122,21 +122,21 @@
           schema: public
           name: application
         column_mapping:
-          id: bountyId
-  - name: bounty_tags
+          id: gigId
+  - name: gig_tags
     using:
       foreign_key_constraint_on:
-        column: bounty_id
+        column: gig_id
         table:
           schema: public
-          name: bounty_tags
+          name: gig_tags
   - name: categories
     using:
       foreign_key_constraint_on:
-        column: bounty_id
+        column: gig_id
         table:
           schema: public
-          name: bounty_category
+          name: gig_category
   insert_permissions:
   - role: user
     permission:
@@ -219,45 +219,45 @@
           _eq: X-Hasura-User-Id
 - table:
     schema: public
-    name: bountyStatusTypes
+    name: gigStatusTypes
   is_enum: true
   array_relationships:
-  - name: bounties
+  - name: gigs
     using:
       foreign_key_constraint_on:
         column: status
         table:
           schema: public
-          name: bounty
+          name: gig
 - table:
     schema: public
-    name: bounty_category
+    name: gig_category
   object_relationships:
-  - name: bounty
+  - name: gig
     using:
-      foreign_key_constraint_on: bounty_id
+      foreign_key_constraint_on: gig_id
   insert_permissions:
   - role: user
     permission:
       check:
-        bounty:
+        gig:
           funderId:
             _eq: X-Hasura-User-Id
       columns:
-      - bounty_id
+      - gig_id
       - category
       backend_only: false
   select_permissions:
   - role: public
     permission:
       columns:
-      - bounty_id
+      - gig_id
       - category
       filter: {}
   - role: user
     permission:
       columns:
-      - bounty_id
+      - gig_id
       - category
       filter: {}
   update_permissions:
@@ -265,29 +265,29 @@
     permission:
       columns:
       - category
-      - bounty_id
+      - gig_id
       filter:
-        bounty:
+        gig:
           funderId:
             _eq: X-Hasura-User-Id
       check:
-        bounty:
+        gig:
           funderId:
             _eq: X-Hasura-User-Id
   delete_permissions:
   - role: user
     permission:
       filter:
-        bounty:
+        gig:
           funderId:
             _eq: X-Hasura-User-Id
 - table:
     schema: public
-    name: bounty_tags
+    name: gig_tags
   object_relationships:
-  - name: bounty
+  - name: gig
     using:
-      foreign_key_constraint_on: bounty_id
+      foreign_key_constraint_on: gig_id
   - name: tag
     using:
       foreign_key_constraint_on: tag_id
@@ -295,40 +295,40 @@
   - role: user
     permission:
       check:
-        bounty:
+        gig:
           funder:
             id:
               _eq: X-Hasura-User-Id
       columns:
-      - bounty_id
+      - gig_id
       - tag_id
       backend_only: false
   select_permissions:
   - role: public
     permission:
       columns:
-      - bounty_id
+      - gig_id
       - tag_id
       filter: {}
   - role: user
     permission:
       columns:
-      - bounty_id
+      - gig_id
       - tag_id
       filter: {}
   update_permissions:
   - role: user
     permission:
       columns:
-      - bounty_id
+      - gig_id
       - tag_id
       filter:
-        bounty:
+        gig:
           funder:
             id:
               _eq: X-Hasura-User-Id
       check:
-        bounty:
+        gig:
           funder:
             id:
               _eq: X-Hasura-User-Id
@@ -336,7 +336,7 @@
   - role: user
     permission:
       filter:
-        bounty:
+        gig:
           funder:
             id:
               _eq: X-Hasura-User-Id
@@ -401,13 +401,13 @@
       update_by_pk: update_tag
     custom_column_names: {}
   array_relationships:
-  - name: tag_bounties
+  - name: tag_gigs
     using:
       foreign_key_constraint_on:
         column: tag_id
         table:
           schema: public
-          name: bounty_tags
+          name: gig_tags
   insert_permissions:
   - role: user
     permission:
@@ -448,13 +448,13 @@
         table:
           schema: public
           name: application
-  - name: bounties
+  - name: gigs
     using:
       foreign_key_constraint_on:
         column: funderId
         table:
           schema: public
-          name: bounty
+          name: gig
   - name: socialAccounts
     using:
       manual_configuration:

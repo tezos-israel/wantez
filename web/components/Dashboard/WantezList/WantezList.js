@@ -5,10 +5,10 @@ import sortArray from 'sort-array';
 import { WantezListItem } from './WantezListItem';
 import { Sort } from './Sort';
 
-export function WantezList({ bounties }) {
+export function WantezList({ gigs }) {
   const [sort, setSort] = React.useState('createdAt');
   const [sortDir, setSortDir] = React.useState('desc');
-  const sortedBounties = sortArray([...bounties], {
+  const sortedGigs = sortArray([...gigs], {
     by: sort,
     order: sortDir,
     customOrders: { experience: ['beginner', 'medium', 'pro'] },
@@ -18,12 +18,12 @@ export function WantezList({ bounties }) {
     <div className="flex flex-col">
       <div className="flex justify-between px-8 py-4">
         <div className="text-sm font-bold text-gray-500">
-          {bounties.length} open wantez
+          {gigs.length} open wantez
         </div>
         <Sort value={sort} dir={sortDir} onChange={handleSortChange} />
       </div>
       <div className="space-y-4">
-        {sortedBounties.map((item) => (
+        {sortedGigs.map((item) => (
           <WantezListItem
             key={item.id}
             id={item.id}
@@ -34,13 +34,13 @@ export function WantezList({ bounties }) {
             createdAt={item.createdAt}
             applicationsCount={item.applications_aggregate.aggregate.count}
             experienceLevel={item.experienceLevel}
-            tags={item.bounty_tags.map((bountyTag) => bountyTag.tag.name)}
+            tags={item.gig_tags.map((tagInfo) => tagInfo.tag.name)}
           />
         ))}
       </div>
-      {!bounties.length && (
+      {!gigs.length && (
         <div className="w-full px-8 text-sm font-bold text-blue-500">
-          No Bounties Created
+          No Gigs Created
         </div>
       )}
     </div>
@@ -53,5 +53,5 @@ export function WantezList({ bounties }) {
 }
 
 WantezList.propTypes = {
-  bounties: propTypes.array.isRequired,
+  gigs: propTypes.array.isRequired,
 };

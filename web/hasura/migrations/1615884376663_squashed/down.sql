@@ -1,8 +1,8 @@
-DROP TABLE "public"."bounty_tags";
+DROP TABLE "public"."gig_tags";
 
 DROP TABLE "public"."tags";
 
-DROP TABLE "public"."bounty_category";
+DROP TABLE "public"."gig_category";
 
 DROP TABLE "public"."timeCommitmentTypes";
 
@@ -23,8 +23,8 @@ WHERE
 
 DROP TABLE "public"."applicationStatusType";
 
-DROP TABLE "public"."bounty";
+DROP TABLE "public"."gig";
 
-DROP TABLE "public"."bountyStatusTypes";
+DROP TABLE "public"."gigStatusTypes";
 
 DROP TABLE "public"."user";

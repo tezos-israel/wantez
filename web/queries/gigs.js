@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const GET_GIGS = gql`
   {
-    bounty {
+    gig {
       title
       id
       fee
@@ -11,7 +11,7 @@ export const GET_GIGS = gql`
       imageUrl
       createdAt
       timeCommitment
-      bounty_tags {
+      gig_tags {
         tag {
           name
         }
@@ -27,7 +27,7 @@ export const GET_GIGS = gql`
 
 export const GIG_QUERY = gql`
   query($id: uuid!) {
-    bounty_by_pk(id: $id) {
+    gig_by_pk(id: $id) {
       id
       title
       fee
@@ -53,7 +53,7 @@ export const GIG_QUERY = gql`
           username
         }
       }
-      bounty_tags {
+      gig_tags {
         tag_id
       }
     }
@@ -67,16 +67,16 @@ export const SAVE_GIG = gql`
   mutation(
     $fee: numeric
     $experienceLevel: experienceLevel_enum
-    $categories: [bounty_category_insert_input!]!
+    $categories: [gig_category_insert_input!]!
     $timeCommitment: timeCommitmentTypes_enum
     $issueUrl: String!
     $deadline: timestamptz!
-    $tags: [bounty_tags_insert_input!]!
+    $tags: [gig_tags_insert_input!]!
     $imageUrl: String!
     $title: String!
     $description: String!
   ) {
-    insert_bounty_one(
+    insert_gig_one(
       object: {
         fee: $fee
         experienceLevel: $experienceLevel
@@ -87,7 +87,7 @@ export const SAVE_GIG = gql`
         imageUrl: $imageUrl
         deadline: $deadline
         categories: { data: $categories }
-        bounty_tags: { data: $tags }
+        gig_tags: { data: $tags }
       }
     ) {
       id
@@ -101,7 +101,7 @@ export const SAVE_GIG = gql`
 
 export const DELETE_GIG = gql`
   mutation($id: uuid!) {
-    delete_bounty_by_pk(id: $id) {
+    delete_gig_by_pk(id: $id) {
       id
     }
   }
@@ -109,16 +109,16 @@ export const DELETE_GIG = gql`
 
 export const REFUND_GIG = gql`
   mutation($id: uuid!) {
-    update_bounty_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
+    update_gig_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
       id
     }
   }
 `;
 
 export const APPROVE_APPLICATION = gql`
-  mutation($bountyId: uuid!, $applicationId: uuid!) {
-    update_bounty_by_pk(
-      pk_columns: { id: $bountyId }
+  mutation($gigId: uuid!, $applicationId: uuid!) {
+    update_gig_by_pk(
+      pk_columns: { id: $gigId }
       _set: { status: "finished" }
     ) {
       id
@@ -134,7 +134,7 @@ export const APPROVE_APPLICATION = gql`
     update_application(
       where: {
         _and: {
-          bountyId: { _eq: $bountyId }
+          gigId: { _eq: $gigId }
           _not: { applicantId: { _eq: $applicationId } }
         }
       }

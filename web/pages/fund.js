@@ -84,42 +84,42 @@ function useCreateGig() {
   };
 
   function updateCache(cache, { data }) {
-    const existingBountiesQuery = cache.readQuery({
+    const existingGigsQuery = cache.readQuery({
       query: GET_GIGS,
     });
 
-    if (!existingBountiesQuery) {
+    if (!existingGigsQuery) {
       return;
     }
 
-    const newGig = data.insert_bounty_one;
+    const newGig = data.insert_gig_one;
 
     cache.writeQuery({
       query: GET_GIGS,
-      data: { bounty: [newGig, ...existingBountiesQuery.bounty] },
+      data: { gig: [newGig, ...existingGigsQuery.gig] },
     });
   }
 
   function updateCacheAfterDelete(cache, { data }) {
-    const existingBountiesQuery = cache.readQuery({
+    const existingGigsQuery = cache.readQuery({
       query: GET_GIGS,
     });
 
-    if (!existingBountiesQuery) {
+    if (!existingGigsQuery) {
       return;
     }
 
-    const gigId = data.delete_bounty_by_pk.id;
+    const gigId = data.delete_gig_by_pk.id;
 
     cache.writeQuery({
       query: GET_GIGS,
       data: {
-        bounty: existingBountiesQuery.bounty.filter((b) => b.id !== gigId),
+        gig: existingGigsQuery.gig.filter((b) => b.id !== gigId),
       },
     });
   }
 
-  async function onCompleted({ insert_bounty_one: gig }) {
+  async function onCompleted({ insert_gig_one: gig }) {
     try {
       await fundGig({
         ...gig,
