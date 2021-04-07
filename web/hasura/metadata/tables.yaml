@@ -98,22 +98,44 @@
           name: application
 - table:
     schema: public
+    name: category
+  is_enum: true
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - category
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - category
+      filter: {}
+- table:
+    schema: public
+    name: experience_level
+  is_enum: true
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - experience_level
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - experience_level
+      filter: {}
+- table:
+    schema: public
     name: gig
   object_relationships:
-  - name: application
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: application
-        column_mapping:
-          id: gig_id
-  - name: gig_status_type
-    using:
-      foreign_key_constraint_on: status
   - name: funder
     using:
       foreign_key_constraint_on: funder_id
+  - name: gig_status_type
+    using:
+      foreign_key_constraint_on: status
   array_relationships:
   - name: applications
     using:
@@ -123,13 +145,6 @@
           name: application
         column_mapping:
           id: gig_id
-  - name: gig_tags
-    using:
-      foreign_key_constraint_on:
-        column: gig_id
-        table:
-          schema: public
-          name: gig_tags
   - name: categories
     using:
       foreign_key_constraint_on:
@@ -137,6 +152,13 @@
         table:
           schema: public
           name: gig_category
+  - name: gig_tags
+    using:
+      foreign_key_constraint_on:
+        column: gig_id
+        table:
+          schema: public
+          name: gig_tags
   insert_permissions:
   - role: user
     permission:
@@ -219,18 +241,6 @@
           _eq: X-Hasura-User-Id
 - table:
     schema: public
-    name: gig_status_type
-  is_enum: true
-  array_relationships:
-  - name: gigs
-    using:
-      foreign_key_constraint_on:
-        column: status
-        table:
-          schema: public
-          name: gig
-- table:
-    schema: public
     name: gig_category
   object_relationships:
   - name: gig
@@ -281,6 +291,18 @@
         gig:
           funder_id:
             _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: gig_status_type
+  is_enum: true
+  array_relationships:
+  - name: gigs
+    using:
+      foreign_key_constraint_on:
+        column: status
+        table:
+          schema: public
+          name: gig
 - table:
     schema: public
     name: gig_tags
@@ -340,36 +362,6 @@
           funder:
             id:
               _eq: X-Hasura-User-Id
-- table:
-    schema: public
-    name: category
-  is_enum: true
-  select_permissions:
-  - role: public
-    permission:
-      columns:
-      - category
-      filter: {}
-  - role: user
-    permission:
-      columns:
-      - category
-      filter: {}
-- table:
-    schema: public
-    name: experience_level
-  is_enum: true
-  select_permissions:
-  - role: public
-    permission:
-      columns:
-      - experience_level
-      filter: {}
-  - role: user
-    permission:
-      columns:
-      - experience_level
-      filter: {}
 - table:
     schema: public
     name: site

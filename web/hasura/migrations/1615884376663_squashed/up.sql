@@ -122,7 +122,6 @@ CREATE TABLE "public"."application"(
   FOREIGN KEY ("gig_id") REFERENCES "public"."gig"("id") ON UPDATE restrict ON DELETE restrict,
   FOREIGN KEY ("status") REFERENCES "public"."application_status_type"("value") ON UPDATE restrict ON DELETE restrict,
   UNIQUE ("id"),
-  UNIQUE ("gig_id"),
   constraint "application_applicantId_gig_id_key" unique ("applicant_id", "gig_id")
 );
 
