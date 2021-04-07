@@ -29,7 +29,7 @@ export default function Hero({ title, about }) {
           <div className="lg:flex-row-reverse lg:space-y-0 flex flex-col items-center justify-center mx-auto space-y-10">
             <PrimaryImage className="lg:w-3/4 w-11/12" />
             <div>
-              <div className="sm:text-6xl font-museo text-5xl">{title}</div>
+              <h1 className="sm:text-6xl font-museo text-5xl">{title}</h1>
               {showNavigationButtons && (
                 <div className="sm:space-x-5 sm:flex sm:space-y-0 mt-10 space-y-5 text-xl">
                   <LinkButton href="/fund">Fund</LinkButton>
@@ -38,9 +38,9 @@ export default function Hero({ title, about }) {
               )}
             </div>
           </div>
-          <div className="xl:w-3/4 sm:text-center sm:mt-20 flex items-center justify-center mx-auto mt-10 text-lg">
+          <p className="xl:w-3/4 sm:text-center sm:mt-20 flex items-center justify-center mx-auto mt-10 text-lg">
             {about}
-          </div>
+          </p>
         </div>
       </div>
     </Section>
