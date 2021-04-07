@@ -75,7 +75,7 @@ function getError({
     return 'Failed checking for unique URL';
   }
 
-  if (touched) {
+  if (touched && validationError) {
     return validationError;
   }
 
