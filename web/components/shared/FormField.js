@@ -20,6 +20,6 @@ export function FormField({ title, fieldId, error = '', children, ...props }) {
 
 FormField.propTypes = {
   title: PropTypes.string,
-  error: PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   fieldId: PropTypes.string,
 };
