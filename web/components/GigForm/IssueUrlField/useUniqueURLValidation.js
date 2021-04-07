@@ -4,7 +4,7 @@ import { debounce } from 'lib/debounce';
 
 const CHECK_URL_UNIQUENESS = gql`
   query($issueUrl: String) {
-    gig_aggregate(where: { issueUrl: { _eq: $issueUrl } }) {
+    gig_aggregate(where: { issue_url: { _eq: $issueUrl } }) {
       aggregate {
         count
       }

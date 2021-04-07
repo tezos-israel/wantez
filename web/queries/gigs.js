@@ -68,11 +68,11 @@ export const SAVE_GIG = gql`
     $fee: numeric
     $experienceLevel: experience_level_enum
     $categories: [gig_category_insert_input!]!
-    $timeCommitment: time_commitment_types_enum
+    $timeCommitment: time_commitment_type_enum
     $issueUrl: String!
     $deadline: timestamptz!
     $tags: [gig_tags_insert_input!]!
-    $image_url: String!
+    $imageUrl: String!
     $title: String!
     $description: String!
   ) {
@@ -84,7 +84,7 @@ export const SAVE_GIG = gql`
         issue_url: $issueUrl
         title: $title
         description: $description
-        image_url: $image_url
+        image_url: $imageUrl
         deadline: $deadline
         categories: { data: $categories }
         gig_tags: { data: $tags }
