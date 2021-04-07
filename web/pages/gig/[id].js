@@ -42,6 +42,11 @@ export default function GigPage() {
     );
   }
 
+  if (!gig) {
+    router.push('/explore')
+    return null;
+  }
+
   return (
     <Layout>
       <div
