@@ -36,7 +36,7 @@ color: primary, secondary,
 Button.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
-  color: PropTypes.oneOf(["default", "primary", "secondary", "inherit"]),
-  size: PropTypes.oneOf(["small", "medium", "large"]),
-  type: PropTypes.string
-}
+  color: PropTypes.oneOf(['default', 'primary', 'secondary', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  type: PropTypes.string,
+};

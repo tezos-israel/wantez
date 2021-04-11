@@ -52,7 +52,6 @@ ApplyDialog.propTypes = {
   onDismiss: PropTypes.func.isRequired,
 };
 
-
 export function ApplyDialogSuccess({ onDismiss, gigTitle }) {
   return (
     <SuccessDialog onDismiss={onDismiss} aria-label="Application success">

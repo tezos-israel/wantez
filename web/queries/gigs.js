@@ -117,10 +117,7 @@ export const REFUND_GIG = gql`
 
 export const APPROVE_APPLICATION = gql`
   mutation($gigId: uuid!, $applicationId: uuid!) {
-    update_gig_by_pk(
-      pk_columns: { id: $gigId }
-      _set: { status: "finished" }
-    ) {
+    update_gig_by_pk(pk_columns: { id: $gigId }, _set: { status: "finished" }) {
       id
     }
 
