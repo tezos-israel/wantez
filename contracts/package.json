@@ -2,18 +2,14 @@
   "name": "contracts",
   "version": "1.0.0",
   "dependencies": {
-    "@taquito/taquito": "^7.1.0-beta.0",
+    "@taquito/taquito": "^8.1.0",
     "eslint-plugin-truffle": "^0.3.1",
-    "promise-retry": "^2.0.1"
-  },
-  "devDependencies": {
-    "truffle": "^5.3.0-tezos.2"
+    "promise-retry": "^2.0.1",
+    "truffle": "^5.5.0-tezos.4"
   },
   "scripts": {
-    "wait-for-sandbox": "node ./scripts/sandbox/waitForNetwork.js",
-    "start-sandbox": "bash ./scripts/sandbox/start_sandbox.sh && npm run wait-for-sandbox",
-    "kill-sandbox": "bash ./scripts/sandbox/kill_sandbox.sh",
-    "restart-sandbox": "npm run kill-sandbox && npm run start-sandbox",
+    "start-sandbox": "docker run --rm --name my-sandbox --detach -p 20000:20000 tqtezos/flextesa:20210216 edobox start",
+    "stop-sandbox": "docker kill my-sandbox",
     "test": "truffle test",
     "compile": "truffle compile",
     "migrate": "truffle migrate",
