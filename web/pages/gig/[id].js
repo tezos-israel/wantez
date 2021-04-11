@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import Loader from 'react-loader-spinner';
@@ -8,7 +8,7 @@ import { GIG_QUERY } from 'queries/gigs';
 import Layout from 'components/Layout';
 import { GigInfo } from 'components/GigInfo';
 
-export default function GigPage() {
+export default function GigPage({ network }) {
   const router = useRouter();
 
   const { data, loading, error } = useQuery(GIG_QUERY, {
@@ -25,7 +25,7 @@ export default function GigPage() {
 
   if (loading) {
     return (
-      <Layout>
+      <Layout network={network}>
         <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
       </Layout>
     );
@@ -33,7 +33,7 @@ export default function GigPage() {
 
   if (error) {
     return (
-      <Layout>
+      <Layout network={network}>
         <div className="alert" severity="error">
           <div className="alert-title">Failed loading gig info</div>
           {error.message || error}
@@ -43,12 +43,12 @@ export default function GigPage() {
   }
 
   if (!gig) {
-    router.push('/explore')
+    router.push('/explore');
     return null;
   }
 
   return (
-    <Layout>
+    <Layout network={network}>
       <div
         style={{ backgroundColor: '#1d2129' }}
         className="flex-auto w-full pb-20"
@@ -60,3 +60,7 @@ export default function GigPage() {
     </Layout>
   );
 }
+
+GigPage.propTypes = {
+  network: PropTypes.object.isRequired,
+};

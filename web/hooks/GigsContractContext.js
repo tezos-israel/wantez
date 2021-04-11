@@ -1,10 +1,9 @@
+import PropTypes from 'prop-types';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import { useContract } from '@tezos-il/tezos-react-hooks';
 
 import { useOnRouteChange } from './useOnRouteChange';
-
-const CONTRACT_ADDRESS = 'KT1K2JLNvTwDNKctaQThjcHrxcmaLoHXH6um';
 
 export const GigsContractContext = createContext({
   connected: false,
@@ -19,7 +18,7 @@ export const GigsContractContext = createContext({
 
 export const useGigsContractContext = () => useContext(GigsContractContext);
 
-export function GigContractProvider({ children }) {
+export function GigContractProvider({ address, children }) {
   const {
     contract,
     error,
@@ -27,7 +26,7 @@ export function GigContractProvider({ children }) {
     loading,
     connect,
     clearError,
-  } = useContract(CONTRACT_ADDRESS);
+  } = useContract(address);
 
   const [operationLoading, setOperationLoading] = useState(false);
 
@@ -94,3 +93,7 @@ export function GigContractProvider({ children }) {
     );
   }
 }
+
+GigContractProvider.propTypes = {
+  address: PropTypes.string.isRequired,
+};

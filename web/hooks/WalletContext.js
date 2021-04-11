@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { createContext, useContext, useEffect } from 'react';
 
 import { useBeaconWallet } from '@tezos-il/tezos-react-hooks';
@@ -14,7 +15,7 @@ export const WalletContext = createContext({
 
 export const useWalletContext = () => useContext(WalletContext);
 
-export function WalletProvider({ children }) {
+export function WalletProvider({ network, children }) {
   const {
     wallet,
     initialized,
@@ -43,9 +44,12 @@ export function WalletProvider({ children }) {
         initialized,
         address,
         connect() {
-          connect({
-            name: 'wantez',
-          });
+          connect(
+            {
+              name: 'wantez',
+            },
+            network
+          );
         },
         error,
         loading,
@@ -57,3 +61,7 @@ export function WalletProvider({ children }) {
     </WalletContext.Provider>
   );
 }
+
+WalletProvider.propTypes = {
+  network: PropTypes.string.isRequired,
+};

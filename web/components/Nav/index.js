@@ -1,12 +1,11 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 import Logo from '../../images/site-logo.svg';
 
 import { UserButtons } from 'components/UserButtons';
-
-export default function Nav() {
+import { isMainnet } from 'lib/networks';
+export default function Nav({ network }) {
   return (
     <nav className="bg-gradient-to-l from-nava to-navb fixed flex items-center w-full h-20 px-6">
       <Link href="/">
@@ -19,10 +18,15 @@ export default function Nav() {
         <Link href="/explore">Explore</Link>
         <Link href="/fund">Fund</Link>
       </div>
+      {!isMainnet(network) && (
+        <div className="p-2 mx-auto bg-red-300 rounded-sm">Not mainnet</div>
+      )}
 
       <UserButtons />
     </nav>
   );
 }
 
-Nav.propTypes = {};
+Nav.propTypes = {
+  network: PropTypes.object.isRequired,
+};

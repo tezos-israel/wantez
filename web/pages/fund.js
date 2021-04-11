@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -12,7 +13,7 @@ import { useAuthContext } from 'hooks/AuthContext';
 
 import Logo from './create-icon.svg';
 
-export default function FundIssuePage() {
+export default function FundIssuePage({ network }) {
   const router = useRouter();
   const { user } = useAuthContext();
 
@@ -27,7 +28,7 @@ export default function FundIssuePage() {
   }
 
   return (
-    <Layout>
+    <Layout network={network}>
       <div className="bg-fund flex-auto w-full pb-20">
         <div className="w-10/12 mx-auto mt-10">
           <div className="auto-cols-max grid items-center mb-4 text-blue-500">
@@ -138,3 +139,7 @@ function useCreateGig() {
     }
   }
 }
+
+FundIssuePage.propTypes = {
+  network: PropTypes.object.isRequired,
+};

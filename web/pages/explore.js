@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
@@ -8,7 +9,7 @@ import { WantezList, Filter, TagsList } from 'components/Dashboard';
 
 import Loader from 'react-loader-spinner';
 
-export default function ExplorePage() {
+export default function ExplorePage({ network }) {
   const router = useRouter();
   const [tags, setTags] = useState([]);
 
@@ -43,7 +44,7 @@ export default function ExplorePage() {
       );
 
   return (
-    <Layout>
+    <Layout network={network}>
       {loading ? (
         <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
       ) : error ? (
@@ -73,3 +74,7 @@ export default function ExplorePage() {
     setFilterValues(value);
   }
 }
+
+ExplorePage.propTypes = {
+  network: PropTypes.object.isRequired,
+};

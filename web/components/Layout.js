@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import NavBar from './Nav';
 import Footer from './Footer';
 import GTMScript from 'components/GTMScript';
-import GTMNoScript from 'components/GTMNoScript';
 
-function Layout({ children, title }) {
+function Layout({ children, title, network }) {
   return (
     <div className="flex flex-col h-screen">
       <Head>
@@ -24,7 +23,7 @@ function Layout({ children, title }) {
         />
       </Head>
 
-      <NavBar />
+      <NavBar network={network} />
 
       <main className="flex flex-col items-center justify-center flex-auto mt-20">
         {children}
@@ -38,6 +37,7 @@ function Layout({ children, title }) {
 Layout.propTypes = {
   children: PropTypes.any,
   title: PropTypes.string,
+  network: PropTypes.object.isRequired,
 };
 
 export default Layout;

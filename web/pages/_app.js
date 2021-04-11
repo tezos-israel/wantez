@@ -8,11 +8,15 @@ import { GTMPageView } from '../lib/gtm';
 import { WalletProvider } from 'hooks/WalletContext';
 import { GigContractProvider } from 'hooks/GigsContractContext';
 import { AuthProvider } from '../hooks/AuthContext';
+import networks from 'lib/networks';
+
 import '@reach/dialog/styles.css';
 import 'styles/_app.css';
 import 'tailwindcss/tailwind.css';
 
-const tezos = new TezosToolkit('https://delphinet.SmartPy.io');
+const CURRENT_NETWORK = process.env.NEXT_PUBLIC_NETWORK_ID;
+const network = networks.find(({ id }) => id === CURRENT_NETWORK);
+const tezos = new TezosToolkit(network.url);
 
 // eslint-disable-next-line react/prop-types
 function App({ Component, pageProps }) {
@@ -36,9 +40,9 @@ function App({ Component, pageProps }) {
     <div id="app">
       <AuthProvider>
         <TezosContextProvider tezos={tezos}>
-          <WalletProvider>
-            <GigContractProvider>
-              <Component {...pageProps} />
+          <WalletProvider network={network.id}>
+            <GigContractProvider address={network.contract}>
+              <Component {...pageProps} network={network} />
             </GigContractProvider>
           </WalletProvider>
         </TezosContextProvider>
