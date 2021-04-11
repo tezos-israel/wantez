@@ -1,0 +1,7 @@
+table:
+  name: social_account
+  schema: public
+object_relationships:
+- name: siteBySite
+  using:
+    foreign_key_constraint_on: site

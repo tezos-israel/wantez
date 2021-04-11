@@ -1,0 +1,38 @@
+table:
+  name: user
+  schema: public
+array_relationships:
+- name: applications
+  using:
+    foreign_key_constraint_on:
+      column: applicant_id
+      table:
+        name: application
+        schema: public
+- name: gigs
+  using:
+    foreign_key_constraint_on:
+      column: funder_id
+      table:
+        name: gig
+        schema: public
+- name: social_accounts
+  using:
+    manual_configuration:
+      column_mapping:
+        id: user_id
+      insertion_order: null
+      remote_table:
+        name: social_account
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - username
+    filter: {}
+  role: public
+- permission:
+    columns:
+    - username
+    filter: {}
+  role: user

@@ -1,0 +1,15 @@
+table:
+  name: experience_level
+  schema: public
+is_enum: true
+select_permissions:
+- permission:
+    columns:
+    - experience_level
+    filter: {}
+  role: public
+- permission:
+    columns:
+    - experience_level
+    filter: {}
+  role: user

@@ -1,0 +1,52 @@
+table:
+  name: gig_category
+  schema: public
+object_relationships:
+- name: gig
+  using:
+    foreign_key_constraint_on: gig_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      gig:
+        funder_id:
+          _eq: X-Hasura-User-Id
+    columns:
+    - gig_id
+    - category
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - gig_id
+    - category
+    filter: {}
+  role: public
+- permission:
+    columns:
+    - gig_id
+    - category
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check:
+      gig:
+        funder_id:
+          _eq: X-Hasura-User-Id
+    columns:
+    - category
+    - gig_id
+    filter:
+      gig:
+        funder_id:
+          _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      gig:
+        funder_id:
+          _eq: X-Hasura-User-Id
+  role: user

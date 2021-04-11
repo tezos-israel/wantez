@@ -1,0 +1,45 @@
+table:
+  name: tags
+  schema: public
+configuration:
+  custom_column_names: {}
+  custom_root_fields:
+    delete_by_pk: delete_tag
+    insert: insert_tags
+    insert_one: insert_tag
+    select: tags
+    select_by_pk: tag
+    update_by_pk: update_tag
+array_relationships:
+- name: tag_gigs
+  using:
+    foreign_key_constraint_on:
+      column: tag_id
+      table:
+        name: gig_tags
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - name
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - name
+    filter: {}
+  role: public
+- permission:
+    columns:
+    - name
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - name
+    filter: {}
+  role: user

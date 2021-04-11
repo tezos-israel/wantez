@@ -1,0 +1,11 @@
+table:
+  name: site
+  schema: public
+array_relationships:
+- name: social_accounts
+  using:
+    foreign_key_constraint_on:
+      column: site
+      table:
+        name: social_account
+        schema: public

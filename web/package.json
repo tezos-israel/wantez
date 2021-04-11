@@ -12,7 +12,7 @@
     "lint": "eslint . --cache --fix",
     "pretest": "npm run lint",
     "predb:migrate": "yarn docker",
-    "db:migrate": "hasura migrate --project ./hasura --admin-secret password apply && hasura metadata --project ./hasura --admin-secret password apply",
+    "db:migrate": "hasura metadata --project ./hasura --admin-secret password apply && hasura migrate --project ./hasura --admin-secret password apply --database-name default && hasura metadata --project ./hasura --admin-secret password reload",
     "db:console": "hasura console --project ./hasura --admin-secret password"
   },
   "dependencies": {

@@ -1,0 +1,114 @@
+table:
+  name: gig
+  schema: public
+object_relationships:
+- name: funder
+  using:
+    foreign_key_constraint_on: funder_id
+- name: gig_status_type
+  using:
+    foreign_key_constraint_on: status
+array_relationships:
+- name: applications
+  using:
+    manual_configuration:
+      column_mapping:
+        id: gig_id
+      insertion_order: null
+      remote_table:
+        name: application
+        schema: public
+- name: categories
+  using:
+    foreign_key_constraint_on:
+      column: gig_id
+      table:
+        name: gig_category
+        schema: public
+- name: gig_tags
+  using:
+    foreign_key_constraint_on:
+      column: gig_id
+      table:
+        name: gig_tags
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      funder_id:
+        _eq: X-Hasura-User-Id
+    columns:
+    - deadline
+    - description
+    - experience_level
+    - fee
+    - image_url
+    - issue_url
+    - status
+    - time_commitment
+    - title
+    set:
+      funder_id: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - created_at
+    - deadline
+    - description
+    - experience_level
+    - fee
+    - funder_id
+    - id
+    - image_url
+    - issue_url
+    - status
+    - time_commitment
+    - title
+    - updated_at
+    filter: {}
+  role: public
+- permission:
+    allow_aggregations: true
+    columns:
+    - created_at
+    - deadline
+    - description
+    - experience_level
+    - fee
+    - funder_id
+    - id
+    - image_url
+    - issue_url
+    - status
+    - time_commitment
+    - title
+    - updated_at
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check:
+      funder_id:
+        _eq: X-Hasura-User-Id
+    columns:
+    - deadline
+    - description
+    - experience_level
+    - image_url
+    - issue_url
+    - status
+    - time_commitment
+    - title
+    filter:
+      funder_id:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      funder_id:
+        _eq: X-Hasura-User-Id
+  role: user

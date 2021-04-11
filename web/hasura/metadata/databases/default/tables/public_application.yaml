@@ -1,0 +1,86 @@
+table:
+  name: application
+  schema: public
+configuration:
+  custom_column_names: {}
+  custom_root_fields:
+    delete: deleteApplications
+    delete_by_pk: deleteApplication
+    insert: insertApplications
+    insert_one: insertApplication
+    select: applications
+    select_by_pk: application
+    update: updateApplications
+    update_by_pk: updateApplication
+object_relationships:
+- name: applicant
+  using:
+    foreign_key_constraint_on: applicant_id
+- name: application_status_type
+  using:
+    foreign_key_constraint_on: status
+- name: gig
+  using:
+    foreign_key_constraint_on: gig_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      applicant_id:
+        _eq: X-Hasura-User-Id
+    columns:
+    - gig_id
+    - details
+    - payment_address
+    set:
+      applicant_id: x-hasura-User-Id
+      status: pending
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - applicant_id
+    - gig_id
+    - created_at
+    - details
+    - id
+    - payment_address
+    - status
+    - updated_at
+    filter: {}
+  role: public
+- permission:
+    allow_aggregations: true
+    columns:
+    - applicant_id
+    - gig_id
+    - created_at
+    - details
+    - id
+    - payment_address
+    - status
+    - updated_at
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check:
+      applicant_id:
+        _eq: X-Hasura-User-Id
+    columns:
+    - gig_id
+    - details
+    - status
+    filter:
+      applicant_id:
+        _eq: X-Hasura-User-Id
+    set:
+      applicant_id: x-hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      applicant_id:
+        _eq: X-Hasura-User-Id
+  role: user
