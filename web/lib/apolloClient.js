@@ -2,9 +2,9 @@ import fetch from 'isomorphic-unfetch';
 import { ApolloClient, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { InMemoryCache } from '@apollo/client/cache';
-import { onError } from '@apollo/client/link/error';
+// import { onError } from '@apollo/client/link/error';
 
-let accessToken = null;
+// let accessToken = null;
 const HASURA_DOMAIN = process.env.NEXT_PUBLIC_HASURA_DOMAIN;
 
 const httpLink = createHttpLink({
@@ -20,7 +20,7 @@ const authLink = setContext(async function authLink(req, { headers }) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     baseUrl = req ? `${protocol}://${req.headers.host}` : '';
   }
-  await requestAccessToken(baseUrl);
+  const accessToken = await requestAccessToken(baseUrl);
   return accessToken
     ? {
         headers: {
@@ -32,15 +32,15 @@ const authLink = setContext(async function authLink(req, { headers }) {
 });
 
 // remove cached token on 401 from the server
-onError(function onApolloError({ networkError }) {
-  if (
-    networkError &&
-    networkError.name === 'ServerError' &&
-    networkError.statusCode === 401
-  ) {
-    accessToken = null;
-  }
-});
+// onError(function onApolloError({ networkError }) {
+//   if (
+//     networkError &&
+//     networkError.name === 'ServerError' &&
+//     networkError.statusCode === 401
+//   ) {
+//     accessToken = null;
+//   }
+// });
 
 export default function createApolloClient(initialState) {
   const onServer = typeof window === 'undefined';
@@ -54,17 +54,16 @@ export default function createApolloClient(initialState) {
 }
 
 async function requestAccessToken(baseUrl = '') {
-  if (accessToken) return;
   try {
     const res = await fetch(`${baseUrl}/api/me`);
     if (res.ok) {
       const json = await res.json();
-      accessToken = json.token;
+      return json.token;
     } else {
-      accessToken = null;
+      return null;
     }
   } catch (e) {
     console.error('failed loading access token', e);
-    accessToken = null;
+    return null;
   }
 }
