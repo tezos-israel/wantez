@@ -4,7 +4,7 @@ import { debounce } from 'lib/debounce';
 
 const CHECK_URL_UNIQUENESS = gql`
   query($issueUrl: String) {
-    bounty_aggregate(where: { issueUrl: { _eq: $issueUrl } }) {
+    gig_aggregate(where: { issue_url: { _eq: $issueUrl } }) {
       aggregate {
         count
       }
@@ -36,7 +36,7 @@ export function useUniqueURLValidation() {
       return;
     }
     const { data, error } = response;
-    setIsUnique(!!(data && data.bounty_aggregate.aggregate.count === 0));
+    setIsUnique(!!(data && data.gig_aggregate.aggregate.count === 0));
     setIsLoading(false);
     setError(error || '');
   }

@@ -161,7 +161,7 @@ export function GigInfo({ gig }) {
 
           <GigDescription description={gig.description} />
 
-          <GigTags tags={gig.bounty_tags} />
+          <GigTags tags={gig.gig_tags} />
 
           <Divider className="border-blue-600 border-dashed" />
 
@@ -205,6 +205,6 @@ GigInfo.propTypes = {
     imageUrl: PropTypes.string,
     status: PropTypes.string,
     title: PropTypes.string,
-    bounty_tags: PropTypes.array,
+    gig_tags: PropTypes.array,
   }),
 };

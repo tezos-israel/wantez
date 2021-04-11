@@ -15,78 +15,78 @@
   object_relationships:
   - name: applicant
     using:
-      foreign_key_constraint_on: applicantId
-  - name: applicationStatusType
+      foreign_key_constraint_on: applicant_id
+  - name: application_status_type
     using:
       foreign_key_constraint_on: status
-  - name: bounty
+  - name: gig
     using:
-      foreign_key_constraint_on: bountyId
+      foreign_key_constraint_on: gig_id
   insert_permissions:
   - role: user
     permission:
       check:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
       set:
         status: pending
-        applicantId: x-hasura-User-Id
+        applicant_id: x-hasura-User-Id
       columns:
-      - bountyId
+      - gig_id
       - details
-      - paymentAddress
+      - payment_address
       backend_only: false
   select_permissions:
   - role: public
     permission:
       columns:
-      - applicantId
-      - bountyId
-      - createdAt
+      - applicant_id
+      - gig_id
+      - created_at
       - details
       - id
-      - paymentAddress
+      - payment_address
       - status
-      - updatedAt
+      - updated_at
       filter: {}
       allow_aggregations: true
   - role: user
     permission:
       columns:
-      - applicantId
-      - bountyId
-      - createdAt
+      - applicant_id
+      - gig_id
+      - created_at
       - details
       - id
-      - paymentAddress
+      - payment_address
       - status
-      - updatedAt
+      - updated_at
       filter: {}
       allow_aggregations: true
   update_permissions:
   - role: user
     permission:
       columns:
-      - bountyId
+      - gig_id
       - details
       - status
       filter:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
       check:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
       set:
-        applicantId: x-hasura-User-Id
+        applicant_id: x-hasura-User-Id
   delete_permissions:
   - role: user
     permission:
       filter:
-        applicantId:
+        applicant_id:
           _eq: X-Hasura-User-Id
 - table:
     schema: public
-    name: applicationStatusType
+    name: application_status_type
   is_enum: true
   array_relationships:
   - name: applications
@@ -96,250 +96,6 @@
         table:
           schema: public
           name: application
-- table:
-    schema: public
-    name: bounty
-  object_relationships:
-  - name: application
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: application
-        column_mapping:
-          id: bountyId
-  - name: bountyStatusType
-    using:
-      foreign_key_constraint_on: status
-  - name: funder
-    using:
-      foreign_key_constraint_on: funderId
-  array_relationships:
-  - name: applications
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: application
-        column_mapping:
-          id: bountyId
-  - name: bounty_tags
-    using:
-      foreign_key_constraint_on:
-        column: bounty_id
-        table:
-          schema: public
-          name: bounty_tags
-  - name: categories
-    using:
-      foreign_key_constraint_on:
-        column: bounty_id
-        table:
-          schema: public
-          name: bounty_category
-  insert_permissions:
-  - role: user
-    permission:
-      check:
-        funderId:
-          _eq: X-Hasura-User-Id
-      set:
-        funderId: x-hasura-User-Id
-      columns:
-      - deadline
-      - description
-      - experienceLevel
-      - fee
-      - imageUrl
-      - issueUrl
-      - status
-      - timeCommitment
-      - title
-      backend_only: false
-  select_permissions:
-  - role: public
-    permission:
-      columns:
-      - createdAt
-      - deadline
-      - description
-      - experienceLevel
-      - fee
-      - funderId
-      - id
-      - imageUrl
-      - issueUrl
-      - status
-      - timeCommitment
-      - title
-      - updatedAt
-      filter: {}
-      allow_aggregations: true
-  - role: user
-    permission:
-      columns:
-      - createdAt
-      - deadline
-      - description
-      - experienceLevel
-      - fee
-      - funderId
-      - id
-      - imageUrl
-      - issueUrl
-      - status
-      - timeCommitment
-      - title
-      - updatedAt
-      filter: {}
-      allow_aggregations: true
-  update_permissions:
-  - role: user
-    permission:
-      columns:
-      - deadline
-      - description
-      - experienceLevel
-      - imageUrl
-      - issueUrl
-      - status
-      - timeCommitment
-      - title
-      filter:
-        funderId:
-          _eq: X-Hasura-User-Id
-      check:
-        funderId:
-          _eq: X-Hasura-User-Id
-  delete_permissions:
-  - role: user
-    permission:
-      filter:
-        funderId:
-          _eq: X-Hasura-User-Id
-- table:
-    schema: public
-    name: bountyStatusTypes
-  is_enum: true
-  array_relationships:
-  - name: bounties
-    using:
-      foreign_key_constraint_on:
-        column: status
-        table:
-          schema: public
-          name: bounty
-- table:
-    schema: public
-    name: bounty_category
-  object_relationships:
-  - name: bounty
-    using:
-      foreign_key_constraint_on: bounty_id
-  insert_permissions:
-  - role: user
-    permission:
-      check:
-        bounty:
-          funderId:
-            _eq: X-Hasura-User-Id
-      columns:
-      - bounty_id
-      - category
-      backend_only: false
-  select_permissions:
-  - role: public
-    permission:
-      columns:
-      - bounty_id
-      - category
-      filter: {}
-  - role: user
-    permission:
-      columns:
-      - bounty_id
-      - category
-      filter: {}
-  update_permissions:
-  - role: user
-    permission:
-      columns:
-      - category
-      - bounty_id
-      filter:
-        bounty:
-          funderId:
-            _eq: X-Hasura-User-Id
-      check:
-        bounty:
-          funderId:
-            _eq: X-Hasura-User-Id
-  delete_permissions:
-  - role: user
-    permission:
-      filter:
-        bounty:
-          funderId:
-            _eq: X-Hasura-User-Id
-- table:
-    schema: public
-    name: bounty_tags
-  object_relationships:
-  - name: bounty
-    using:
-      foreign_key_constraint_on: bounty_id
-  - name: tag
-    using:
-      foreign_key_constraint_on: tag_id
-  insert_permissions:
-  - role: user
-    permission:
-      check:
-        bounty:
-          funder:
-            id:
-              _eq: X-Hasura-User-Id
-      columns:
-      - bounty_id
-      - tag_id
-      backend_only: false
-  select_permissions:
-  - role: public
-    permission:
-      columns:
-      - bounty_id
-      - tag_id
-      filter: {}
-  - role: user
-    permission:
-      columns:
-      - bounty_id
-      - tag_id
-      filter: {}
-  update_permissions:
-  - role: user
-    permission:
-      columns:
-      - bounty_id
-      - tag_id
-      filter:
-        bounty:
-          funder:
-            id:
-              _eq: X-Hasura-User-Id
-      check:
-        bounty:
-          funder:
-            id:
-              _eq: X-Hasura-User-Id
-  delete_permissions:
-  - role: user
-    permission:
-      filter:
-        bounty:
-          funder:
-            id:
-              _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: category
@@ -357,33 +113,269 @@
       filter: {}
 - table:
     schema: public
-    name: experienceLevel
+    name: experience_level
   is_enum: true
   select_permissions:
   - role: public
     permission:
       columns:
-      - experienceLevel
+      - experience_level
       filter: {}
   - role: user
     permission:
       columns:
-      - experienceLevel
+      - experience_level
       filter: {}
+- table:
+    schema: public
+    name: gig
+  object_relationships:
+  - name: funder
+    using:
+      foreign_key_constraint_on: funder_id
+  - name: gig_status_type
+    using:
+      foreign_key_constraint_on: status
+  array_relationships:
+  - name: applications
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: application
+        column_mapping:
+          id: gig_id
+  - name: categories
+    using:
+      foreign_key_constraint_on:
+        column: gig_id
+        table:
+          schema: public
+          name: gig_category
+  - name: gig_tags
+    using:
+      foreign_key_constraint_on:
+        column: gig_id
+        table:
+          schema: public
+          name: gig_tags
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        funder_id:
+          _eq: X-Hasura-User-Id
+      set:
+        funder_id: x-hasura-User-Id
+      columns:
+      - deadline
+      - description
+      - experience_level
+      - fee
+      - image_url
+      - issue_url
+      - status
+      - time_commitment
+      - title
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - created_at
+      - deadline
+      - description
+      - experience_level
+      - fee
+      - funder_id
+      - id
+      - image_url
+      - issue_url
+      - status
+      - time_commitment
+      - title
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - created_at
+      - deadline
+      - description
+      - experience_level
+      - fee
+      - funder_id
+      - id
+      - image_url
+      - issue_url
+      - status
+      - time_commitment
+      - title
+      - updated_at
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - deadline
+      - description
+      - experience_level
+      - image_url
+      - issue_url
+      - status
+      - time_commitment
+      - title
+      filter:
+        funder_id:
+          _eq: X-Hasura-User-Id
+      check:
+        funder_id:
+          _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        funder_id:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: gig_category
+  object_relationships:
+  - name: gig
+    using:
+      foreign_key_constraint_on: gig_id
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        gig:
+          funder_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - gig_id
+      - category
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - gig_id
+      - category
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - gig_id
+      - category
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - category
+      - gig_id
+      filter:
+        gig:
+          funder_id:
+            _eq: X-Hasura-User-Id
+      check:
+        gig:
+          funder_id:
+            _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        gig:
+          funder_id:
+            _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: gig_status_type
+  is_enum: true
+  array_relationships:
+  - name: gigs
+    using:
+      foreign_key_constraint_on:
+        column: status
+        table:
+          schema: public
+          name: gig
+- table:
+    schema: public
+    name: gig_tags
+  object_relationships:
+  - name: gig
+    using:
+      foreign_key_constraint_on: gig_id
+  - name: tag
+    using:
+      foreign_key_constraint_on: tag_id
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        gig:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
+      columns:
+      - gig_id
+      - tag_id
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - gig_id
+      - tag_id
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - gig_id
+      - tag_id
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - gig_id
+      - tag_id
+      filter:
+        gig:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
+      check:
+        gig:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        gig:
+          funder:
+            id:
+              _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: site
   array_relationships:
-  - name: socialAccounts
+  - name: social_accounts
     using:
       foreign_key_constraint_on:
         column: site
         table:
           schema: public
-          name: socialAccount
+          name: social_account
 - table:
     schema: public
-    name: socialAccount
+    name: social_account
   object_relationships:
   - name: siteBySite
     using:
@@ -401,13 +393,13 @@
       update_by_pk: update_tag
     custom_column_names: {}
   array_relationships:
-  - name: tag_bounties
+  - name: tag_gigs
     using:
       foreign_key_constraint_on:
         column: tag_id
         table:
           schema: public
-          name: bounty_tags
+          name: gig_tags
   insert_permissions:
   - role: user
     permission:
@@ -435,7 +427,7 @@
       check: null
 - table:
     schema: public
-    name: timeCommitmentTypes
+    name: time_commitment_type
   is_enum: true
 - table:
     schema: public
@@ -444,25 +436,25 @@
   - name: applications
     using:
       foreign_key_constraint_on:
-        column: applicantId
+        column: applicant_id
         table:
           schema: public
           name: application
-  - name: bounties
+  - name: gigs
     using:
       foreign_key_constraint_on:
-        column: funderId
+        column: funder_id
         table:
           schema: public
-          name: bounty
-  - name: socialAccounts
+          name: gig
+  - name: social_accounts
     using:
       manual_configuration:
         remote_table:
           schema: public
-          name: socialAccount
+          name: social_account
         column_mapping:
-          id: userId
+          id: user_id
   select_permissions:
   - role: public
     permission:

@@ -82,30 +82,30 @@ GigApplications.propTypes = {
 };
 
 function updateCacheAfterDelete(cache, { data }) {
-  updateGetBountiesCache(cache, { data });
-  updateBountyCache(cache, { data });
+  updateGetGigsCache(cache, { data });
+  updateGigCache(cache, { data });
 }
 
-function updateBountyCache(cache, { data }) {
-  const bountyId = data.deleteApplication.bountyId;
+function updateGigCache(cache, { data }) {
+  const gigId = data.deleteApplication.gigId;
 
-  const bountyQuery = cache.readQuery({
+  const gigQuery = cache.readQuery({
     query: GIG_QUERY,
-    variables: { id: bountyId },
+    variables: { id: gigId },
   });
 
-  if (!bountyQuery) {
+  if (!gigQuery) {
     return;
   }
   const appId = data.deleteApplication.id;
-  const bounty = bountyQuery.bounty_by_pk;
+  const gig = gigQuery.gig_by_pk;
 
   cache.writeQuery({
     query: GIG_QUERY,
     data: {
-      bounty_by_pk: {
-        ...bounty,
-        applications: bounty.applications
+      gig_by_pk: {
+        ...gig,
+        applications: gig.applications
           .filter((app) => app.id !== appId)
           .map((app) => ({ __typename: 'application', id: app.id })),
       },
@@ -113,28 +113,28 @@ function updateBountyCache(cache, { data }) {
   });
 }
 
-function updateGetBountiesCache(cache, { data }) {
-  const existingBountiesQuery = cache.readQuery({
+function updateGetGigsCache(cache, { data }) {
+  const existingGigsQuery = cache.readQuery({
     query: GET_GIGS,
   });
 
-  if (!existingBountiesQuery) {
+  if (!existingGigsQuery) {
     return;
   }
 
-  const bountyId = data.deleteApplication.bountyId;
+  const gigId = data.deleteApplication.gigId;
 
   cache.writeQuery({
     query: GET_GIGS,
     data: {
-      bounty: existingBountiesQuery.bounty.map((b) =>
-        b.id !== bountyId
-          ? b
+      gig: existingGigsQuery.gig.map((gig) =>
+        gig.id !== gigId
+          ? gig
           : {
-              ...b,
+              ...gig,
               applications_aggregate: {
                 aggregate: {
-                  count: b.applications_aggregate.aggregate.count - 1,
+                  count: gig.applications_aggregate.aggregate.count - 1,
                 },
               },
             }

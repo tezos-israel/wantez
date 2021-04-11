@@ -118,17 +118,17 @@ ApplyDialogForm.propTypes = {
 };
 
 function updateCacheAfterCreate(cache, { data }) {
-  const { bountyId, appId } = data.insertApplication;
+  const { gigId, appId } = data.insertApplication;
 
-  updateBountyAppsCache(cache, bountyId, appId);
-  updateBountyAppsCountCache(cache, bountyId);
+  updateGigAppsCache(cache, gigId, appId);
+  updateGigAppsCountCache(cache, gigId);
 }
 
-function updateBountyAppsCache(cache, bountyId, appId) {
+function updateGigAppsCache(cache, gigId, appId) {
   const fragmentQuery = {
-    id: `bounty:${bountyId}`,
+    id: `gig:${gigId}`,
     fragment: gql`
-      fragment bountyAApplications on bounty {
+      fragment gigApplications on gig {
         applications {
           id
         }
@@ -136,24 +136,24 @@ function updateBountyAppsCache(cache, bountyId, appId) {
     `,
   };
 
-  const bounty = cache.readFragment(fragmentQuery);
+  const gig = cache.readFragment(fragmentQuery);
 
   cache.writeFragment({
     ...fragmentQuery,
     data: {
       applications: [
-        ...bounty.applications,
+        ...gig.applications,
         { __typename: 'application', id: appId },
       ],
     },
   });
 }
 
-function updateBountyAppsCountCache(cache, bountyId) {
+function updateGigAppsCountCache(cache, gigId) {
   const fragmentQuery = {
-    id: `bounty:${bountyId}`,
+    id: `gig:${gigId}`,
     fragment: gql`
-      fragment bountyAApplicationsCount on bounty {
+      fragment gigApplicationsCount on gig {
         applications_aggregate {
           aggregate {
             count
@@ -163,8 +163,8 @@ function updateBountyAppsCountCache(cache, bountyId) {
     `,
   };
 
-  const bounty = cache.readFragment(fragmentQuery);
-  if (!bounty) {
+  const gig = cache.readFragment(fragmentQuery);
+  if (!gig) {
     return;
   }
 
@@ -173,7 +173,7 @@ function updateBountyAppsCountCache(cache, bountyId) {
     data: {
       applications_aggregate: {
         aggregate: {
-          count: (bounty.applications_aggregate?.aggregate?.count || 0) + 1,
+          count: (gig.applications_aggregate?.aggregate?.count || 0) + 1,
         },
       },
     },

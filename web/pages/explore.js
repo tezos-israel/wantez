@@ -26,9 +26,9 @@ export default function ExplorePage() {
     return null;
   }
 
-  const bounties =
+  const gigs =
     data &&
-    data.bounty
+    data.gig
       .filter(
         (gig) =>
           (!filterValues.timeCommitment.length ||
@@ -38,7 +38,7 @@ export default function ExplorePage() {
       )
       .filter((gig) =>
         tags.every((tag) =>
-          gig.bounty_tags.some((tagInfo) => tagInfo.tag.name === tag)
+          gig.gig_tags.some((tagInfo) => tagInfo.tag.name === tag)
         )
       );
 
@@ -48,7 +48,7 @@ export default function ExplorePage() {
         <Loader type="TailSpin" color="#cacaca" height={50} width={50} />
       ) : error ? (
         <div className="alert" severity="error">
-          <div className="alert-title">Failed loading bounties</div>
+          <div className="alert-title">Failed loading gigs</div>
           {error.message || error}
         </div>
       ) : (
@@ -61,7 +61,7 @@ export default function ExplorePage() {
               <TagsList tags={tags} onChange={setTags} />
             </div>
             <div className="flex-auto">
-              <WantezList bounties={bounties} />
+              <WantezList gigs={gigs} />
             </div>
           </div>
         </div>

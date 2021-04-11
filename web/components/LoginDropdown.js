@@ -72,5 +72,5 @@ export function LoginDropdown({ dropdownRef }) {
 }
 
 LoginDropdown.propTypes = {
-  dropdownRef: PropTypes.func,
+  dropdownRef: PropTypes.object,
 };

@@ -2,16 +2,16 @@ import { gql } from '@apollo/client';
 
 export const GET_GIGS = gql`
   {
-    bounty {
+    gig {
       title
       id
       fee
       status
-      experienceLevel
-      imageUrl
-      createdAt
-      timeCommitment
-      bounty_tags {
+      experienceLevel: experience_level
+      image_url
+      createdAt: created_at
+      timeCommitment: time_commitment
+      gig_tags {
         tag {
           name
         }
@@ -27,16 +27,16 @@ export const GET_GIGS = gql`
 
 export const GIG_QUERY = gql`
   query($id: uuid!) {
-    bounty_by_pk(id: $id) {
+    gig_by_pk(id: $id) {
       id
       title
       fee
       status
-      imageUrl
-      createdAt
-      timeCommitment
+      image_url
+      createdAt: created_at
+      timeCommitment: time_commitment
       description
-      experienceLevel
+      experienceLevel: experience_level
       categories {
         category
       }
@@ -45,15 +45,15 @@ export const GIG_QUERY = gql`
       }
       applications {
         id
-        createdAt
+        createdAt: created_at
         status
-        paymentAddress
+        paymentAddress: payment_address
         details
         applicant {
           username
         }
       }
-      bounty_tags {
+      gig_tags {
         tag_id
       }
     }
@@ -66,28 +66,28 @@ export const GIG_QUERY = gql`
 export const SAVE_GIG = gql`
   mutation(
     $fee: numeric
-    $experienceLevel: experienceLevel_enum
-    $categories: [bounty_category_insert_input!]!
-    $timeCommitment: timeCommitmentTypes_enum
+    $experienceLevel: experience_level_enum
+    $categories: [gig_category_insert_input!]!
+    $timeCommitment: time_commitment_type_enum
     $issueUrl: String!
     $deadline: timestamptz!
-    $tags: [bounty_tags_insert_input!]!
+    $tags: [gig_tags_insert_input!]!
     $imageUrl: String!
     $title: String!
     $description: String!
   ) {
-    insert_bounty_one(
+    insert_gig_one(
       object: {
         fee: $fee
-        experienceLevel: $experienceLevel
-        timeCommitment: $timeCommitment
-        issueUrl: $issueUrl
+        experience_level: $experienceLevel
+        time_commitment: $timeCommitment
+        issue_url: $issueUrl
         title: $title
         description: $description
-        imageUrl: $imageUrl
+        image_url: $imageUrl
         deadline: $deadline
         categories: { data: $categories }
-        bounty_tags: { data: $tags }
+        gig_tags: { data: $tags }
       }
     ) {
       id
@@ -101,7 +101,7 @@ export const SAVE_GIG = gql`
 
 export const DELETE_GIG = gql`
   mutation($id: uuid!) {
-    delete_bounty_by_pk(id: $id) {
+    delete_gig_by_pk(id: $id) {
       id
     }
   }
@@ -109,16 +109,16 @@ export const DELETE_GIG = gql`
 
 export const REFUND_GIG = gql`
   mutation($id: uuid!) {
-    update_bounty_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
+    update_gig_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
       id
     }
   }
 `;
 
 export const APPROVE_APPLICATION = gql`
-  mutation($bountyId: uuid!, $applicationId: uuid!) {
-    update_bounty_by_pk(
-      pk_columns: { id: $bountyId }
+  mutation($gigId: uuid!, $applicationId: uuid!) {
+    update_gig_by_pk(
+      pk_columns: { id: $gigId }
       _set: { status: "finished" }
     ) {
       id
@@ -134,8 +134,8 @@ export const APPROVE_APPLICATION = gql`
     update_application(
       where: {
         _and: {
-          bountyId: { _eq: $bountyId }
-          _not: { applicantId: { _eq: $applicationId } }
+          gig_id: { _eq: $gigId }
+          _not: { applicant_id: { _eq: $applicationId } }
         }
       }
       _set: { status: "dismissed" }

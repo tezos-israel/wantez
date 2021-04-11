@@ -61,7 +61,7 @@ async function createUserIfNeeded({ email }) {
     mutation createUserIfNeeded($email: String!) {
       insert_user_one(
         object: { email: $email, username: $email }
-        on_conflict: { constraint: user_email_key, update_columns: lastSeenAt }
+        on_conflict: { constraint: user_email_key, update_columns: last_seen_at }
       ) {
         id
         email

@@ -3,17 +3,17 @@ import { gql } from '@apollo/client';
 export const CREATE_APPLICATION = gql`
   mutation applyToGig($details: String!, $gigId: uuid!, $address: String!) {
     insertApplication(
-      object: { details: $details, bountyId: $gigId, paymentAddress: $address }
+      object: { details: $details, gig_id: $gigId, payment_address: $address }
     ) {
       id
-      createdAt
+      createdAt: created_at
       status
       details
-      paymentAddress
+      paymentAddress: payment_address
       applicant {
         username
       }
-      bountyId
+      gigId: gig_id
     }
   }
 `;
@@ -21,7 +21,7 @@ export const CREATE_APPLICATION = gql`
 export const DELETE_APPLICATION = gql`
   mutation deleteApplication($appId: uuid!) {
     deleteApplication(id: $appId) {
-      bountyId
+      gigId: gig_id
       id
     }
   }

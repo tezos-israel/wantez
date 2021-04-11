@@ -20,5 +20,5 @@ export function ActionsMenu({ onLogout, actionsMenuRef }) {
 
 ActionsMenu.propTypes = {
   onLogout: PropTypes.func.isRequired,
-  actionsMenuRef: PropTypes.func,
+  actionsMenuRef: PropTypes.object.isRequired,
 };
