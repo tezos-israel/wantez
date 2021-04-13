@@ -15,7 +15,11 @@ import { GET_GIGS, GIG_QUERY } from 'queries/gigs';
 
 import GigApplicationsItem from './GigApplicationsItem';
 
-export default function GigApplications({ applications, currentUsername }) {
+export default function GigApplications({
+  isFunder,
+  applications,
+  currentUsername,
+}) {
   const [isCancelPopupOpen, openCancelPopup, closeCancelPopup] = useBoolean();
   const [deleteApplication] = useMutation(DELETE_APPLICATION, {
     update: updateCacheAfterDelete,
@@ -46,6 +50,7 @@ export default function GigApplications({ applications, currentUsername }) {
               application={item}
               key={item.id}
               isLast={index === applications.length - 1}
+              isFunder={isFunder}
               currentUsername={currentUsername}
               onCancel={() => handleCancel(item.id)}
             />
@@ -79,6 +84,7 @@ export default function GigApplications({ applications, currentUsername }) {
 GigApplications.propTypes = {
   applications: PropTypes.array.isRequired,
   currentUsername: PropTypes.string,
+  isFunder: PropTypes.bool,
 };
 
 function updateCacheAfterDelete(cache, { data }) {

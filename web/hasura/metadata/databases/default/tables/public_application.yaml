@@ -40,44 +40,50 @@ select_permissions:
 - permission:
     allow_aggregations: true
     columns:
-    - applicant_id
     - gig_id
-    - created_at
-    - details
     - id
+    - status
+    filter:
+      gig:
+        funder_id:
+          _eq: X-Hasura-User-Id
+  role: funder
+- permission:
+    allow_aggregations: true
+    columns:
+    - details
     - payment_address
     - status
+    - created_at
     - updated_at
+    - applicant_id
+    - gig_id
+    - id
     filter: {}
   role: public
 - permission:
     allow_aggregations: true
     columns:
-    - applicant_id
-    - gig_id
-    - created_at
     - details
-    - id
     - payment_address
     - status
+    - created_at
     - updated_at
+    - applicant_id
+    - gig_id
+    - id
     filter: {}
   role: user
 update_permissions:
 - permission:
-    check:
-      applicant_id:
-        _eq: X-Hasura-User-Id
+    check: null
     columns:
-    - gig_id
-    - details
     - status
     filter:
-      applicant_id:
-        _eq: X-Hasura-User-Id
-    set:
-      applicant_id: x-hasura-User-Id
-  role: user
+      gig:
+        funder_id:
+          _eq: X-Hasura-User-Id
+  role: funder
 delete_permissions:
 - permission:
     filter:

@@ -69,6 +69,24 @@ select_permissions:
     - title
     - updated_at
     filter: {}
+  role: funder
+- permission:
+    allow_aggregations: true
+    columns:
+    - created_at
+    - deadline
+    - description
+    - experience_level
+    - fee
+    - funder_id
+    - id
+    - image_url
+    - issue_url
+    - status
+    - time_commitment
+    - title
+    - updated_at
+    filter: {}
   role: public
 - permission:
     allow_aggregations: true
@@ -89,6 +107,14 @@ select_permissions:
     filter: {}
   role: user
 update_permissions:
+- permission:
+    check: null
+    columns:
+    - status
+    filter:
+      funder_id:
+        _eq: X-Hasura-User-Id
+  role: funder
 - permission:
     check:
       funder_id:

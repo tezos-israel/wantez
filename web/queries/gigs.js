@@ -107,37 +107,10 @@ export const DELETE_GIG = gql`
   }
 `;
 
-export const REFUND_GIG = gql`
-  mutation($id: uuid!) {
-    update_gig_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
-      id
-    }
-  }
-`;
-
-export const APPROVE_APPLICATION = gql`
-  mutation($gigId: uuid!, $applicationId: uuid!) {
-    update_gig_by_pk(pk_columns: { id: $gigId }, _set: { status: "finished" }) {
-      id
-    }
-
-    update_application_by_pk(
-      pk_columns: { id: $applicationId }
-      _set: { status: "approved" }
-    ) {
-      id
-    }
-
-    update_application(
-      where: {
-        _and: {
-          gig_id: { _eq: $gigId }
-          _not: { applicant_id: { _eq: $applicationId } }
-        }
-      }
-      _set: { status: "dismissed" }
-    ) {
-      affected_rows
-    }
-  }
-`;
+// export const REFUND_GIG = gql`
+//   mutation($id: uuid!) {
+//     update_gig_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
+//       id
+//     }
+//   }
+// `;

@@ -6,8 +6,9 @@ import {
   AccordionPanel,
 } from '@reach/accordion';
 import { formatDistance, subDays } from 'date-fns';
-//import { useMutation } from '@apollo/client';
-//import {APPROVE_APPLICATION } from 'queries/bounties';
+import { useMutation } from '@apollo/client';
+
+import { APPROVE_APPLICATION } from 'queries/applications';
 import { useRouter } from 'next/router';
 
 import CancelButton from './CancelButton';
@@ -17,12 +18,19 @@ import { AvatarImage } from '@shared/AvatarImage';
 export default function GigApplicationsItem({
   application,
   isLast,
+  isFunder,
   currentUsername,
   onCancel,
 }) {
   const router = useRouter();
-  const gigID = router.query.id;
-  //const [update_application_by_pk]  = useMutation(APPROVE_APPLICATION);
+  const gigId = router.query.id;
+  const [approveApplication] = useMutation(APPROVE_APPLICATION, {
+    context: {
+      headers: {
+        'x-hasura-role': 'funder',
+      },
+    },
+  });
 
   return (
     <AccordionItem
@@ -67,15 +75,18 @@ export default function GigApplicationsItem({
             {application.details}
           </div>
           <div className="md:px-10 lg:w-1/3 2xl:px-30 lg:mt-0 flex flex-col w-full px-5 mt-5">
-            {currentUsername !== application.applicant.username && (
+            {isFunder && (
               <>
                 <button
                   className="px-5 py-1 mb-3 font-bold text-white bg-blue-600 rounded-md"
-                  onClick={updateStatus}
+                  onClick={handleApprove}
                 >
                   Approve
                 </button>
-                <button className=" px-5 py-1 font-bold text-blue-600 transform border-2 border-blue-600 rounded-md">
+                <button
+                  className=" px-5 py-1 font-bold text-blue-600 transform border-2 border-blue-600 rounded-md"
+                  onClick={handleDismiss}
+                >
                   Dismiss
                 </button>
               </>
@@ -89,9 +100,13 @@ export default function GigApplicationsItem({
     </AccordionItem>
   );
 
-  function updateStatus() {
+  function handleApprove() {
+    approveApplication({ variables: { gigId, applicationId: application.id } });
+  }
+
+  function handleDismiss() {
     console.log(application.id);
-    console.log(gigID);
+    console.log(gigId);
     // update application
   }
 }
@@ -107,6 +122,7 @@ GigApplicationsItem.propTypes = {
     applicant: PropTypes.shape({ username: PropTypes.string }),
   }).isRequired,
   isLast: PropTypes.bool,
+  isFunder: PropTypes.bool,
   currentUsername: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
 };
