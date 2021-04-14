@@ -166,6 +166,7 @@ export function GigInfo({ gig }) {
           <Divider className="border-blue-600 border-dashed" />
 
           <GigApplications
+            isFunder={isFunder}
             applications={gig.applications}
             currentUsername={user && user.email}
           />

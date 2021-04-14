@@ -6,8 +6,13 @@ import {
   AccordionPanel,
 } from '@reach/accordion';
 import { formatDistance, subDays } from 'date-fns';
-//import { useMutation } from '@apollo/client';
-//import {APPROVE_APPLICATION } from 'queries/bounties';
+import { useMutation } from '@apollo/client';
+
+import {
+  APPROVE_APPLICATION,
+  RECONSIDER_APPLICATION,
+  DISMISS_APPLICATION,
+} from 'queries/applications';
 import { useRouter } from 'next/router';
 
 import CancelButton from './CancelButton';
@@ -17,12 +22,16 @@ import { AvatarImage } from '@shared/AvatarImage';
 export default function GigApplicationsItem({
   application,
   isLast,
+  isFunder,
+  hasApprovedApplication,
   currentUsername,
   onCancel,
 }) {
-  const router = useRouter();
-  const gigID = router.query.id;
-  //const [update_application_by_pk]  = useMutation(APPROVE_APPLICATION);
+  const {
+    handleApprove,
+    handleDismiss,
+    handleReconsider,
+  } = useApplicationMutations(application.id);
 
   return (
     <AccordionItem
@@ -67,46 +76,146 @@ export default function GigApplicationsItem({
             {application.details}
           </div>
           <div className="md:px-10 lg:w-1/3 2xl:px-30 lg:mt-0 flex flex-col w-full px-5 mt-5">
-            {currentUsername !== application.applicant.username && (
-              <>
-                <button
-                  className="px-5 py-1 mb-3 font-bold text-white bg-blue-600 rounded-md"
-                  onClick={updateStatus}
-                >
-                  Approve
-                </button>
-                <button className=" px-5 py-1 font-bold text-blue-600 transform border-2 border-blue-600 rounded-md">
-                  Dismiss
-                </button>
-              </>
-            )}
-            {currentUsername === application.applicant.username && (
-              <CancelButton onCancel={onCancel} />
-            )}
+            <ApplicationButtons
+              onCancel={onCancel}
+              hasApprovedApplication={hasApprovedApplication}
+              isApplicant={application.applicant.username === currentUsername}
+              status={application.status}
+              isFunder={isFunder}
+              onApprove={handleApprove}
+              onDismiss={handleDismiss}
+              onReconsider={handleReconsider}
+            />
           </div>
         </div>
       </AccordionPanel>
     </AccordionItem>
   );
-
-  function updateStatus() {
-    console.log(application.id);
-    console.log(gigID);
-    // update application
-  }
 }
 
 GigApplicationsItem.propTypes = {
   application: PropTypes.shape({
+    applicant: PropTypes.shape({
+      username: PropTypes.string,
+    }),
+    createdAt: PropTypes.string,
+    details: PropTypes.string,
     id: PropTypes.string,
-    title: PropTypes.string,
     image: PropTypes.string,
     status: PropTypes.string,
-    details: PropTypes.string,
-    createdAt: PropTypes.string,
-    applicant: PropTypes.shape({ username: PropTypes.string }),
+    title: PropTypes.string,
   }).isRequired,
-  isLast: PropTypes.bool,
   currentUsername: PropTypes.string,
+  hasApprovedApplication: PropTypes.bool.isRequired,
+  isFunder: PropTypes.bool,
+  isLast: PropTypes.bool,
   onCancel: PropTypes.func.isRequired,
 };
+
+function ApplicationButtons({
+  onCancel,
+  isApplicant,
+  isFunder,
+  hasApprovedApplication,
+  status,
+  onDismiss,
+  onReconsider,
+  onApprove,
+}) {
+  const isApproved = status === 'approved';
+  const isDismissed = status === 'dismissed';
+
+  if (isApplicant) {
+    return <CancelButton onCancel={onCancel} />;
+  }
+
+  if (!isFunder) {
+    return null;
+  }
+
+  if (isApproved || isDismissed) {
+    return (
+      <ApplicationButton onClick={onReconsider} opposite>
+        Reconsider
+      </ApplicationButton>
+    );
+  }
+
+  if (hasApprovedApplication) {
+    return null;
+  }
+
+  return (
+    <>
+      <ApplicationButton onClick={onApprove}>Approve</ApplicationButton>
+      <ApplicationButton onClick={onDismiss} opposite>
+        Dismiss
+      </ApplicationButton>
+    </>
+  );
+}
+
+ApplicationButtons.propTypes = {
+  hasApprovedApplication: PropTypes.bool.isRequired,
+  isApplicant: PropTypes.bool.isRequired,
+  isFunder: PropTypes.bool.isRequired,
+  onApprove: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func.isRequired,
+  onReconsider: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
+};
+
+function ApplicationButton({ children, opposite, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className={classnames(
+        'px-5 py-1 mb-3 font-bold border-2 rounded-md',
+        opposite ? 'text-blue-600 border-blue-600' : 'text-white bg-blue-600'
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+ApplicationButton.propTypes = {
+  children: PropTypes.any,
+  onClick: PropTypes.func.isRequired,
+  opposite: PropTypes.bool,
+};
+
+function useApplicationMutations(applicationId) {
+  const router = useRouter();
+  const gigId = router.query.id;
+
+  const requestContext = {
+    context: {
+      headers: {
+        'x-hasura-role': 'funder',
+      },
+    },
+  };
+
+  const [approveApplication] = useMutation(APPROVE_APPLICATION, requestContext);
+  const [dismissApplication] = useMutation(DISMISS_APPLICATION, requestContext);
+  const [reconsiderApplication] = useMutation(
+    RECONSIDER_APPLICATION,
+    requestContext
+  );
+
+  return { handleApprove, handleDismiss, handleReconsider };
+
+  function handleApprove() {
+    approveApplication({ variables: { gigId, applicationId } });
+  }
+
+  function handleDismiss() {
+    dismissApplication({ variables: { gigId, applicationId } });
+  }
+
+  function handleReconsider() {
+    reconsiderApplication({ variables: { gigId, applicationId } });
+  }
+}

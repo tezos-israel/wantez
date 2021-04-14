@@ -36,7 +36,7 @@ export default async (req, res) => {
     userMetadata['https://hasura.io/jwt/claims'] = {
       'x-hasura-default-role': 'user',
       // do some custom logic to decide allowed roles
-      'x-hasura-allowed-roles': ['user'],
+      'x-hasura-allowed-roles': ['user', 'funder', 'applicant'],
       'x-hasura-user-id': id,
     };
   } catch (e) {

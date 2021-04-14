@@ -23,12 +23,11 @@ function Layout({ children, title, network }) {
         />
       </Head>
 
-      <NavBar network={network} />
-
       <main className="flex flex-col items-center justify-center flex-auto mt-20">
         {children}
       </main>
 
+      <NavBar network={network} />
       <Footer />
     </div>
   );

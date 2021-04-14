@@ -26,3 +26,49 @@ export const DELETE_APPLICATION = gql`
     }
   }
 `;
+
+export const APPROVE_APPLICATION = gql`
+  mutation approveApplication($gigId: uuid!, $applicationId: uuid!) {
+    update_gig_by_pk(pk_columns: { id: $gigId }, _set: { status: work }) {
+      id
+      status
+    }
+
+    updateApplication(
+      pk_columns: { id: $applicationId }
+      _set: { status: approved }
+    ) {
+      id
+      status
+    }
+  }
+`;
+
+export const RECONSIDER_APPLICATION = gql`
+  mutation reconsiderApplication($gigId: uuid!, $applicationId: uuid!) {
+    update_gig_by_pk(pk_columns: { id: $gigId }, _set: { status: pending }) {
+      id
+      status
+    }
+
+    updateApplication(
+      pk_columns: { id: $applicationId }
+      _set: { status: pending }
+    ) {
+      id
+      status
+    }
+  }
+`;
+
+export const DISMISS_APPLICATION = gql`
+  mutation dismissApplication($applicationId: uuid!) {
+    updateApplication(
+      pk_columns: { id: $applicationId }
+      _set: { status: dismissed }
+    ) {
+      id
+      status
+    }
+  }
+`;
