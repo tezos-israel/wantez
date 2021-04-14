@@ -41,18 +41,34 @@ export const APPROVE_APPLICATION = gql`
       id
       status
     }
+  }
+`;
 
-    dismissedApplications: updateApplications(
-      where: {
-        _and: { gig_id: { _eq: $gigId }, _not: { id: { _eq: $applicationId } } }
-      }
+export const RECONSIDER_APPLICATION = gql`
+  mutation reconsiderApplication($gigId: uuid!, $applicationId: uuid!) {
+    update_gig_by_pk(pk_columns: { id: $gigId }, _set: { status: pending }) {
+      id
+      status
+    }
+
+    updateApplication(
+      pk_columns: { id: $applicationId }
+      _set: { status: pending }
+    ) {
+      id
+      status
+    }
+  }
+`;
+
+export const DISMISS_APPLICATION = gql`
+  mutation dismissApplication($applicationId: uuid!) {
+    updateApplication(
+      pk_columns: { id: $applicationId }
       _set: { status: dismissed }
     ) {
-      affected_rows
-      returning {
-        id
-        status
-      }
+      id
+      status
     }
   }
 `;

@@ -33,6 +33,10 @@ export default function GigApplications({
     startLoading,
   } = useLoadingState();
 
+  const hasApprovedApplication = applications.some(
+    (application) => application.status === 'approved'
+  );
+
   return (
     <div className="lg:p-10 p-5">
       <h3 className="font-bold uppercase">Applications</h3>
@@ -53,6 +57,7 @@ export default function GigApplications({
               isFunder={isFunder}
               currentUsername={currentUsername}
               onCancel={() => handleCancel(item.id)}
+              hasApprovedApplication={hasApprovedApplication}
             />
           ))}
         </Accordion>
