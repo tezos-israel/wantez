@@ -106,11 +106,3 @@ export const DELETE_GIG = gql`
     }
   }
 `;
-
-// export const REFUND_GIG = gql`
-//   mutation($id: uuid!) {
-//     update_gig_by_pk(pk_columns: { id: $id }, _set: { status: "canceled" }) {
-//       id
-//     }
-//   }
-// `;
