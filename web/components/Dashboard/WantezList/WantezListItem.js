@@ -8,6 +8,8 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import parseJSON from 'date-fns/parseJSON';
 import Link from 'next/link';
 
+import { usePrice } from '../../../hooks/usePrice';
+
 export function WantezListItem({
   title,
   imgUrl,
@@ -20,7 +22,7 @@ export function WantezListItem({
   tags,
 }) {
   const levelClass = getLevelClassName(experienceLevel);
-  const feeInILS = fee * 2;
+  const feeInILS = usePrice(fee, 'ils');
   return (
     <Link href={`/gig/${id}`}>
       <a
