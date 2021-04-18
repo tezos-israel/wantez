@@ -21,6 +21,11 @@ export default function Header({ gig, user, isFunder }) {
     gig.applications.find(
       (application) => application.applicant.username === user.email
     );
+
+  const currentWork = gig.applications.find(
+    (application) => application.status === 'approved'
+  );
+
   const isApplyButtonVisible = !isFunder && !hasApplied;
 
   return (
@@ -95,7 +100,9 @@ export default function Header({ gig, user, isFunder }) {
             gigTitle={gig.title}
           />
 
-          {gig.status === 'work' && <PayWorkButton />}
+          {isFunder && gig.status === 'work' && (
+            <PayWorkButton application={currentWork} gigId={gig.id} />
+          )}
 
           {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
         Share
