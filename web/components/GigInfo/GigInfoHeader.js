@@ -6,7 +6,7 @@ import { useFiatPrice } from 'hooks/CurrencyContext';
 import { useWalletContext } from 'hooks/WalletContext';
 import { getLevelClassName } from 'lib/experienceLevel';
 import ApplyButton from './ApplyButton';
-import Button from '@shared/Button';
+import PayWorkButton from './PayWorkButton';
 
 import { gigProps } from './props';
 import styles from './gigInfo.module.css';
@@ -95,9 +95,7 @@ export default function Header({ gig, user, isFunder }) {
             gigTitle={gig.title}
           />
 
-          {gig.status === 'work' && (
-            <Button color="primary">Approve work</Button>
-          )}
+          {gig.status === 'work' && <PayWorkButton />}
 
           {/* <button className=" md:px-8 lg:px-10 px-5 py-2 font-bold text-blue-600 transform rounded-md">
         Share
