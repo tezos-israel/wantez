@@ -8,7 +8,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import parseJSON from 'date-fns/parseJSON';
 import Link from 'next/link';
 
-import { usePrice } from '../../../hooks/usePrice';
+import { usePrice } from 'hooks/usePrice';
 
 export function WantezListItem({
   title,
