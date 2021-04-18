@@ -38,7 +38,10 @@ export function LoginDropdown({ dropdownRef }) {
       onSubmit={formik.handleSubmit}
       ref={dropdownRef}
     >
-      <FormField fieldId="email-input" error={formik.errors.email}>
+      <FormField
+        fieldId="email-input"
+        error={formik.touched.email && formik.errors.email}
+      >
         <div className="flex">
           <input
             className={classnames(
