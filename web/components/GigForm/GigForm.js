@@ -8,7 +8,7 @@ import { FieldGroup, FieldGroupTitle } from 'components/shared/FieldGroup';
 import { FormField } from 'components/shared/FormField';
 import { OptionsField } from 'components/shared/OptionsField';
 
-import { usePrice } from '../../hooks/usePrice';
+import { useFiatPrice } from 'hooks/CurrencyContext';
 
 import { useRepoInfo } from './use-repo-info';
 
@@ -45,7 +45,9 @@ export default function GigForm({
     validationSchema: schema,
   });
 
-  const priceFiat = usePrice(formik.values.price, 'ils');
+  const { fiatPrice, currencySymbol, isLoading: isLoadingPrice } = useFiatPrice(
+    formik.values.price
+  );
   const fee = formik.values.price * FEE_PERCENT;
 
   const {
@@ -172,12 +174,12 @@ export default function GigForm({
                 value={formik.values.price}
               />
             </FormField>
-            <FormField title="ILS" fieldId="usd-input">
+            <FormField title={currencySymbol} fieldId="usd-input">
               <input
                 type="number"
                 className="form-input w-full border border-gray-500 rounded-none"
                 disabled
-                value={priceFiat}
+                value={fiatPrice}
               />
             </FormField>
             <FormField
@@ -216,8 +218,9 @@ export default function GigForm({
             {formik.values.price + fee} XTZ
           </div>
           <p className="text-xs text-green-600">
-            Issue {formik.values.price} XTZ ({priceFiat} ILS) + {fee} XTZ Wantez
-            Platform Fee
+            Issue {formik.values.price} XTZ
+            {!isLoadingPrice && ` (${fiatPrice} ${currencySymbol})`} + {fee} XTZ
+            Wantez Platform Fee
           </p>
         </FieldGroup>
         <div className="my-6 border-t-2 border-blue-500 border-dashed" />

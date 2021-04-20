@@ -2,7 +2,7 @@ import { formatDistance, subDays } from 'date-fns';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { usePrice } from 'hooks/usePrice';
+import { useFiatPrice } from 'hooks/CurrencyContext';
 import { useAuthContext } from 'hooks/AuthContext';
 import { useWalletContext } from 'hooks/WalletContext';
 import { getLevelClassName } from 'lib/experienceLevel';
@@ -21,7 +21,9 @@ import ApplyButton from './ApplyButton';
 import styles from './gigInfo.module.css';
 
 export function GigInfo({ gig }) {
-  const priceFiat = usePrice(gig.fee, 'ils');
+  const { fiatPrice, currencySymbol, isLoading: isLoadingPrice } = useFiatPrice(
+    gig.fee
+  );
   const { user } = useAuthContext();
   const { address } = useWalletContext();
 
@@ -78,13 +80,16 @@ export function GigInfo({ gig }) {
             <div className="lg:pl-30">
               <div className="gig-details flex justify-between mt-8 mb-10">
                 <div className="left-section">
-                  <div className="gig-costs md:text-md flex justify-start mb-5 text-lg">
-                    <div className="cost tez-cost mr-4 font-bold text-blue-600">
+                  <div className="md:text-md flex justify-start mb-5 text-lg">
+                    <div className="mr-4 font-bold text-blue-600">
                       {gig.fee} <span className="currency">XTZ</span>
                     </div>
-                    <div className="cost text-gray-500">
-                      {priceFiat} <span className="currency">ILS ₪</span>
-                    </div>
+                    {!isLoadingPrice && (
+                      <div className="text-gray-500">
+                        {fiatPrice}
+                        <span className="ml-1">{currencySymbol}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="gig-info">
                     <ul className="info-list md:text-sm lg:flex-row flex flex-col justify-between text-gray-500">

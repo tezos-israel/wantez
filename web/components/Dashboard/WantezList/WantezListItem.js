@@ -8,7 +8,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import parseJSON from 'date-fns/parseJSON';
 import Link from 'next/link';
 
-import { usePrice } from 'hooks/usePrice';
+import { useFiatPrice } from 'hooks/CurrencyContext';
 
 export function WantezListItem({
   title,
@@ -22,7 +22,10 @@ export function WantezListItem({
   tags,
 }) {
   const levelClass = getLevelClassName(experienceLevel);
-  const feeInILS = usePrice(fee, 'ils');
+
+  const { fiatPrice, currencySymbol, isLoading: isLoadingPrice } = useFiatPrice(
+    fee
+  );
   return (
     <Link href={`/gig/${id}`}>
       <a
@@ -45,7 +48,11 @@ export function WantezListItem({
           </div>
           <div className="col-span-1 col-start-12 text-right">
             <div className="font-bold">{fee} XTZ</div>
-            <div className="font-medium text-gray-500">{feeInILS} ILS</div>
+            {!isLoadingPrice && (
+              <div className="font-medium text-gray-500">
+                {fiatPrice} {currencySymbol}
+              </div>
+            )}
           </div>
           <div className="flex items-end col-span-9 space-x-4">
             <div className="flex items-center text-xs text-gray-500 capitalize">
