@@ -19,7 +19,7 @@ export default function Nav({ network }) {
         <Link href="/fund">Fund</Link>
       </div>
       {!isMainnet(network) && (
-        <div className="p-2 mx-auto bg-red-300 rounded-sm">Not mainnet</div>
+        <div className="p-2 mx-auto bg-red-300 rounded-sm">{network.id}</div>
       )}
 
       <UserButtons />
