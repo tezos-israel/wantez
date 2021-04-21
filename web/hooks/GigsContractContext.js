@@ -11,9 +11,18 @@ export const GigsContractContext = createContext({
   error: null,
   connect() {},
 
-  fundGig() {},
-  refundGig() {},
-  approveApplication() {},
+  // eslint-disable-next-line no-unused-vars
+  fundGig() {
+    throw new Error('not implemented');
+  },
+  // eslint-disable-next-line no-unused-vars
+  refundGig() {
+    throw new Error('not implemented');
+  },
+  // eslint-disable-next-line no-unused-vars
+  payWork(wantezId = '', paymentAddress = '') {
+    throw new Error('not implemented');
+  },
 });
 
 export const useGigsContractContext = () => useContext(GigsContractContext);
@@ -49,7 +58,7 @@ export function GigContractProvider({ address, children }) {
         clearErrors,
         fundGig,
         refundGig,
-        approveApplication,
+        payWork,
       }}
     >
       {children}
@@ -86,10 +95,10 @@ export function GigContractProvider({ address, children }) {
     return callMethod(async (methods) => await methods.refundBounty(id).send());
   }
 
-  function approveApplication(wantezId, paymentAddress) {
+  function payWork(wantezId, paymentAddress) {
     return callMethod(
       async (methods) =>
-        await methods.approveApplication(paymentAddress, wantezId).send()
+        await methods.approveApplication(wantezId, paymentAddress).send()
     );
   }
 }

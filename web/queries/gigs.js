@@ -106,3 +106,13 @@ export const DELETE_GIG = gql`
     }
   }
 `;
+
+export const PAY_WORK = gql`
+  mutation payWork($gigId: uuid!) {
+    # set gig status to finished
+    update_gig_by_pk(pk_columns: { id: $gigId }, _set: { status: finished }) {
+      id
+      status
+    }
+  }
+`;
