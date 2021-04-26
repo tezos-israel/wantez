@@ -4,9 +4,7 @@ import { HalfCirclePaper } from './HalfCirclePaper';
 
 export default function Card({ className, children }) {
   return (
-    <div
-      className={classnames('relative bg-white overflow-y-hidden', className)}
-    >
+    <div className={classnames('bg-white overflow-y-hidden', className)}>
       <div className="px-4">
         <HalfCirclePaper />
       </div>
