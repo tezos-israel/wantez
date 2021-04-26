@@ -75,7 +75,7 @@ export default function GigApplicationsItem({
           <div className="lg:w-2/3 lg:text-md w-full text-sm text-gray-600">
             {application.details}
           </div>
-          <div className="md:px-10 lg:w-1/3 2xl:px-30 lg:mt-0 flex flex-col w-full px-5 mt-5">
+          <div className="md:px-10 lg:w-1/3 2xl:px-32 lg:mt-0 flex flex-col w-full px-5 mt-5">
             <ApplicationButtons
               onCancel={onCancel}
               hasApprovedApplication={hasApprovedApplication}

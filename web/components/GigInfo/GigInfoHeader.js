@@ -52,7 +52,7 @@ export default function Header({ gig, user, isFunder }) {
           </div>
         </div>
       </div>
-      <div className="lg:pl-30">
+      <div className="lg:pl-32">
         <div className="flex justify-between mt-8 mb-10">
           <div>
             <div className="md:text-md flex justify-start mb-5 text-lg">

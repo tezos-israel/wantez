@@ -17,7 +17,7 @@ export default function Hero({ title, about }) {
         <Particles className={backgroundClass} />
       )}
     >
-      <div className="pt-30 sm:px-0 px-10 pb-40">
+      <div className="pt-28 sm:px-0 px-10 pb-40">
         <div className="top-5 left-5 absolute">
           <Link href="/">
             <a>
