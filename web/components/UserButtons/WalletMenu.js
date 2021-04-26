@@ -21,15 +21,13 @@ export function WalletMenu({ address = '', onClick }) {
         </div>
       )}
       <button
-        className="focus:outline-none relative flex items-center"
+        className="focus:outline-none relative flex items-center text-green-400"
         onClick={onClick}
       >
         {!address && (
-          <div className="mr-3 text-sm font-bold text-green-400">
-            Connect wallet
-          </div>
+          <div className="mr-3 text-sm font-bold">Connect wallet</div>
         )}
-        <WalletIcon />
+        <WalletIcon className="fill-current" />
       </button>
     </div>
   );

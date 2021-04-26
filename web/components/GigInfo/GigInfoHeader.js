@@ -35,19 +35,21 @@ export default function Header({ gig, user, isFunder }) {
           <img src={gig.imageUrl} className="mr-5" width="100" height="100" />
           <h1 className="lg:text-xl text-gray-700">{gig.title}</h1>
         </div>
-        <div
-          className={classnames(
-            'lg:text-xl w-50 h-10 px-8 py-1 mt-5 border-2 border-blue-600 border-dashed text-blue-600 capitalize relative',
-            styles.gigLabel
-          )}
-        >
+        <div className="relative w-40 h-10">
           <div
             className={classnames(
-              'w-full h-full absolute -z-1 -top-2 -right-2 py-3',
+              'w-full h-full absolute -top-2 -right-2',
               getLevelClassName(gig.experienceLevel)
             )}
           ></div>
-          {gig.experienceLevel}
+          <div
+            className={classnames(
+              'lg:text-xl px-8 py-1 border-2 border-blue-600 border-dashed text-blue-600 capitalize absolute',
+              styles.gigLabel
+            )}
+          >
+            {gig.experienceLevel}
+          </div>
         </div>
       </div>
       <div className="lg:pl-30">
