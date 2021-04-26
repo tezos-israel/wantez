@@ -33,7 +33,7 @@ export default function ContactForm() {
             handleBlur,
           }) => (
             <form
-              className="lg:w-3/4 pb-30 px-10 pt-24 mx-auto"
+              className="lg:w-3/4 px-10 pt-24 pb-32 mx-auto"
               onSubmit={handleSubmit}
             >
               <h2 className="font-museo w-content sm:text-5xl flex items-center mx-auto text-4xl font-bold text-blue-500">

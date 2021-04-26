@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 export default function Features({ features }) {
   return (
-    <div className="lg:w-3/4 lg:mx-auto lg:px-0 lg:mt-0 pt-30 px-10">
-      <div className="space-y-30 sm:space-y-30">
+    <div className="lg:w-3/4 lg:mx-auto lg:px-0 lg:mt-0 px-10 pt-32">
+      <div className="space-y-32">
         {features.map((section, index) => (
           <div
             className={classnames(
