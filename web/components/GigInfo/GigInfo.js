@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import clx from 'classnames';
 
 import { useAuthContext } from 'hooks/AuthContext';
 
@@ -24,7 +24,7 @@ export function GigInfo({ gig }) {
   return (
     <div className="relative">
       <div
-        className={classnames(
+        className={clx(
           'absolute w-full overflow-hidden bg-white',
           styles.bgHalfCirclePaper
         )}
@@ -32,7 +32,7 @@ export function GigInfo({ gig }) {
         <HalfCirclePaper />
       </div>
 
-      <Card className={styles.gigContent}>
+      <Card className={clx(styles.gigContent, 'relative')}>
         <div className="md:px-10 lg:px-20">
           <Header gig={gig} isFunder={isFunder} user={user} />
 
