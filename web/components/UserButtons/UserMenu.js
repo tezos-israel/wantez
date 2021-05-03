@@ -35,7 +35,7 @@ export function UserMenu({ user, onLogout }) {
             }
           )}
         >
-          Log in
+          Sign up / Log in
           <div className="w-11 h-11 ml-3">
             <UserAvatar />
           </div>
