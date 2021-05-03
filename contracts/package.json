@@ -8,7 +8,7 @@
     "truffle": "^5.5.0-tezos.4"
   },
   "scripts": {
-    "start-sandbox": "docker run --rm --name my-sandbox --detach -p 20000:20000 tqtezos/flextesa:20210216 edobox start",
+    "start-sandbox": "docker run --rm --name my-sandbox --detach -p 20000:20000 tqtezos/flextesa:20210316 flobox start",
     "stop-sandbox": "docker kill my-sandbox",
     "test": "truffle test",
     "compile": "truffle compile",
