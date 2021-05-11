@@ -68,7 +68,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-images": "^1.7.0",
     "next-transpile-modules": "^6.1.0",
-    "postcss": "^8.2.4",
+    "postcss": "^8.2.10",
     "prettier-plugin-tailwind-css": "^1.4.0"
   }
 }
