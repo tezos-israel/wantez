@@ -11,8 +11,8 @@ module.exports = {
       type: 'tezos',
     },
     testnet: {
-      host: 'http://edonet.tezos.co.il',
-      port: 8732, //172.15.67.251.55983',
+      host: 'http://florencenet.tezos.co.il',
+      port: 8732,
       network_id: '*',
       secret,
       mnemonic,
